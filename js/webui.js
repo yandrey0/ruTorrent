@@ -78,8 +78,15 @@ var theWebUI =
 				{ text: theUILang.Seeds, 		width: "60px", 	id: "seeds",		type: TYPE_NUMBER },
 				{ text: theUILang.Peers, 		width: "60px", 	id: "peers",		type: TYPE_NUMBER },
 				{ text: theUILang.scrapeDownloaded,	width: "80px", 	id: "downloaded",	type: TYPE_NUMBER },
-				{ text: theUILang.scrapeUpdate,		width: "85px", 	id: "last",		type: TYPE_NUMBER },
+				{ text: theUILang.scrapeUpdate + " S",	width: "85px", 	id: "last",		type: TYPE_NUMBER },
+				{ text: theUILang.scrapeUpdate,		width: "85px", 	id: "slast",		type: TYPE_NUMBER },
 				{ text: theUILang.trkInterval,		width: "80px", 	id: "interval",		type: TYPE_NUMBER },
+				{ text: theUILang.Peers + " (новые)",	width: "60px", 	id: "lpeers",		type: TYPE_PEERS, 	"align" : ALIGN_RIGHT},
+				{ text: "Последняя активность",		width: "80px", 	id: "alast",		type: TYPE_NUMBER },
+				{ text: "Следующая активность",		width: "80px", 	id: "anext",		type: TYPE_NUMBER },
+				{ text: "Неудачи",			width: "80px", 	id: "err",		type: TYPE_NUMBER },
+				{ text: "Удачи",			width: "80px", 	id: "ok",		type: TYPE_NUMBER },
+				{ text: "Событие",			width: "80px", 	id: "levent",		type: TYPE_NUMBER },
 				{ text: theUILang.trkPrivate, 		width: "60px", 	id: "private",		type: TYPE_STRING, 	"align" : ALIGN_RIGHT}
 			],
 

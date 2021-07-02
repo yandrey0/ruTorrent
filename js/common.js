@@ -693,6 +693,8 @@ var theFormatter =
 	},
 	trackers: function(table,arr)
 	{
+		var ev = ['', 'completed', 'started', 'stopped', 'scrape'];
+
 		for(var i in arr)
 		{
 			if(arr[i]==null)
@@ -712,6 +714,18 @@ var theFormatter =
       					break;
       				case 'last' :
 	      				arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
+      					break;
+      				case 'slast' :
+	      				arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
+      					break;
+      				case 'alast' :
+	      				arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
+      					break;
+      				case 'anext' :
+	      				arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
+      					break;
+      				case 'levent' :
+	      				arr[i] = ev[arr[i]];
       					break;
 	      		}
 		}

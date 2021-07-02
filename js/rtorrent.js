@@ -38,7 +38,9 @@ var theRequestManager =
 		[
 		        "t.get_url=", "t.get_type=", "t.is_enabled=", "t.get_group=", "t.get_scrape_complete=", 
 			"t.get_scrape_incomplete=", "t.get_scrape_downloaded=",
-			"t.get_normal_interval=", "t.get_scrape_time_last="
+			"t.get_normal_interval=", "t.get_scrape_time_last=",
+			"t.success_time_last=", "t.activity_time_last=", "t.activity_time_next=", "t.failed_counter=", "t.success_counter=", "t.latest_event=",
+			"t.latest_sum_peers=", "t.latest_new_peers="
 		],
 		handlers: []
 	},
@@ -939,6 +941,13 @@ rTorrentStub.prototype.gettrackersResponse = function(xml)
 		trk.downloaded = this.getValue(values,6);
 		trk.interval = this.getValue(values,7);
 		trk.last = this.getValue(values,8);
+		trk.slast = this.getValue(values,9);
+		trk.alast = this.getValue(values,10);
+		trk.anext = this.getValue(values,11);
+		trk.err = this.getValue(values,12);
+		trk.ok = this.getValue(values,13);
+		trk.levent = this.getValue(values,14);
+		trk.lpeers = this.getValue(values,15) + " (" + this.getValue(values,16) + ")";
 
 		$.each( theRequestManager.trk.handlers, function(i,handler)
 		{
