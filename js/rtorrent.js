@@ -1112,6 +1112,8 @@ rTorrentStub.prototype.listResponse = function(xml)
 				ret.labels_size[torrent.label] = parseInt(ret.labels_size[torrent.label]) + parseInt(torrent.size);
 			}
 		}
+		torrent.chunks = get_size_chunks;
+		torrent.chunk_size = get_chunk_size;
 		var get_peers_not_connected = parseInt(this.getValue(values,17));
 		var get_peers_connected = parseInt(this.getValue(values,18));
 		var get_peers_all = get_peers_not_connected+get_peers_connected;

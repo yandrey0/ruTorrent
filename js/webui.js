@@ -2356,6 +2356,8 @@ var theWebUI =
 			}
 			$("#cmt").html( strip_tags(url,'<a><b><strong>') );
 			$("#dsk").text((d.free_diskspace=='0') ? '' : theConverter.bytes(d.free_diskspace,2));
+			$("#sz").text((d.size=='0') ? '' : theConverter.bytes(d.size,2) + ' (' + d.chunks + ' x ' + theConverter.bytes(d.chunk_size,2) + ')');
+			$("#by").text((d.created_by=='') ? '' : ' (' + d.created_by + ')');
 	   		this.updatePeers();
 		}
 	},
