@@ -326,8 +326,8 @@ var theWebUI =
 			});
 		}
 		correctContent();
-		this.updateServerTime();
-		window.setInterval( this.updateServerTime, 1000 );
+//		this.updateServerTime();
+//		window.setInterval( this.updateServerTime, 1000 );
 		this.requestWithoutTimeout("?action=getuisettings", [this.initFinish, this]);
 	},
 

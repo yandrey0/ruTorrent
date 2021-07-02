@@ -1192,12 +1192,12 @@ function Ajax(URI, isASync, onComplete, onTimeout, onError, reqTimeout)
 				} catch(e) { diff = 0; };
 				theWebUI.deltaTime = iv(diff);
 			}
-			if(theWebUI.serverDeltaTime==0)
+			/*if(theWebUI.serverDeltaTime==0)
 			{
 				var timestamp = XMLHttpRequest.getResponseHeader("X-Server-Timestamp");
 				if(timestamp != null)
 					theWebUI.serverDeltaTime = new Date().getTime()-iv(timestamp)*1000;
-			}
+			}*/
 			stub = null;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown)
