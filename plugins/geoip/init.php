@@ -4,7 +4,7 @@ require_once( "sqlite.php" );
 
 eval( getPluginConf( $plugin["name"] ) );
 
-$retrieveCountry = ($retrieveCountry && function_exists("geoip_country_code_by_name"));
+//$retrieveCountry = ($retrieveCountry && function_exists("geoip_country_code_by_name"));
 $retrieveComments = ($retrieveComments && sqlite_exists());
 
 if( $retrieveHost || $retrieveCountry || $retrieveComments )

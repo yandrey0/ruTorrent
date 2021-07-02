@@ -3,13 +3,16 @@
 	require_once( '../../php/util.php' );
 	require_once( "sqlite.php" );
 	eval( getPluginConf( 'geoip' ) );
+	use MaxMind\Db\Reader;
+	$reader = new Reader('/var/www/geoip2/GeoLite2-City.mmdb');
+	$reader2 = new Reader('/var/www/geoip2/GeoLite2-ASN.mmdb');
 
 	function isValidCode( $country )
 	{
-		return( !empty($country) && (strlen($country)==2) && !is_numeric($country[1]) );
+		return( !empty($country) && (strlen($country)==2) && !ctype_digit($country[1]) );
 	}
 
-	$retrieveCountry = ($retrieveCountry && function_exists("geoip_country_code_by_name"));
+//	$retrieveCountry = ($retrieveCountry && function_exists("geoip_country_code_by_name"));
 	$retrieveCountryIPv6 = ($retrieveCountry && function_exists("geoip_country_code_by_name_v6"));
 	$retrieveComments = ($retrieveComments && sqlite_exists());
 	$ret = array();
@@ -31,12 +34,25 @@
 			if($parts[0]=="ip")
 			{
 				$value = trim($parts[1]);
+				$value = str_replace(array('[',']'), '', $value);
+
 				if(strlen($value))
 				{
 					$city = array();
 					if($retrieveCountry)
 					{
 						$country = '';
+
+						$record = $reader->get($value);
+						$country = $record['country']['iso_code'] ? $record['country']['iso_code'] : '';
+						if($record['city']['names']['ru']) $city[] = $record['city']['names']['ru'];
+						if(empty($city) && $record['city']['names']['en']) $city[] = $record['city']['names']['en'];
+						
+						if($record['subdivisions']){
+							foreach($record['subdivisions'] as $sub) if($sub['names']) $city[] = $sub['names']['ru'] ? $sub['names']['ru'] : $sub['names']['en'];
+						}
+
+/*						
 					        if(geoip_db_avail(GEOIP_CITY_EDITION_REV1) || geoip_db_avail(GEOIP_CITY_EDITION_REV0))
 					        {
        					        	$country = @geoip_record_by_name( $value );
@@ -48,34 +64,21 @@
        					        		$country = $country["country_code"];
 							}
 						}
-						if(!isValidCode($country) )
-							$country = @geoip_country_code_by_name( $value );
-						if(!isValidCode($country) && substr($value, 0, 1) == '[' && $retrieveCountryIPv6)
-							$country = @geoip_country_code_by_name_v6( substr($value, 1, -1) );
+*/
 						if(!isValidCode($country))
 							$country = "un";
 						else
 						{
 							$country = strtolower($country);
-							$org = '';
-							if(geoip_db_avail(GEOIP_ORG_EDITION))
-							{
-								$org = utf8_encode(geoip_org_by_name($value));
-								if(!empty($org))
-									$city[] = $org;
-							}
-							if(geoip_db_avail(GEOIP_ISP_EDITION))
-							{
-								$c = utf8_encode(geoip_isp_by_name($value));
-								if(!empty($c) && ($c!=$org))
-									$city[] = $c;
-							}
+
 						}
                     			}
 					else
 						$country = "un";
-					if(!empty($city))
+					if(!empty($city)){
+                                               $city = array_unique($city);
                                                $country.=" (".implode(', ',$city).")";
+										   }
 					$host = $value;
                                         if($retrieveHost)
                                         {
@@ -113,7 +116,10 @@
         					$db = new ipDB();
         					$comment = $db->get($value);
                                         }
-					$ret[] = array( "ip"=>$value, "info"=>array( "country"=>$country, "host"=>$host, "comment"=>$comment ) );
+                     
+                     $asn = $reader2->get($value);
+
+					$ret[] = array( "ip"=>$value, "info"=>array( "country"=>$country, "host"=>$host, "comment"=>$comment, "asn"=>$asn['autonomous_system_organization']?$asn['autonomous_system_organization']:"-" ) );
 				}
 			}
 		}
