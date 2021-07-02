@@ -11,6 +11,10 @@ if(isset($_REQUEST["label"]))
 	$label = function_exists('mb_strtolower')
 		? mb_strtolower(rawurldecode($_REQUEST["label"]), 'utf-8')
 		: strtolower(rawurldecode($_REQUEST["label"]));
+	#
+	$p = explode("/", $label);
+	$label = ($p[1] && in_array($p[1], array('film','films','films2','films3','game','games','movie','movies','music','porn','porno','xxx','serial','serials','serials2','serials3','video','2tb','640'))) ? $p[1] : $p[0];
+	#
 	$name = getSettingsPath().'/labels';
 	if(!is_dir($name))
 		makeDirectory($name);
@@ -61,6 +65,6 @@ if(isset($_REQUEST["tracker"]))
 	}
 }
 
-header("HTTP/1.0 302 Moved Temporarily");
+header("Status: 302 Moved Temporarily");
 header("Location: ./trackers/unknown.png");
 exit();
