@@ -100,6 +100,7 @@ var theWebUI =
 			columns:
 			[
 				{ text: theUILang.Address,		width: "100px", id: "name",		type: TYPE_STRING },
+				{ text: theUILang.Listening_Port,	width: "50px",  id: "port",		type: TYPE_NUMBER },
 				{ text: theUILang.ClientVersion,	width: "120px", id: "version",		type: TYPE_STRING },
 				{ text: theUILang.Flags, 		width: "60px", 	id: "flags",		type: TYPE_STRING, 	"align" : ALIGN_RIGHT},
 				{ text: theUILang.Done, 		width: "100px", id: "done",		type: TYPE_PROGRESS },
@@ -854,7 +855,7 @@ var theWebUI =
    		$.extend(this.peers,data);
    		$.each(data,function(id,peer)
 		{
-			peer.name = peer.name+':'+peer.port
+//			peer.name = peer.name+':'+peer.port
 			if(!$type(table.rowdata[id])) 
 				table.addRowById(peer, id, peer.icon, peer.attr);
         		else 
