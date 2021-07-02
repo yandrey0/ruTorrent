@@ -905,6 +905,11 @@ var theWebUI =
 		this.request("?action=addpeer&hash="+this.dID+"&f="+encodeURIComponent($("#peerIP").val()), [this.updatePeers,this]);
 	},
 
+	addNewTracker: function()
+	{
+		this.request("?action=addtracker&hash="+this.dID+"&p="+encodeURIComponent($("#trackerGroup").val())+"&f="+encodeURIComponent($("#trackerURL").val()));
+	},
+
 	setPeerState: function(cmd)
 	{
    		var prs = this.getPeerIds(cmd);
@@ -1075,6 +1080,7 @@ var theWebUI =
 			{
 		   		theContextMenu.add([CMENU_SEP]);
 				theContextMenu.add([theUILang.updateTracker, this.isTorrentCommandEnabled("updateTracker",this.dID) ? "theWebUI.updateTracker()" : null]);
+				theContextMenu.add(["Добавить трекер", this.isTorrentCommandEnabled("addtracker",this.dID) ? "theDialogManager.show('tradd')" : null]);
 			}
 		}
 		return(true);

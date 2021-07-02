@@ -635,6 +635,15 @@ rTorrentStub.prototype.addpeer = function()
 	this.commands.push( cmd );
 }
 
+rTorrentStub.prototype.addtracker = function()
+{
+	var cmd = new rXMLRPCCommand("d.tracker.insert");
+	cmd.addParameter("string",this.hashes[0]);
+	cmd.addParameter("string",decodeURIComponent(this.ss[0]));
+	cmd.addParameter("string",decodeURIComponent(this.vs[0]));
+	this.commands.push( cmd );
+}
+
 rTorrentStub.prototype.createqueued = function()
 {
 	for(var i=0; i<this.hashes.length; i++)

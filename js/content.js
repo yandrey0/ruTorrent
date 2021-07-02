@@ -115,6 +115,12 @@ function makeContent()
 			'</form>'+
 		'</div>');
 
+	theDialogManager.make("tradd","Добавить трекер",
+		'<div class="content fxcaret">&nbsp;&nbsp;группа | url<br><br><input type="text" id="trackerGroup" class="TextboxVShort" value="0"/><input type="text" id="trackerURL" name="trackerURL" class="Textbox" style="width: 320px" value=""/><br><br></div>'+
+		'<div class="aright buttons-list"><input type="button" class="OK Button" value="'+theUILang.ok+'" onclick="theWebUI.addNewTracker();theDialogManager.hide(\'tradd\');return(false);" />'+
+			'<input type="button" class="Cancel Button" value="'+theUILang.Cancel+'"/></div>',
+		true);
+
 	$("#tadd_label_select").change( function(e)
 	{
 		var index = this.selectedIndex;
