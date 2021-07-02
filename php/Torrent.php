@@ -324,6 +324,13 @@ class Torrent
     		$this->touch();
 	}
 
+    	public function created_by( $created_by = null ) 
+    	{
+        	return(is_null( $created_by ) ?
+            		isset( $this->{'created by'} ) ? $this->{'created by'} : null :
+            		$this->touch( $this->{'created by'} = (string) $created_by ));
+	}
+
 	/** Getter and setter of torrent name
 	 * @param null|string name (optional, if omitted it's a getter)
 	 * @return string|null name or null if not set

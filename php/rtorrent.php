@@ -64,6 +64,18 @@ class rTorrent
 						$cmd->addParameter(getCmd("d.set_custom2=").$comment);
 				}
 			}
+			$created_by = $torrent->created_by();
+			if($created_by)
+			{
+				if(isInvalidUTF8($created_by))
+					$created_by = win2utf($created_by);
+				if(strlen($created_by)>0)
+				{
+					$created_by = rawurlencode($created_by);
+					if(strlen($created_by)<=4096)
+						$cmd->addParameter(getCmd("d.set_custom5=").$created_by);
+				}
+			}
 			if($label && (strlen($label)>0))
 			{
 				$label = rawurlencode($label);

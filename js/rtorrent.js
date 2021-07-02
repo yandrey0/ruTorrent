@@ -28,7 +28,7 @@ var theRequestManager =
 			"d.get_custom1=", "d.get_peers_accounted=", "d.get_peers_not_connected=", "d.get_peers_connected=", "d.get_peers_complete=",
 			"d.get_left_bytes=", "d.get_priority=", "d.get_state_changed=", "d.get_skip_total=", "d.get_hashing=",
 			"d.get_chunks_hashed=", "d.get_base_path=", "d.get_creation_date=", "d.get_tracker_focus=", "d.is_active=",
-			"d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file="
+			"d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file=", "d.get_custom5="
 		],
 		handlers: []
 	},
@@ -1139,6 +1139,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 		torrent.free_diskspace = this.getValue(values,32);
 		torrent.private = this.getValue(values,33);
 		torrent.multi_file = iv(this.getValue(values,34));
+		torrent.created_by = decodeURIComponent(this.getValue(values,35));
 		torrent.seeds = torrent.seeds_actual + " (" + torrent.seeds_all + ")";
 		torrent.peers = torrent.peers_actual + " (" + torrent.peers_all + ")";
 		var hash = this.getValue(values,0);
