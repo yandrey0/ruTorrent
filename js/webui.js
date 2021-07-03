@@ -99,6 +99,7 @@ var theWebUI =
 			obj: new dxSTable(),
 			columns:
 			[
+				{ text: 'Страна',			width: "200px", id: "country",		type: TYPE_STRING },
 				{ text: theUILang.Address,		width: "100px", id: "name",		type: TYPE_STRING },
 				{ text: theUILang.Listening_Port,	width: "50px",  id: "port",		type: TYPE_NUMBER },
 				{ text: theUILang.ClientVersion,	width: "120px", id: "version",		type: TYPE_STRING },
@@ -109,7 +110,8 @@ var theWebUI =
 				{ text: theUILang.DL, 			width: "60px", 	id: "dl",		type: TYPE_NUMBER },
 				{ text: theUILang.UL, 			width: "60px", 	id: "ul",		type: TYPE_NUMBER },
                                 { text: theUILang.PeerDL, 		width: "60px", 	id: "peerdl",		type: TYPE_NUMBER },
-                                { text: theUILang.PeerDownloaded, 	width: "100px", id: "peerdownloaded",	type: TYPE_NUMBER }
+                                { text: theUILang.PeerDownloaded, 	width: "100px", id: "peerdownloaded",	type: TYPE_NUMBER },
+                                { text: 'ASN', 				width: "300px", id: "asn",		type: TYPE_STRING }
 			],
 			container:	"PeerList",
 			format:		theFormatter.peers,

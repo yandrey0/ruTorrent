@@ -926,6 +926,49 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 
 		ret[id] = peer;
 	}
+	
+	var content = "";
+	$.each( ret, function(id,peer){
+
+	info = thePeersCache.get(peer.ip);
+	if(info){
+		ret[id].icon = "geoip geoip_flag_"+info.country_code;
+		country = info.country_name;
+		country += (typeof info.city !== 'undefined' && info.city != null)  ? ' ('+info.city+')' : '';
+		ret[id].country = country;
+		ret[id].asn = info.asn;
+
+	}else{
+		content += ("&ip="+peer.ip);
+		ret[id].icon = "geoip geoip_flag_un";
+		ret[id].country = '...';
+		ret[id].asn = '...';
+	}
+
+	});
+
+
+		if(content.length)
+		{
+			var AjaxReq = jQuery.ajax(
+			{
+				type: "POST",
+				contentType: "application/x-www-form-urlencoded",
+				processData: false,
+				timeout: theWebUI.settings["webui.reqtimeout"],
+//			        async : false,
+				url : "/php/geoip2.php",
+				data : "dummy=1"+content,
+				dataType : "json",
+				cache: false,
+				success : function(data)
+				{
+					thePeersCache.add(data);
+				}
+			});
+			thePeersCache.strip();
+		}
+
 	return(ret);
 }
 
@@ -1260,6 +1303,39 @@ function Ajax(URI, isASync, onComplete, onTimeout, onError, reqTimeout)
 		}
 	});
 }
+
+var thePeersCache = 
+{
+	MAX_SIZE: 1024,
+	ips: [],
+	info: {},
+
+	add: function( data )
+	{
+		for( var i = 0; i< data.length; i++ )
+		{
+			this.ips.push(data[i].ip);
+			this.info[data[i].ip] = data[i].info;
+		}
+	},
+
+	strip: function()
+	{
+		if(this.ips.length>=this.MAX_SIZE)
+		{
+			for(var i=0; i<this.MAX_SIZE/2; i++)
+				delete this.info[this.ips[i]];
+			this.ips.splice(0,this.MAX_SIZE/2);
+		}
+	},
+
+	get: function( ip )
+	{
+		return( $type(this.info[ip]) ? this.info[ip] : null );
+	}
+
+};
+
 
 $(document).ready(function() 
 {
