@@ -956,9 +956,9 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 				contentType: "application/x-www-form-urlencoded",
 				processData: false,
 				timeout: theWebUI.settings["webui.reqtimeout"],
-//			        async : false,
+			        async : true,
 				url : "/php/geoip2.php",
-				data : "dummy=1"+content,
+				data : "il=1"+content,
 				dataType : "json",
 				cache: false,
 				success : function(data)
@@ -1356,5 +1356,8 @@ $(document).ready(function()
 	        	timer = null;
 		}
 		$('#ind').css( { visibility: "hidden" } );
+	});
+	$(document).on('click','#PeerList .stable-PeerList-col-1 div, #TrackerList .stable-TrackerList-col-0 div', function(){
+		copyToClipboard(this);
 	});
 });
