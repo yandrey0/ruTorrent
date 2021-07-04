@@ -111,7 +111,8 @@ var theWebUI =
 				{ text: theUILang.UL, 			width: "60px", 	id: "ul",		type: TYPE_NUMBER },
                                 { text: theUILang.PeerDL, 		width: "60px", 	id: "peerdl",		type: TYPE_NUMBER },
                                 { text: theUILang.PeerDownloaded, 	width: "100px", id: "peerdownloaded",	type: TYPE_NUMBER },
-                                { text: 'ASN', 				width: "300px", id: "asn",		type: TYPE_STRING }
+                                { text: 'ASN', 				width: "300px", id: "asn",		type: TYPE_STRING },
+                                { text: 'Time Zone',			width: "150px", id: "timezone",		type: TYPE_STRING }
 			],
 			container:	"PeerList",
 			format:		theFormatter.peers,

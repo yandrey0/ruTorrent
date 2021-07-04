@@ -64,7 +64,13 @@ function isValidCode( $country )
                      
                     $asn = $reader2->get($value);
 
-					$ret[] = array( "ip"=>$value, "info"=>array( "country_code"=>$country, "country_name"=>$name, "city"=>$city, "asn"=>$asn['autonomous_system_organization']?$asn['autonomous_system_organization']:"-" ) );
+                    if($record['location']['time_zone']){
+						if($dt = new DateTime("now", new DateTimeZone($record['location']['time_zone']))) $timezone = $dt->format('P').' '.$record['location']['time_zone']; else $timezone = $record['location']['time_zone'];
+					}else{
+						$timezone = '-';
+					}
+
+					$ret[] = array( "ip"=>$value, "info"=>array( "country_code"=>$country, "country_name"=>$name, "city"=>$city, "asn"=>$asn['autonomous_system_organization']?$asn['autonomous_system_organization']:"-", "timezone"=>$timezone ) );
 				}
 			}
 		}

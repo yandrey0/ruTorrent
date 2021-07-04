@@ -937,12 +937,14 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 		country += (typeof info.city !== 'undefined' && info.city != null)  ? ' ('+info.city+')' : '';
 		ret[id].country = country;
 		ret[id].asn = info.asn;
+		ret[id].timezone = info.timezone;
 
 	}else{
 		content += ("&ip="+peer.ip);
 		ret[id].icon = "geoip geoip_flag_un";
 		ret[id].country = '...';
 		ret[id].asn = '...';
+		ret[id].timezone = '...';
 	}
 
 	});
