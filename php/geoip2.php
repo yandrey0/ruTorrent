@@ -6,6 +6,8 @@ use MaxMind\Db\Reader;
 $reader = new Reader('/var/www/geoip2/GeoLite2-City.mmdb');
 $reader2 = new Reader('/var/www/geoip2/GeoLite2-ASN.mmdb');
 
+$offset_local = date('Z');
+
 function isValidCode( $country )
 {
 	return( !empty($country) && (strlen($country)==2) && !ctype_digit($country[1]) );
@@ -65,7 +67,13 @@ function isValidCode( $country )
                     $asn = $reader2->get($value);
 
                     if($record['location']['time_zone']){
-						if($dt = new DateTime("now", new DateTimeZone($record['location']['time_zone']))) $timezone = $dt->format('P').' '.$record['location']['time_zone']; else $timezone = $record['location']['time_zone'];
+//						if($dt = new DateTime("now", new DateTimeZone($record['location']['time_zone']))) $timezone = $dt->format('P').' '.$record['location']['time_zone']; else $timezone = $record['location']['time_zone'];
+						if($dt_peer = new DateTime(null, new DateTimeZone($record['location']['time_zone']))){
+							$offset_peer = $dt_peer->format('Z');
+							$diff = ($offset_peer - $offset_local) / 3600;
+							$diff = ($diff >= 0) ? '+'.$diff : $diff;
+							$timezone = $diff.' '.$record['location']['time_zone'];
+						} else $timezone = $record['location']['time_zone'];
 					}else{
 						$timezone = '-';
 					}
