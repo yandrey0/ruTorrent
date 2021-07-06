@@ -886,6 +886,7 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 	var ret = {};
 	var datas = xml.getElementsByTagName('data');
 	var self = this;
+	var uip = "";
 	for(var j=1;j<datas.length;j++)
 	{
 		var data = datas[j];
@@ -917,6 +918,23 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 		peer.peerdl = this.getValue(values,12);		//	p.get_peer_rate
 		peer.peerdownloaded = this.getValue(values,13);	//	p.get_peer_total
 		peer.port = this.getValue(values,14);		//	p.get_port
+
+		info = thePeersCache.get(peer.ip);
+		if(info){
+		peer.icon = "geoip geoip_flag_"+info.country_code;
+		country = info.country_name;
+		country += (typeof info.city !== 'undefined' && info.city != null)  ? ' ('+info.city+')' : '';
+		peer.country = country;
+		peer.asn = info.asn;
+		peer.timezone = info.timezone;
+		}else{
+		uip += ("&ip="+peer.ip);
+		peer.icon = "geoip geoip_flag_un";
+		peer.country = '...';
+		peer.asn = '...';
+		peer.timezone = '...';
+		}
+
 		var id = this.getValue(values,0);
 		$.each( theRequestManager.prs.handlers, function(i,handler)
 		{
@@ -926,31 +944,8 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 
 		ret[id] = peer;
 	}
-	
-	var content = "";
-	$.each( ret, function(id,peer){
 
-	info = thePeersCache.get(peer.ip);
-	if(info){
-		ret[id].icon = "geoip geoip_flag_"+info.country_code;
-		country = info.country_name;
-		country += (typeof info.city !== 'undefined' && info.city != null)  ? ' ('+info.city+')' : '';
-		ret[id].country = country;
-		ret[id].asn = info.asn;
-		ret[id].timezone = info.timezone;
-
-	}else{
-		content += ("&ip="+peer.ip);
-		ret[id].icon = "geoip geoip_flag_un";
-		ret[id].country = '...';
-		ret[id].asn = '...';
-		ret[id].timezone = '...';
-	}
-
-	});
-
-
-		if(content.length)
+		if(uip.length)
 		{
 			var AjaxReq = jQuery.ajax(
 			{
@@ -960,7 +955,7 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 				timeout: theWebUI.settings["webui.reqtimeout"],
 			        async : true,
 				url : "/php/geoip2.php",
-				data : "il=1"+content,
+				data : "il=1"+uip,
 				dataType : "json",
 				cache: false,
 				success : function(data)
