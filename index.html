@@ -24,13 +24,12 @@
 		<style type="text/css">
 			@import "./css/style.css";
 		</style>
-		<script type="text/javascript" src="./js/jquery.js"></script>
+		<script type="text/javascript" src="./js/jquery-2.2.4.min.js"></script>
 		<script type="text/javascript" src="./lang/langs.js"></script>
 		<script type="text/javascript" src="./js/common.js"></script>
 		<script type="text/javascript" src="./js/objects.js"></script>
 		<script type="text/javascript" src="./js/content.js"></script>
 		<script type="text/javascript" src="./js/stable.js"></script>
-		<!--[if lt IE 9]><script type="text/javascript" src="./js/excanvas.js"></script><![endif]-->
     		<script type="text/javascript" src="./js/jquery.flot.js"></script>
 		<script type="text/javascript" src="./js/graph.js"></script>
 		<script type="text/javascript" src="./js/plugins.js"></script>
@@ -147,20 +146,20 @@
 						</ul>
 						<div id="tdcont">
 							<div id="gcont" class="tab">
-								<table cellpadding="5" cellspacing="2" width="100%" summary="layout table" id="mainlayout">
+								<table cellpadding="5" cellspacing="2" summary="layout table" id="mainlayout">
 									<tr>
 										<td colspan="6" class="Header">
 											<script type="text/javascript"> document.write(theUILang.Transfer); </script></td>
 									</tr>
 									<tr>
-										<td width="6%" nowrap><script type="text/javascript"> document.write(theUILang.Time_el); </script>:</td><td width="11%" nowrap><span id="et" class="det"></span></td>
-										<td width="6%" nowrap><script type="text/javascript"> document.write(theUILang.Remaining); </script>:</td><td width="11%" nowrap><span id="rm" class="det"></span></td>
-										<td width="6%" nowrap><script type="text/javascript"> document.write(theUILang.Share_ratio); </script>:</td><td width="11%" nowrap><span id="ra" class="det"></span></td>
+										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Time_el); </script>:</td><td class="tr2" nowrap><span id="et" class="det"></span></td>
+										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Remaining); </script>:</td><td class="tr2" nowrap><span id="rm" class="det"></span></td>
+										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Share_ratio); </script>:</td><td class="tr2" nowrap><span id="ra" class="det"></span></td>
 									</tr>
 									<tr>
-										<td width="6%" nowrap><script type="text/javascript"> document.write(theUILang.Downloaded); </script>:</td><td width="11%" nowrap><span id="dl" class="det"></span></td>
-										<td width="6%" nowrap><script type="text/javascript"> document.write(theUILang.Down_speed); </script>:</td><td width="11%" nowrap><span id="ds" class="det"></span></td>
-										<td width="6%" nowrap><script type="text/javascript"> document.write(theUILang.Wasted); </script>:</td><td width="11%" nowrap><span id="wa" class="det"></span></td>
+										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Downloaded); </script>:</td><td class="tr2" nowrap><span id="dl" class="det"></span></td>
+										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Down_speed); </script>:</td><td class="tr2" nowrap><span id="ds" class="det"></span></td>
+										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Wasted); </script>:</td><td class="tr2" nowrap><span id="wa" class="det"></span></td>
 									</tr>
 									<tr>
 										<td nowrap><script type="text/javascript"> document.write(theUILang.Uploaded); </script>:</td><td nowrap><span id="ul" class="det"></span></td>
@@ -264,7 +263,7 @@
 							<!--td class="statuscell">
 								<div class="stval" id="servertime"></div>
 							</td-->
-							<td width="100%"></td>
+							<td></td>
 						</tr>
 					</table>
 					</div>

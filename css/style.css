@@ -283,6 +283,11 @@ div#tadd select { width: 220px }
 	#go { display: none }
 	#query { width: 80px }
 }
+
+#mainlayout { width: 100%; }
+#mainlayout td.tr1 { width: 6%; }
+#mainlayout td.tr2 { width: 11%; }
+
 .geoip {background-repeat: no-repeat; background-position: center center; width: 22px; }
 .geoip_flag_ad {background-image: url( "/images/flags/ad.svg" ); }
 .geoip_flag_ae {background-image: url( "/images/flags/ae.svg" ); }
