@@ -922,9 +922,8 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 		info = thePeersCache.get(peer.ip);
 		if(info){
 		peer.icon = "geoip geoip_flag_"+info.country_code;
-		country = info.country_name;
-		country += (typeof info.city !== 'undefined' && info.city != null)  ? ' ('+info.city+')' : '';
-		peer.country = country;
+		peer.country = info.country_name;
+		peer.country += (typeof info.city !== 'undefined' && info.city != null)  ? ' ('+info.city+')' : '';
 		peer.asn = info.asn;
 		peer.timezone = info.timezone;
 		}else{
