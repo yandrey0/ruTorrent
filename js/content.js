@@ -703,7 +703,6 @@ function correctContent()
 		rPlugin.prototype.removePageFromTabs("TrackerList");
 		rPlugin.prototype.removePageFromTabs("FileList");
 		rPlugin.prototype.removePageFromTabs("PeerList");
-		rPlugin.prototype.removePageFromTabs("Speed");
 		$("#st_up").remove();
 		$("#st_down").remove();
 		rPlugin.prototype.removeButtonFromToolbar("add");

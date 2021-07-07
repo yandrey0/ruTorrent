@@ -848,18 +848,12 @@ var theTabs =
    		FileList : theUILang.Files,
    		TrackerList : theUILang.Trackers,
    		PeerList : theUILang.Peers,
-   		Speed : theUILang.Speed,
    		PluginList : theUILang.Plugins,
    		lcont : theUILang.Logger
    	},
 
    	init: function()
    	{
-		if(browser.isKonqueror && (browser.versionMajor<4))
-		{
-			delete this.tabs["Speed"];
-			$("#Speed").remove();
-		}
    		var s = "";
    		for(var n in this.tabs)
       			s += "<li id=\"tab_" + n + "\"><a href=\"javascript://void();\" onmousedown=\"theTabs.show('" + n + "'); return(false);\" onfocus=\"this.blur();\">" + this.tabs[n] + "</a></li>";
@@ -906,10 +900,6 @@ var theTabs =
 						case "PluginList":
 							prefix = "plg";
 							break;
-               					case "Speed":
-               						theWebUI.setActiveView(id);
-               						theWebUI.speedGraph.resize();
-               						break;
 						default:
 							this.onShow(n);
                				}

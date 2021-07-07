@@ -207,7 +207,6 @@ var theWebUI =
 	cLabels:	{},
 	dID:		"",
 	pID:		"",
-	speedGraph:	new rSpeedGraph(),
 	url:		window.location.href.substr(0,window.location.href.lastIndexOf("/")+1),
 	timer:		new Timer(),
 	activeView:	null,
@@ -428,7 +427,6 @@ var theWebUI =
 			}
 			return(this.oldFilesSortNumeric(x,y));
 		}
-		this.speedGraph.create($("#Speed"));
 		if(!this.settings["webui.show_cats"])
 			$("#CatList").hide();
 		if(!this.settings["webui.show_dets"])
@@ -1748,7 +1746,6 @@ var theWebUI =
 
 	setSpeedValues: function(tul,tdl)
 	{
-		this.speedGraph.addData(tul,tdl);
 		this.total.speedDL = tdl;
 		this.total.speedUL = tul;
 	},
@@ -2510,7 +2507,6 @@ var theWebUI =
 			var table = this.getTable("plg");
 			if(table)
 				table.resize(w,h);
-			this.speedGraph.resize(w,h);
 		}
 	},
 
