@@ -1187,7 +1187,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 		torrent.save_path = (torrent.base_path.substring(pos+1) === torrent.name) ? 
 			torrent.base_path.substring(0,pos) : torrent.base_path;
 		torrent.created = this.getValue(values,27);
-		torrent.tracker_focus = this.getValue(values,28);
+//		torrent.tracker_focus = this.getValue(values,28);
 		try {
 		torrent.comment = this.getValue(values,31);
 		if(torrent.comment.search("VRS24mrker")==0)
