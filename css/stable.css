@@ -34,8 +34,8 @@
 
 .stable-head .rowcover { position: absolute; left: 0; top: 0; height: 20px; width: 1000px; background: transparent; display: none; }
 
-.meter-value { float: left; background-color: #99D699; border: 1px inset #BBBBBB; border-bottom: none;}
+.meter-value { float: left; background-color: #87CEEB; border: 1px inset #BBBBBB; border-bottom: none;}
 .meter-text { position: relative; text-align: center; float: left; width: 100%; height: 0px; overflow: visible; font-size: 11px; z-index: 1; }
 
 .meter-value-start-color { background-color: #FFFF00 }
-.meter-value-end-color { background-color: #99D699 }
+.meter-value-end-color { background-color: #87CEEB }
