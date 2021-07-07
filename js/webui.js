@@ -2312,7 +2312,7 @@ var theWebUI =
       			theTabs.show("gcont");
    		this.dID = hash;
    		this.getFiles(hash);
-// 		this.getTrackers(hash);
+ 		this.getTrackers(hash);
    		if(!noSwitch && !theWebUI.settings["webui.show_dets"])
    		{
 			$("#tdetails").show();
