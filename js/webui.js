@@ -2375,6 +2375,8 @@ var theWebUI =
 			$("#dsk").text((d.free_diskspace=='0') ? '' : theConverter.bytes(d.free_diskspace,2));
 			$("#sz").text((d.size=='0') ? '' : theConverter.bytes(d.size,2) + ' (' + d.chunks + ' x ' + theConverter.bytes(d.chunk_size,2) + ')');
 			$("#by").text((d.created_by=='') ? '' : ' (' + d.created_by + ')');
+			$("#st").text(d.status);
+			$("#fl").text(d.num_files);
 	   		this.updatePeers();
 		}
 	},

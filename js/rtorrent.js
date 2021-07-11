@@ -27,7 +27,7 @@ var theRequestManager =
 			"d.get_up_total=", "d.get_ratio=", "d.get_up_rate=", "d.get_down_rate=", "d.get_chunk_size=",
 			"d.get_custom1=", "d.get_peers_accounted=", "d.get_peers_not_connected=", "d.get_peers_connected=", "d.get_peers_complete=",
 			"d.get_left_bytes=", "d.get_priority=", "d.get_state_changed=", "d.get_skip_total=", "d.get_hashing=",
-			"d.get_chunks_hashed=", "d.get_base_path=", "d.get_creation_date=", "d.get_tracker_focus=", "d.is_active=",
+			"d.get_chunks_hashed=", "d.get_base_path=", "d.get_creation_date=", "d.get_size_files=", "d.is_active=",
 			"d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file=", "d.get_custom5=",
 			"d.timestamp.finished=", "d.timestamp.started=", "d.custom=addtime"
 		],
@@ -1189,6 +1189,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 			torrent.base_path.substring(0,pos) : torrent.base_path;
 		torrent.created = this.getValue(values,27);
 //		torrent.tracker_focus = this.getValue(values,28);
+		torrent.num_files = this.getValue(values,28);
 		try {
 		torrent.comment = this.getValue(values,31);
 		if(torrent.comment.search("VRS24mrker")==0)
