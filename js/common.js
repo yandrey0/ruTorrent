@@ -559,6 +559,15 @@ var theFormatter =
 				case 14:
 					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
 					break;
+				case 17:
+					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
+					break;
+				case 18:
+					arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
+					break;
+				case 19:
+					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
+					break;
 			}
 		}
 		return(arr);

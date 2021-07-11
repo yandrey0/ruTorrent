@@ -82,6 +82,7 @@ class rTorrent
 				if(strlen($label)<=4096)
 					$cmd->addParameter(getCmd("d.set_custom1=").$label);
 			}
+			$cmd->addParameter(getCmd("d.set_custom")."=addtime,".time());
 			if(is_array($addition))
 				foreach($addition as $key=>$prm)
 					$cmd->addParameter($prm,'string');

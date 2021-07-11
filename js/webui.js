@@ -29,7 +29,10 @@ var theWebUI =
 				{ text: theUILang.Priority, 		width: "80px", 	id: "priority",		type: TYPE_NUMBER },
 				{ text: theUILang.Created_on,		width: "110px", id: "created",		type: TYPE_NUMBER },
 				{ text: theUILang.Remaining, 		width: "90px", 	id: "remaining",	type: TYPE_NUMBER },
-				{ text: theUILang.Save_path,		width: "200px", id: "save_path",	type: TYPE_STRING }
+				{ text: theUILang.Save_path,		width: "200px", id: "save_path",	type: TYPE_STRING },
+				{ text: 'Добавлен',			width: '110px', id: 'addtime',		type: TYPE_NUMBER},
+				{ text: 'Завершен',			width: '100px', id: 'finished',		type: TYPE_NUMBER},
+				{ text: 'Старт',			width: '110px', id: 'started',		type: TYPE_NUMBER}
 			],
 			container:	"List",
 			format:		theFormatter.torrents,
