@@ -402,7 +402,7 @@ var theConverter =
 		if((noRound==null) && (tm >= 2419200))
 			return "\u221e";
 //		var val = tm % (604800 * 52);
-		var val = tm;
+/*		var val = tm;
 		var w = iv(val / 604800);
 		val = val % 604800;
 		var d = iv(val / 86400);
@@ -435,7 +435,55 @@ var theConverter =
 		}
 		if(v < 2)
 			ret += val + theUILang.time_s;
-		return( ret.substring(0,ret.length-1) );
+		return( ret.substring(0,ret.length-1) );*/
+		var diff = tm;
+		
+		var second	= 1;
+		var minute	= 60;
+		var hour	= 3600;
+		var day		= 86400;
+		var week	= 604800;
+		var month	= 2592000;
+		var year	= 31536000;
+    
+		var text = '';
+
+	if(diff >= year){
+		y = Math.floor(diff/year);
+		m = Math.floor((diff-(y*year))/month);
+    text = y+'г';
+    text += m ? ' '+m+theUILang.time_m : '';
+	}else if(diff >= month){
+		m = Math.floor(diff/month);
+		w = Math.floor((diff-(m*month))/week);
+    text = m+theUILang.time_m;
+    text += w ? ' '+w+theUILang.time_w : '';
+	}else if(diff >= week){
+		w = Math.floor(diff/week);
+		d = Math.floor((diff-(w*week))/day);
+    text = w+theUILang.time_w;
+    text += d ? ' '+d+theUILang.time_d : '';
+	}else if(diff >= day){
+		d = Math.floor(diff/day);
+		h = Math.floor((diff-(d*day))/hour);
+    text = d+theUILang.time_d;
+    text += h ? ' '+h+theUILang.time_h : '';
+	}else if(diff >= hour){
+		h = Math.floor(diff/hour);
+		m = Math.floor((diff-(h*hour))/minute);
+    text = h+theUILang.time_h;
+    text += m ? ' '+m+theUILang.time_m : '';
+	}else if(diff >= minute){
+		m = Math.floor(diff/minute);
+		s = iv(diff % minute);
+    text = m+theUILang.time_m;
+    text += s ? ' '+s+theUILang.time_s : '';
+	}else if(diff >= second){
+    text = iv(diff)+theUILang.time_s;
+    } 
+
+    return text;
+
 	},
 	bytes: function(bt, p)
 	{
