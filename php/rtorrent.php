@@ -137,6 +137,20 @@ class rTorrent
 					if(strlen($label)<=4096)
 						$cmd->addParameter(getCmd("d.set_custom1=").$label);
 				}
+
+				parse_str($magnet, $p);
+
+				if($tracker = parse_url(urldecode($p['tr']), PHP_URL_HOST))
+				{
+					if(filter_var($tracker, FILTER_VALIDATE_IP) == false) $tracker = implode('.', array_slice(explode('.', $tracker), -2));
+
+				} else $tracker = 'unknown';
+
+				$tracker = rawurlencode($tracker);
+				if(strlen($tracker)<=4096)
+					$cmd->addParameter(getCmd("d.set_custom4=").$tracker);
+
+				$cmd->addParameter(getCmd("d.set_custom")."=addtime,".time());
 				if(is_array($addition))
 					foreach($addition as $key=>$prm)
 						$cmd->addParameter($prm,'string');
