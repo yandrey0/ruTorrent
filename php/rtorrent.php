@@ -52,7 +52,7 @@ class rTorrent
 				$req->addCommand( new rXMLRPCCommand( 'execute', array('mkdir','-p',$directory) ) );
 				$cmd->addParameter( ($isAddPath ? getCmd("d.set_directory=")."\"" : getCmd("d.set_directory_base=")."\"").$directory."\"" );
 			}
-			$comment = $torrent->comment();
+			$comment = $torrent->comment() ? $torrent->comment() : $torrent->{'publisher-url'};
 			if($comment)
 			{
 				if(isInvalidUTF8($comment))
@@ -81,6 +81,19 @@ class rTorrent
 				$label = rawurlencode($label);
 				if(strlen($label)<=4096)
 					$cmd->addParameter(getCmd("d.set_custom1=").$label);
+			}
+			
+			if($url = filter_var($torrent->{'publisher-url'}, FILTER_VALIDATE_URL, ['flags' => FILTER_FLAG_SCHEME_REQUIRED])){
+			} else if($url = filter_var($torrent->comment(), FILTER_VALIDATE_URL, ['flags' => FILTER_FLAG_SCHEME_REQUIRED])){
+			} else $url = $torrent->announce_list()[0][0] ? $torrent->announce_list()[0][0] : $torrent->announce();
+			
+			if($tracker = parse_url($url, PHP_URL_HOST))
+			{
+				if(filter_var($tracker, FILTER_VALIDATE_IP) == false) $tracker = implode('.', array_slice(explode('.', $tracker), -2));
+
+				$tracker = rawurlencode($tracker);
+				if(strlen($tracker)<=4096)
+					$cmd->addParameter(getCmd("d.set_custom4=").$tracker);
 			}
 			$cmd->addParameter(getCmd("d.set_custom")."=addtime,".time());
 			if(is_array($addition))

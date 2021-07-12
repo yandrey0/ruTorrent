@@ -32,7 +32,8 @@ var theWebUI =
 				{ text: theUILang.Save_path,		width: "200px", id: "save_path",	type: TYPE_STRING },
 				{ text: 'Добавлен',			width: '110px', id: 'addtime',		type: TYPE_NUMBER},
 				{ text: 'Завершен',			width: '100px', id: 'finished',		type: TYPE_NUMBER},
-				{ text: 'Старт',			width: '110px', id: 'started',		type: TYPE_NUMBER}
+				{ text: 'Старт',			width: '110px', id: 'started',		type: TYPE_NUMBER},
+				{ text: theUILang.Tracker,		width: '100px', id: 'tracker',		type: TYPE_STRING}
 			],
 			container:	"List",
 			format:		theFormatter.torrents,
@@ -1736,8 +1737,9 @@ var theWebUI =
 				theWebUI.updateTegs(torrent);
 			}
 		});
-		this.getAllTrackers(tArray);
+//		this.getAllTrackers(tArray);
 		this.loadLabels(data.labels, data.labels_size);
+		this.rebuildTrackersLabels(data.trackers_labels, data.trackers_labels_size);
 		this.updateLabels(wasRemoved);
 		this.loadTorrents();
 		this.getTotal();
@@ -1864,7 +1866,7 @@ var theWebUI =
 				}
 			var tegIg = "teg_"+this.lastTeg;
 			this.lastTeg++;
-			var el = $("<LI>").attr("id",tegIg).addClass("teg").
+			var el = $("<li>").attr("id",tegIg).addClass("teg").
 				html(escapeHTML(str) + "&nbsp;(<span id=\"" + tegIg + "-c\">0</span>)").attr("title",str+" (0)").
 				mouseclick(theWebUI.tegContextMenu).addClass("cat")
 			$("#lblf").append( el );
@@ -1984,6 +1986,56 @@ var theWebUI =
 		return(false);
 	},
 
+
+
+rebuildTrackersLabels: function(c, s)
+{
+
+		var p = $("#torrl");
+		var temp = new Array();
+		var keys = new Array();
+		for(var lbl in c)
+			keys.push(lbl);
+		keys.sort();
+
+		for(var i=0; i<keys.length; i++) 
+		{
+			var lbl = keys[i];
+			var lblSize = this.settings["webui.show_labelsize"] ? " ; " + theConverter.bytes(s[lbl], 2) : "";
+			this.cLabels[lbl] = 1;
+			temp["i" + lbl] = true;
+
+			if(!$$("i" + lbl)) 
+			{
+				//php/label.php?tracker="+lbl+"
+				p.append( $("<li>").
+					attr("id","i" + lbl).css({ padding: "2px 4px" }).
+					html("<img class=\"licon\" src=\"images/trackers/"+lbl+".png\" />" + escapeHTML(lbl) + "&nbsp;(<span id=\"-" + lbl + "_c\">" + c[lbl] + lblSize + "</span>)").
+					mouseclick(theWebUI.labelContextMenu).addClass("cat tracker") );
+			}
+			else
+			{
+				li = $($$('i'+lbl));
+				li.children("span").text(c[lbl]+lblSize);
+			}
+
+		}
+		var needSwitch = false;
+		p.children().each(function(ndx,val)
+		{
+			var id = val.id;
+			if(id && !$type(temp[id]))
+			{
+				$(val).remove();
+				if(theWebUI.actLbls["ptrackers_cont"] == id)
+					needSwitch = true;
+			}
+		});
+		if(needSwitch)
+			theWebUI.resetLabels();
+
+},
+
 	/**
 	 *
 	 * @param {Object.<string, number>} c - <label_name, count>
@@ -2007,9 +2059,12 @@ var theWebUI =
 			temp["-_-_-" + lbl + "-_-_-"] = true;
 			if(!$$("-_-_-" + lbl + "-_-_-")) 
 			{
-				p.append( $("<LI>").
-					attr("id","-_-_-" + lbl + "-_-_-").
-					html(escapeHTML(lbl) + "&nbsp;(<span id=\"-_-_-" + lbl + "-_-_-c\">" + c[lbl] + lblSize + "</span>)").
+				//php/label.php?label="+lbl+"
+				pi = lbl.split("/");
+				lab = (pi[1] && ['film','films','films2','films3','game','games','movie','movies','music','porn','porno','xxx','serial','serials','serials2','serials3','video','2tb','640'].includes(pi[1])) ? pi[1] : pi[0];
+				p.append( $("<li>").
+					attr("id","-_-_-" + lbl + "-_-_-").css({ padding: "2px 4px" }).
+					html("<img class=\"licon\" src=\"images/labels/"+lab+".png\" />" + escapeHTML(lbl) + "&nbsp;(<span id=\"-_-_-" + lbl + "-_-_-c\">" + c[lbl] + lblSize + "</span>)").
 					mouseclick(theWebUI.labelContextMenu).addClass("cat") );
 			}
 		}
@@ -2051,7 +2106,7 @@ var theWebUI =
 		else
 			if(this.labels[id].indexOf("-_-_-nlb-_-_-") >- 1)
 				this.labels["-_-_-nlb-_-_-"]--;
-		lbl = "-_-_-" + lbl + "-_-_-";
+		lbl = "-_-_-" + lbl + "-_-_-i" + torrent.tracker;
 		if(torrent.done < 1000)
       		{
 			lbl += "-_-_-dls-_-_-";
@@ -2212,7 +2267,7 @@ var theWebUI =
 		var showRow = true;
 		for(var lblType in this.actLbls)
 		{
-			if (lblType != "plabel_cont" && lblType != "pstate_cont" && lblType != "flabel_cont")
+			if (lblType != "plabel_cont" && lblType != "pstate_cont" && lblType != "flabel_cont" && lblType != "ptrackers_cont")
 				continue;
 
 			var actLbl = this.actLbls[lblType];

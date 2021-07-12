@@ -285,6 +285,8 @@ div#tadd select { width: 220px }
 #mainlayout td.tr1 { width: 6%; }
 #mainlayout td.tr2 { width: 11%; }
 
+.licon { width: 16px; height: 16px; margin-right: 5px; float: left; }
+
 .geoip {background-repeat: no-repeat; background-position: center center; width: 22px; }
 .geoip_flag_ad {background-image: url( "/images/flags/ad.svg" ); }
 .geoip_flag_ae {background-image: url( "/images/flags/ae.svg" ); }

@@ -29,7 +29,7 @@ var theRequestManager =
 			"d.get_left_bytes=", "d.get_priority=", "d.get_state_changed=", "d.get_skip_total=", "d.get_hashing=",
 			"d.get_chunks_hashed=", "d.get_base_path=", "d.get_creation_date=", "d.get_size_files=", "d.is_active=",
 			"d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file=", "d.get_custom5=",
-			"d.timestamp.finished=", "d.timestamp.started=", "d.custom=addtime"
+			"d.timestamp.finished=", "d.timestamp.started=", "d.custom=addtime", "d.get_custom4="
 		],
 		handlers: []
 	},
@@ -1112,6 +1112,8 @@ rTorrentStub.prototype.listResponse = function(xml)
 	ret.torrents = {};
 	ret.labels = {};
 	ret.labels_size = {};
+	ret.trackers_labels = {};
+	ret.trackers_labels_size = {};
 	var datas = xml.getElementsByTagName('data');
 	var self = this;
 	for(var j=1;j<datas.length;j++)
@@ -1202,6 +1204,19 @@ rTorrentStub.prototype.listResponse = function(xml)
 		torrent.finished = this.getValue(values,36);
 		torrent.started = this.getValue(values,37);
 		torrent.addtime = this.getValue(values,38);
+		torrent.tracker = $.trim(decodeURIComponent(this.getValue(values,39)));
+
+			if(!$type(ret.trackers_labels[torrent.tracker]))
+			{
+				ret.trackers_labels[torrent.tracker] = 1;
+				ret.trackers_labels_size[torrent.tracker] = parseInt(torrent.size);
+			}
+			else
+			{
+				ret.trackers_labels[torrent.tracker]++;
+				ret.trackers_labels_size[torrent.tracker] = parseInt(ret.trackers_labels_size[torrent.tracker]) + parseInt(torrent.size);
+			}
+
 		torrent.seeds = torrent.seeds_actual + " (" + torrent.seeds_all + ")";
 		torrent.peers = torrent.peers_actual + " (" + torrent.peers_all + ")";
 		var hash = this.getValue(values,0);
