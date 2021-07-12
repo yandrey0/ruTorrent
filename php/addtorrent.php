@@ -31,6 +31,7 @@ else
 		if((strlen($dir_edit)>0) && !rTorrentSettings::get()->correctDirectory($dir_edit))
 			$uploaded_files = array( array( 'status' => "FailedDirectory" ) );
 	}
+	if($dir_edit && !$label) $label = trim(str_replace(rTorrentSettings::get()->directory, '', $dir_edit), './');
 	if(empty($uploaded_files))
 	{
 		if(isset($_FILES['torrent_file']))
@@ -129,7 +130,7 @@ else
 		if( isset($file['name']) )
 			$location.=('name[]='.rawurlencode($file['name']).'&');
 	}
-	header("HTTP/1.0 302 Moved Temporarily");
+	header("Status: 302 Moved Temporarily");
 	if(isset($_REQUEST['json']))
 		$location.='json=1';
 	header($location);
