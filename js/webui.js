@@ -5,7 +5,7 @@
 
 var theWebUI = 
 {
-        version: "3.10",
+        version: "4.0",
 	tables:
 	{
 		trt: 
@@ -198,9 +198,14 @@ var theWebUI =
 	{
 		"-_-_-all-_-_-":	0,
 		"-_-_-dls-_-_-":	0,
+		"-_-_-sed-_-_-":	0,
 		"-_-_-com-_-_-":	0,
+		"-_-_-stp-_-_-":	0,
+		"-_-_-pus-_-_-":	0,
 		"-_-_-act-_-_-":	0,
 		"-_-_-iac-_-_-":	0,
+		"-_-_-chk-_-_-":	0,
+		"-_-_-que-_-_-":	0,
 		"-_-_-nlb-_-_-":	0,
 		"-_-_-err-_-_-":	0
 	},
@@ -1652,6 +1657,19 @@ var theWebUI =
    		var tul = 0;
 		var tdl = 0;
 		var tArray = [];
+		var mlcnt = {
+		"nlb": 0,
+		"dls": 0,
+		"sed": 0,
+		"com": 0,
+		"stp": 0,
+		"pus": 0,
+		"act": 0,
+		"iac": 0,
+		"chk": 0,
+		"que": 0,
+		"err": 0
+		};
 		$.each(data.torrents,
 		/**
 		 * @param {string} hash - torrent hash
@@ -1663,7 +1681,7 @@ var theWebUI =
 			tul += iv(torrent.ul);
 			var sInfo = theWebUI.getStatusIcon(torrent);
 			torrent.status = sInfo[1];
-			var lbl = theWebUI.getLabels(hash, torrent);
+			var lbl = theWebUI.getLabels(hash, torrent, mlcnt);
 			if(!$type(theWebUI.torrents[hash]))
 			{
 				theWebUI.labels[hash] = lbl;
@@ -1715,18 +1733,6 @@ var theWebUI =
 				delete theWebUI.files[hash];
 				delete theWebUI.dirs[hash];
 				delete theWebUI.peers[hash];
-				if(theWebUI.labels[hash].indexOf("-_-_-nlb-_-_-") >- 1)
-					theWebUI.labels["-_-_-nlb-_-_-"]--;
-				if(theWebUI.labels[hash].indexOf("-_-_-com-_-_-") >- 1)
-						theWebUI.labels["-_-_-com-_-_-"]--;
-				if(theWebUI.labels[hash].indexOf("-_-_-dls-_-_-") >- 1)
-						theWebUI.labels["-_-_-dls-_-_-"]--;
-				if(theWebUI.labels[hash].indexOf("-_-_-act-_-_-") >- 1)
-						theWebUI.labels["-_-_-act-_-_-"]--;
-				if(theWebUI.labels[hash].indexOf("-_-_-iac-_-_-") >- 1)
-						theWebUI.labels["-_-_-iac-_-_-"]--;
-				if(theWebUI.labels[hash].indexOf("-_-_-err-_-_-") >- 1)
-						theWebUI.labels["-_-_-err-_-_-"]--;
 				delete theWebUI.labels[hash];
 				table.removeRow(hash);
 				wasRemoved = true;
@@ -1805,7 +1811,7 @@ var theWebUI =
 		else
 		if(state & dStatus.hashing)
 		{
-			icon = "Status_Queued_Up";
+			icon = "Status_Queued";
 			status = theUILang.Queued;
 		}
 		else
@@ -1820,6 +1826,8 @@ var theWebUI =
 				else
 				{
 					icon = (completed == 1000) ? "Status_Up" : "Status_Down";
+//					if((torrent.ul >= 1024) && (icon == "Status_Up")) icon = "Status_Up_Act";
+//					if((torrent.dl >= 1024) && (icon == "Status_Down")) icon = "Status_Down_Act";
 					status = (completed == 1000) ? theUILang.Seeding : theUILang.Downloading;
 				}
 			}
@@ -2092,62 +2100,99 @@ rebuildTrackersLabels: function(c, s)
 	 * @param {string} id - torrent hash
 	 * @param {WebUITorrent} torrent
 	 */
-	getLabels : function(id, torrent)
+	getLabels : function(id, torrent, mlcnt)
 	{
 		if(!$type(this.labels[id]))
 			this.labels[id] = "";
 		var lbl = torrent.label;
+
+		
 		if(lbl == "")
       		{
 			lbl += "-_-_-nlb-_-_-";
-			if(this.labels[id].indexOf("-_-_-nlb-_-_-") ==- 1)
-				this.labels["-_-_-nlb-_-_-"]++;
+			mlcnt.nlb++;
 		}
-		else
-			if(this.labels[id].indexOf("-_-_-nlb-_-_-") >- 1)
-				this.labels["-_-_-nlb-_-_-"]--;
+
 		lbl = "-_-_-" + lbl + "-_-_-i" + torrent.tracker;
-		if(torrent.done < 1000)
-      		{
+
+		if(torrent.state & dStatus.checking){
+
+			lbl += "-_-_-chk-_-_-";
+			mlcnt.chk++;
+
+		} else if(torrent.state & dStatus.hashing){
+
+			lbl += "-_-_-que-_-_-";
+			mlcnt.que++;
+
+		} else {
+
+		if(torrent.state & dStatus.started){
+			
+			if(torrent.state & dStatus.paused){
+
+			lbl += "-_-_-pus-_-_-";
+			mlcnt.pus++;
+			
+			} else {
+
+			 if(torrent.done == 1000){
+			 
+			lbl += "-_-_-sed-_-_-";
+			mlcnt.sed++;
+		 
+			 } else {
+
 			lbl += "-_-_-dls-_-_-";
-			if(this.labels[id].indexOf("-_-_-dls-_-_-") ==- 1)
-				this.labels["-_-_-dls-_-_-"]++;
-			if(this.labels[id].indexOf("-_-_-com-_-_-") >- 1)
-				this.labels["-_-_-com-_-_-"]--;
+			mlcnt.dls++;
+			 
+			 }
+			 
+			
+			}
 		}
-		else
-      		{
+		
+		}
+		
+		if((torrent.done == 1000) && (torrent.state == "")){
+
 			lbl += "-_-_-com-_-_-";
-			if(this.labels[id].indexOf("-_-_-com-_-_-") ==- 1)
-				this.labels["-_-_-com-_-_-"]++;
-			if(this.labels[id].indexOf("-_-_-dls-_-_-") >- 1)
-				this.labels["-_-_-dls-_-_-"]--;
-         	}
+			mlcnt.com++;
+
+		}
+
+		if((torrent.done < 1000) && (torrent.state == "")){
+
+			lbl += "-_-_-stp-_-_-";
+			mlcnt.stp++;
+
+		}
+
 		if((torrent.dl >= 1024) || (torrent.ul >= 1024))
 		{
 			lbl += "-_-_-act-_-_-";
-			if(this.labels[id].indexOf("-_-_-act-_-_-") ==- 1)
-				this.labels["-_-_-act-_-_-"]++;
-			if(this.labels[id].indexOf("-_-_-iac-_-_-") >- 1)
-				this.labels["-_-_-iac-_-_-"]--;
+			mlcnt.act++;
+
 		}
 		else
 		{
 			lbl += "-_-_-iac-_-_-";
-			if(this.labels[id].indexOf("-_-_-iac-_-_-") ==- 1)
-				this.labels["-_-_-iac-_-_-"]++;
-			if(this.labels[id].indexOf("-_-_-act-_-_-") >- 1)
-				this.labels["-_-_-act-_-_-"]--;
+			mlcnt.iac++;
+
 		}
+
 		if(torrent.state & dStatus.error)
 		{
 			lbl += "-_-_-err-_-_-";
-			if(this.labels[id].indexOf("-_-_-err-_-_-") ==- 1)
-				this.labels["-_-_-err-_-_-"]++;
+			mlcnt.err++;
+
 		}
-		else
-  			if(this.labels[id].indexOf("-_-_-err-_-_-") >- 1)
-				this.labels["-_-_-err-_-_-"]--;
+
+		for (var l in mlcnt) {
+			this.labels["-_-_-"+ l +"-_-_-"] = mlcnt[l];
+		}
+		
+		
 		return(lbl);
 	},
 
