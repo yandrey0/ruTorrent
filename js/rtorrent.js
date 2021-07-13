@@ -1143,7 +1143,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 			state|=dStatus.error;
 		torrent.state = state;
 		torrent.name = this.getValue(values,5);
-		torrent.size = this.getValue(values,6);
+		torrent.size = parseInt(this.getValue(values,6));
 		var get_completed_chunks = parseInt(this.getValue(values,7));
 		var get_hashed_chunks = parseInt(this.getValue(values,25));
 		var get_size_chunks = parseInt(this.getValue(values,8));
@@ -1164,12 +1164,12 @@ rTorrentStub.prototype.listResponse = function(xml)
 			if(!$type(ret.labels[torrent.label]))
 			{
 				ret.labels[torrent.label] = 1;
-				ret.labels_size[torrent.label] = parseInt(torrent.size);
+				ret.labels_size[torrent.label] = torrent.size;
 			}
 			else
 			{
 				ret.labels[torrent.label]++;
-				ret.labels_size[torrent.label] = parseInt(ret.labels_size[torrent.label]) + parseInt(torrent.size);
+				ret.labels_size[torrent.label] = ret.labels_size[torrent.label] + torrent.size;
 			}
 		}
 		torrent.chunks = get_size_chunks;
@@ -1209,12 +1209,12 @@ rTorrentStub.prototype.listResponse = function(xml)
 			if(!$type(ret.trackers_labels[torrent.tracker]))
 			{
 				ret.trackers_labels[torrent.tracker] = 1;
-				ret.trackers_labels_size[torrent.tracker] = parseInt(torrent.size);
+				ret.trackers_labels_size[torrent.tracker] = torrent.size;
 			}
 			else
 			{
 				ret.trackers_labels[torrent.tracker]++;
-				ret.trackers_labels_size[torrent.tracker] = parseInt(ret.trackers_labels_size[torrent.tracker]) + parseInt(torrent.size);
+				ret.trackers_labels_size[torrent.tracker] = ret.trackers_labels_size[torrent.tracker] + torrent.size;
 			}
 
 		torrent.seeds = torrent.seeds_actual + " (" + torrent.seeds_all + ")";

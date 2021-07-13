@@ -1658,17 +1658,17 @@ var theWebUI =
 		var tdl = 0;
 		var tArray = [];
 		var mlcnt = {
-		"nlb": 0,
-		"dls": 0,
-		"sed": 0,
-		"com": 0,
-		"stp": 0,
-		"pus": 0,
-		"act": 0,
-		"iac": 0,
-		"chk": 0,
-		"que": 0,
-		"err": 0
+		"nlb": [0, 0],
+		"dls": [0, 0],
+		"sed": [0, 0],
+		"com": [0, 0],
+		"stp": [0, 0],
+		"pus": [0, 0],
+		"act": [0, 0],
+		"iac": [0, 0],
+		"chk": [0, 0],
+		"que": [0, 0],
+		"err": [0, 0]
 		};
 		$.each(data.torrents,
 		/**
@@ -2110,7 +2110,8 @@ rebuildTrackersLabels: function(c, s)
 		if(lbl == "")
       		{
 			lbl += "-_-_-nlb-_-_-";
-			mlcnt.nlb++;
+			mlcnt.nlb[0]++;
+			mlcnt.nlb[1] += torrent.size;
 		}
 
 		lbl = "-_-_-" + lbl + "-_-_-i" + torrent.tracker;
@@ -2118,12 +2119,14 @@ rebuildTrackersLabels: function(c, s)
 		if(torrent.state & dStatus.checking){
 
 			lbl += "-_-_-chk-_-_-";
-			mlcnt.chk++;
+			mlcnt.chk[0]++;
+			mlcnt.chk[1] += torrent.size;
 
 		} else if(torrent.state & dStatus.hashing){
 
 			lbl += "-_-_-que-_-_-";
-			mlcnt.que++;
+			mlcnt.que[0]++;
+			mlcnt.que[1] += torrent.size;
 
 		} else {
 
@@ -2132,19 +2135,22 @@ rebuildTrackersLabels: function(c, s)
 			if(torrent.state & dStatus.paused){
 
 			lbl += "-_-_-pus-_-_-";
-			mlcnt.pus++;
+			mlcnt.pus[0]++;
+			mlcnt.pus[1] += torrent.size;
 			
 			} else {
 
 			 if(torrent.done == 1000){
 			 
 			lbl += "-_-_-sed-_-_-";
-			mlcnt.sed++;
+			mlcnt.sed[0]++;
+			mlcnt.sed[1] += torrent.size;
 		 
 			 } else {
 
 			lbl += "-_-_-dls-_-_-";
-			mlcnt.dls++;
+			mlcnt.dls[0]++;
+			mlcnt.dls[1] += torrent.size;
 			 
 			 }
 			 
@@ -2157,39 +2163,45 @@ rebuildTrackersLabels: function(c, s)
 		if((torrent.done == 1000) && (torrent.state == "")){
 
 			lbl += "-_-_-com-_-_-";
-			mlcnt.com++;
+			mlcnt.com[0]++;
+			mlcnt.com[1] += torrent.size;
 
 		}
 
 		if((torrent.done < 1000) && (torrent.state == "")){
 
 			lbl += "-_-_-stp-_-_-";
-			mlcnt.stp++;
+			mlcnt.stp[0]++;
+			mlcnt.stp[1] += torrent.size;
 
 		}
 
 		if((torrent.dl >= 1024) || (torrent.ul >= 1024))
 		{
 			lbl += "-_-_-act-_-_-";
-			mlcnt.act++;
+			mlcnt.act[0]++;
+			mlcnt.act[1] += torrent.size;
 
 		}
 		else
 		{
 			lbl += "-_-_-iac-_-_-";
-			mlcnt.iac++;
+			mlcnt.iac[0]++;
+			mlcnt.iac[1] += torrent.size;
 
 		}
 
 		if(torrent.state & dStatus.error)
 		{
 			lbl += "-_-_-err-_-_-";
-			mlcnt.err++;
+			mlcnt.err[0]++;
+			mlcnt.err[1] += torrent.size;
 
 		}
 
 		for (var l in mlcnt) {
-			this.labels["-_-_-"+ l +"-_-_-"] = mlcnt[l];
+			let lblSize = (this.settings["webui.show_labelsize"] && mlcnt[l][1]) ? " ; " + theConverter.bytes(mlcnt[l][1], 2) : "";
+			this.labels["-_-_-"+ l +"-_-_-"] = mlcnt[l][0] + lblSize;
 		}
 		
 		
