@@ -102,7 +102,7 @@ div#CatList ul li.sel {background-color: #CFDEEF; border-color: #CFDEEF }
 #-_-_-que-_-_- {background-position: 4px -352px;}
 #-_-_-err-_-_- {background-position: 4px -95px;}
 div#CatList ul li.RSS {background-image: url(../images/tstatus.png); background-position: 4px -206px}
-div#CatList ul li.disRSS {background-image: url(../images/tstatus.png); background-position: 4px -190px}
+div#CatList ul li.disRSS {background-image: url(../images/tstatus.png); background-position: 4px -224px}
 
 .stable-icon {background-image: url(../images/tstatus.png); background-repeat: no-repeat}
 .Status_Down {background-position: 0px 0px}
