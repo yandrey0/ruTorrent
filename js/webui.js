@@ -2012,7 +2012,7 @@ rebuildTrackersLabels: function(c, s)
 		{
 			var lbl = keys[i];
 			var lblSize = this.settings["webui.show_labelsize"] ? " ; " + theConverter.bytes(s[lbl], 2) : "";
-			this.cLabels[lbl] = 1;
+//			this.cLabels[lbl] = 1;
 			temp["i" + lbl] = true;
 
 			if(!$$("i" + lbl)) 
