@@ -2155,6 +2155,22 @@ rebuildTrackersLabels: function(c, s)
 			mlcnt.dls[1] += torrent.size;
 			 
 			 }
+//
+		if((torrent.dl >= 1024) || (torrent.ul >= 1024))
+		{
+			lbl += "-_-_-act-_-_-";
+			mlcnt.act[0]++;
+			mlcnt.act[1] += torrent.size;
+
+		}
+		else
+		{
+			lbl += "-_-_-iac-_-_-";
+			mlcnt.iac[0]++;
+			mlcnt.iac[1] += torrent.size;
+
+		}
+//
 			 
 			
 			}
@@ -2178,20 +2194,6 @@ rebuildTrackersLabels: function(c, s)
 
 		}
 
-		if((torrent.dl >= 1024) || (torrent.ul >= 1024))
-		{
-			lbl += "-_-_-act-_-_-";
-			mlcnt.act[0]++;
-			mlcnt.act[1] += torrent.size;
-
-		}
-		else
-		{
-			lbl += "-_-_-iac-_-_-";
-			mlcnt.iac[0]++;
-			mlcnt.iac[1] += torrent.size;
-
-		}
 
 		if(torrent.state & dStatus.error)
 		{
