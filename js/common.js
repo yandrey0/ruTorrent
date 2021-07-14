@@ -5,7 +5,7 @@
 
 function $$(id)
 {
-	return((typeof id == 'string') ? document.getElementById(id) : id);
+	return((typeof id == 'string' && id != '') ? document.getElementById(id) : id);
 }
 
 function $type(obj)
@@ -1658,10 +1658,11 @@ function copyToClipboard(element) {
 }
 
 // Caveat: doesn't work with Internet Explorer.
-(function setBrowserTimezoneCookie()
+/*(function setBrowserTimezoneCookie()
 {
 	try 
 	{
 		document.cookie = "browser_timezone="+Intl.DateTimeFormat().resolvedOptions().timeZone
 	} catch(e) {}
-}).apply();
+}).apply();*/
+

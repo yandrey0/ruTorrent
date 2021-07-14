@@ -1668,7 +1668,8 @@ var theWebUI =
 		"iac": [0, 0],
 		"chk": [0, 0],
 		"que": [0, 0],
-		"err": [0, 0]
+		"err": [0, 0],
+		"all": [0, 0]
 		};
 		$.each(data.torrents,
 		/**
@@ -2199,6 +2200,9 @@ rebuildTrackersLabels: function(c, s)
 
 		}
 
+		mlcnt.all[0]++;
+		mlcnt.all[1] += torrent.size;
+
 		for (var l in mlcnt) {
 			let lblSize = (this.settings["webui.show_labelsize"] && mlcnt[l][1]) ? " ; " + theConverter.bytes(mlcnt[l][1], 2) : "";
 			this.labels["-_-_-"+ l +"-_-_-"] = mlcnt[l][0] + lblSize;
@@ -2265,7 +2269,7 @@ rebuildTrackersLabels: function(c, s)
 
 	updateLabels: function(wasRemoved)
 	{
-		$(".-_-_-all-_-_-c").text(Object.keys(this.torrents).length)
+		$(".-_-_-all-_-_-c").text(this.labels["-_-_-all-_-_-"]);
 
 		for(var k in this.labels)
 			if(k.substr(0, 5) == "-_-_-")
