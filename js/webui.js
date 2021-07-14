@@ -1701,6 +1701,7 @@ var theWebUI =
 				}
 				if((oldTorrent.state!=torrent.state) ||
 					(oldTorrent.size!=torrent.size) ||
+					(oldTorrent.ul!=torrent.ul) ||
 					(oldTorrent.done!=torrent.done))
 					table.setIcon(hash, sInfo[0]);
 //				if((oldTorrent.seeds!=torrent.seeds) || (oldTorrent.peers!=torrent.peers))
@@ -1827,7 +1828,7 @@ var theWebUI =
 				else
 				{
 					icon = (completed == 1000) ? "Status_Up" : "Status_Down";
-//					if((torrent.ul >= 1024) && (icon == "Status_Up")) icon = "Status_Up_Act";
+					if((torrent.ul >= 1024) && (icon == "Status_Up")) icon = "Status_Up_Act";
 //					if((torrent.dl >= 1024) && (icon == "Status_Down")) icon = "Status_Down_Act";
 					status = (completed == 1000) ? theUILang.Seeding : theUILang.Downloading;
 				}
