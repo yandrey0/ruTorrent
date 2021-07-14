@@ -1205,6 +1205,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 		torrent.started = this.getValue(values,37);
 		torrent.addtime = this.getValue(values,38);
 		torrent.tracker = $.trim(decodeURIComponent(this.getValue(values,39)));
+		if(torrent.tracker == "") torrent.tracker = "unknown";
 
 			if(!$type(ret.trackers_labels[torrent.tracker]))
 			{
