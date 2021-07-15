@@ -272,6 +272,7 @@ div#tadd select { width: 220px }
 .statuscell {height: 20px; line-height: 20px; border-right: 1px solid #A0A0A0;}
 .sthdr { font-weight: bold; padding-right: 3px; text-align: right; }
 .stval { padding-right: 3px; overflow: hidden; width: 65px; }
+.sttval { width: 65px; text-align: left; }
 .speedEdit { width: 320px }
 .statuscell td { padding: 0 }
 .st_system .sthdr { padding-left: 8px }
