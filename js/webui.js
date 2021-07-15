@@ -2532,15 +2532,14 @@ rebuildTrackersLabels: function(c, s)
 	        $("#stdown_speed").text(dl);
 	        $("#stdown_limit").text((self.total.rateDL>0 && self.total.rateDL<327625*1024) ? theConverter.speed(self.total.rateDL) : theUILang.no);
 	        $("#stdown_total").text(theConverter.bytes(self.total.DL));
-	        if(self.total.DHT.active == "1"){
-	        var dhtstat = 'DHT ';
-       	        dhtstat += ' N: ' + self.total.DHT.nodes + ' | ';
-	        dhtstat += ' R: ' + theConverter.bytes(self.total.DHT.bytes_read) + ' ';
-	        dhtstat += ' W: ' + theConverter.bytes(self.total.DHT.bytes_written) + ' | ';
-       	        dhtstat += ' P: ' + self.total.DHT.peers + ' | ';
-       	        dhtstat += ' T: ' + self.total.DHT.torrents;
-	        $("#dhtstat").text(dhtstat);
-	        }
+
+	        var dhtstat = '';
+	        dhtstat += (self.total.DHT.active == "1") ? '' : ' off |';
+       	        dhtstat += self.total.DHT.nodes ? ' N: ' + self.total.DHT.nodes + ' |' : '';
+	        dhtstat += (self.total.DHT.bytes_read || self.total.DHT.bytes_written) ? ' R: ' + theConverter.bytes(self.total.DHT.bytes_read) + ' W: ' + theConverter.bytes(self.total.DHT.bytes_written) + ' |' : '';
+       	        dhtstat += self.total.DHT.peers ? ' P: ' + self.total.DHT.peers + ' |' : '';
+       	        dhtstat += self.total.DHT.torrents ? ' T: ' + self.total.DHT.torrents + ' |' : '';;
+	        $("#dhtstat").text(dhtstat.slice(0, -1));
 	},
 
 	setDLRate: function(spd)

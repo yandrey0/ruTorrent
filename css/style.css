@@ -274,7 +274,7 @@ div#tadd select { width: 220px }
 .stval { padding-right: 3px; overflow: hidden; width: 65px; }
 .speedEdit { width: 320px }
 .statuscell td { padding: 0 }
-#st_system .sthdr { padding-left: 8px }
+.st_system .sthdr { padding-left: 8px }
 #dhtstat { padding: 0 8px; overflow: hidden; }
 
 .ie fieldset {padding: 5px}
