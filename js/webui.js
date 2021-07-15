@@ -181,7 +181,8 @@ var theWebUI =
 		speedDL: 	0,
 		speedUL: 	0,
 		DL: 		0,
-		UL: 		0
+		UL: 		0,
+		DHT:		{}
 	},
 	sTimer: 	null,
 	updTimer: 	null,
@@ -514,7 +515,7 @@ var theWebUI =
 			window.clearInterval(this.sTimer);
 			this.sTimer = null;
 		}
-		this.sTimer = window.setInterval(this.updateStatus, 1000);
+		this.sTimer = window.setInterval(this.updateStatus, iv(theWebUI.settings["webui.update_interval"]));
 	},
 
 //
@@ -2531,6 +2532,15 @@ rebuildTrackersLabels: function(c, s)
 	        $("#stdown_speed").text(dl);
 	        $("#stdown_limit").text((self.total.rateDL>0 && self.total.rateDL<327625*1024) ? theConverter.speed(self.total.rateDL) : theUILang.no);
 	        $("#stdown_total").text(theConverter.bytes(self.total.DL));
+	        if(self.total.DHT.active == "1"){
+	        var dhtstat = 'DHT ';
+       	        dhtstat += ' N: ' + self.total.DHT.nodes + ' | ';
+	        dhtstat += ' R: ' + theConverter.bytes(self.total.DHT.bytes_read) + ' ';
+	        dhtstat += ' W: ' + theConverter.bytes(self.total.DHT.bytes_written) + ' | ';
+       	        dhtstat += ' P: ' + self.total.DHT.peers + ' | ';
+       	        dhtstat += ' T: ' + self.total.DHT.torrents;
+	        $("#dhtstat").text(dhtstat);
+	        }
 	},
 
 	setDLRate: function(spd)
