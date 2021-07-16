@@ -1752,6 +1752,7 @@ var theWebUI =
 		this.updateLabels(wasRemoved);
 		this.loadTorrents();
 		this.getTotal();
+		window.setTimeout(this.updateStatus, 100);
 
 		$('#viewrows').text(table.viewRows + '/' + table.rows);
 
@@ -2536,8 +2537,9 @@ rebuildTrackersLabels: function(c, s)
 	        var dhtstat = '';
 	        dhtstat += (self.total.DHT.active == "1") ? '' : ' off |';
        	        dhtstat += self.total.DHT.nodes ? ' N: ' + self.total.DHT.nodes + ' |' : '';
+       	        dhtstat += self.total.DHT.buckets ? ' B: ' + self.total.DHT.buckets + ' |' : '';
 	        dhtstat += (self.total.DHT.bytes_read || self.total.DHT.bytes_written) ? ' R: ' + theConverter.bytes(self.total.DHT.bytes_read) + ' W: ' + theConverter.bytes(self.total.DHT.bytes_written) + ' |' : '';
-       	        dhtstat += self.total.DHT.peers ? ' P: ' + self.total.DHT.peers + ' |' : '';
+       	        dhtstat += (self.total.DHT.peers || self.total.DHT.peers_max) ? ' P: ' + self.total.DHT.peers + ' / ' + self.total.DHT.peers_max + ' |' : '';
        	        dhtstat += self.total.DHT.torrents ? ' T: ' + self.total.DHT.torrents + ' |' : '';;
 	        $("#dhtstat").text(dhtstat.slice(0, -1));
 	},
