@@ -1659,18 +1659,18 @@ var theWebUI =
 		var tdl = 0;
 		var tArray = [];
 		var mlcnt = {
-		"nlb": [0, 0],
-		"dls": [0, 0],
-		"sed": [0, 0],
-		"com": [0, 0],
-		"stp": [0, 0],
-		"pus": [0, 0],
-		"act": [0, 0],
-		"iac": [0, 0],
-		"chk": [0, 0],
-		"que": [0, 0],
-		"err": [0, 0],
-		"all": [0, 0]
+		"nlb": [0, 0, 0, 0],
+		"dls": [0, 0, 0, 0],
+		"sed": [0, 0, 0, 0],
+		"com": [0, 0, 0, 0],
+		"stp": [0, 0, 0, 0],
+		"pus": [0, 0, 0, 0],
+		"act": [0, 0, 0, 0],
+		"iac": [0, 0, 0, 0],
+		"chk": [0, 0, 0, 0],
+		"que": [0, 0, 0, 0],
+		"err": [0, 0, 0, 0],
+		"all": [0, 0, 0, 0]
 		};
 		$.each(data.torrents,
 		/**
@@ -2013,7 +2013,10 @@ rebuildTrackersLabels: function(c, s)
 		for(var i=0; i<keys.length; i++) 
 		{
 			var lbl = keys[i];
-			var lblSize = this.settings["webui.show_labelsize"] ? " ; " + theConverter.bytes(s[lbl], 2) : "";
+			let lblSize = "";
+			if(this.settings["webui.show_labelsize"] && s[lbl][2]){
+			lblSize += (s[lbl][3]) ? " ; " + theConverter.bytes(s[lbl][2], 2) + " / " + theConverter.bytes(s[lbl][3], 2) + " : " + theConverter.round(s[lbl][3]/s[lbl][2], 3) : " ; " + theConverter.bytes(s[lbl][2], 2);
+			}
 //			this.cLabels[lbl] = 1;
 			temp["i" + lbl] = true;
 
@@ -2029,6 +2032,7 @@ rebuildTrackersLabels: function(c, s)
 			{
 				li = $($$('i'+lbl));
 				li.children("span").text(c[lbl]+lblSize);
+				li.attr("title", c[lbl]+lblSize);
 			}
 
 		}
@@ -2065,7 +2069,10 @@ rebuildTrackersLabels: function(c, s)
 		for(var i=0; i<keys.length; i++) 
 		{
 			var lbl = keys[i];
-			var lblSize = this.settings["webui.show_labelsize"] ? " ; " + theConverter.bytes(s[lbl], 2) : "";
+			let lblSize = "";
+			if(this.settings["webui.show_labelsize"] && s[lbl][2]){
+			lblSize += (s[lbl][3]) ? " ; " + theConverter.bytes(s[lbl][2], 2) + " / " + theConverter.bytes(s[lbl][3], 2) + " : " + theConverter.round(s[lbl][3]/s[lbl][2], 3) : " ; " + theConverter.bytes(s[lbl][2], 2);
+			}
 			this.labels["-_-_-" + lbl + "-_-_-"] = c[lbl] + lblSize;
 			this.cLabels[lbl] = 1;
 			temp["-_-_-" + lbl + "-_-_-"] = true;
@@ -2116,6 +2123,8 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-nlb-_-_-";
 			mlcnt.nlb[0]++;
 			mlcnt.nlb[1] += torrent.size;
+			mlcnt.nlb[2] += torrent.downloaded;
+			mlcnt.nlb[3] += torrent.uploaded;
 		}
 
 		lbl = "-_-_-" + lbl + "-_-_-i" + torrent.tracker;
@@ -2125,12 +2134,16 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-chk-_-_-";
 			mlcnt.chk[0]++;
 			mlcnt.chk[1] += torrent.size;
+			mlcnt.chk[2] += torrent.downloaded;
+			mlcnt.chk[3] += torrent.uploaded;
 
 		} else if(torrent.state & dStatus.hashing){
 
 			lbl += "-_-_-que-_-_-";
 			mlcnt.que[0]++;
 			mlcnt.que[1] += torrent.size;
+			mlcnt.que[2] += torrent.downloaded;
+			mlcnt.que[3] += torrent.uploaded;
 
 		} else {
 
@@ -2141,6 +2154,8 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-pus-_-_-";
 			mlcnt.pus[0]++;
 			mlcnt.pus[1] += torrent.size;
+			mlcnt.pus[2] += torrent.downloaded;
+			mlcnt.pus[3] += torrent.uploaded;
 			
 			} else {
 
@@ -2149,12 +2164,16 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-sed-_-_-";
 			mlcnt.sed[0]++;
 			mlcnt.sed[1] += torrent.size;
+			mlcnt.sed[2] += torrent.downloaded;
+			mlcnt.sed[3] += torrent.uploaded;
 		 
 			 } else {
 
 			lbl += "-_-_-dls-_-_-";
 			mlcnt.dls[0]++;
 			mlcnt.dls[1] += torrent.size;
+			mlcnt.dls[2] += torrent.downloaded;
+			mlcnt.dls[3] += torrent.uploaded;
 			 
 			 }
 //
@@ -2163,6 +2182,8 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-act-_-_-";
 			mlcnt.act[0]++;
 			mlcnt.act[1] += torrent.size;
+			mlcnt.act[2] += torrent.downloaded;
+			mlcnt.act[3] += torrent.uploaded;
 
 		}
 		else
@@ -2170,6 +2191,8 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-iac-_-_-";
 			mlcnt.iac[0]++;
 			mlcnt.iac[1] += torrent.size;
+			mlcnt.iac[2] += torrent.downloaded;
+			mlcnt.iac[3] += torrent.uploaded;
 
 		}
 //
@@ -2185,6 +2208,8 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-com-_-_-";
 			mlcnt.com[0]++;
 			mlcnt.com[1] += torrent.size;
+			mlcnt.com[2] += torrent.downloaded;
+			mlcnt.com[3] += torrent.uploaded;
 
 		}
 
@@ -2193,6 +2218,8 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-stp-_-_-";
 			mlcnt.stp[0]++;
 			mlcnt.stp[1] += torrent.size;
+			mlcnt.stp[2] += torrent.downloaded;
+			mlcnt.stp[3] += torrent.uploaded;
 
 		}
 
@@ -2202,14 +2229,21 @@ rebuildTrackersLabels: function(c, s)
 			lbl += "-_-_-err-_-_-";
 			mlcnt.err[0]++;
 			mlcnt.err[1] += torrent.size;
+			mlcnt.err[2] += torrent.downloaded;
+			mlcnt.err[3] += torrent.uploaded;
 
 		}
 
 		mlcnt.all[0]++;
 		mlcnt.all[1] += torrent.size;
+		mlcnt.all[2] += torrent.downloaded;
+		mlcnt.all[3] += torrent.uploaded;
 
 		for (var l in mlcnt) {
-			let lblSize = (this.settings["webui.show_labelsize"] && mlcnt[l][1]) ? " ; " + theConverter.bytes(mlcnt[l][1], 2) : "";
+			let lblSize = "";
+			if(this.settings["webui.show_labelsize"] && mlcnt[l][2]){
+			lblSize += (mlcnt[l][3]) ? " ; " + theConverter.bytes(mlcnt[l][2], 2) + " / " + theConverter.bytes(mlcnt[l][3], 2) + " : " + theConverter.round(mlcnt[l][3]/mlcnt[l][2], 3) : " ; " + theConverter.bytes(mlcnt[l][2], 2);
+			}
 			this.labels["-_-_-"+ l +"-_-_-"] = mlcnt[l][0] + lblSize;
 		}
 		
@@ -2275,10 +2309,13 @@ rebuildTrackersLabels: function(c, s)
 	updateLabels: function(wasRemoved)
 	{
 		$(".-_-_-all-_-_-c").text(this.labels["-_-_-all-_-_-"]);
+		$(".-_-_-all-_-_-c").attr("title", this.labels["-_-_-all-_-_-"]);
 
 		for(var k in this.labels)
-			if(k.substr(0, 5) == "-_-_-")
+			if(k.substr(0, 5) == "-_-_-"){
 				$($$(k+"c")).text(this.labels[k]);
+				$($$(k)).attr("title", this.labels[k]);
+			}
 
 		for( var id in this.tegs )
 		{

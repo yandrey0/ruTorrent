@@ -1153,8 +1153,8 @@ rTorrentStub.prototype.listResponse = function(xml)
 		var get_size_chunks = parseInt(this.getValue(values,8));
 		var chunks_processing = (is_hash_checking==0) ? get_completed_chunks : get_hashed_chunks;
 		torrent.done = Math.floor(chunks_processing/get_size_chunks*1000);
-		torrent.downloaded = this.getValue(values,9);
-		torrent.uploaded = this.getValue(values,10);
+		torrent.downloaded = parseInt(this.getValue(values,9));
+		torrent.uploaded = parseInt(this.getValue(values,10));
 		torrent.ratio = this.getValue(values,11);
 		torrent.ul = this.getValue(values,12);
 		torrent.dl = this.getValue(values,13);
@@ -1168,12 +1168,18 @@ rTorrentStub.prototype.listResponse = function(xml)
 			if(!$type(ret.labels[torrent.label]))
 			{
 				ret.labels[torrent.label] = 1;
-				ret.labels_size[torrent.label] = torrent.size;
+				ret.labels_size[torrent.label] = {};
+				ret.labels_size[torrent.label][1] = torrent.size;
+				ret.labels_size[torrent.label][2] = torrent.downloaded;
+				ret.labels_size[torrent.label][3] = torrent.uploaded;
+
 			}
 			else
 			{
 				ret.labels[torrent.label]++;
-				ret.labels_size[torrent.label] = ret.labels_size[torrent.label] + torrent.size;
+				ret.labels_size[torrent.label][1] = ret.labels_size[torrent.label][1] + torrent.size;
+				ret.labels_size[torrent.label][2] = ret.labels_size[torrent.label][2] + torrent.downloaded;
+				ret.labels_size[torrent.label][3] = ret.labels_size[torrent.label][3] + torrent.uploaded;
 			}
 		}
 		torrent.chunks = get_size_chunks;
@@ -1214,12 +1220,17 @@ rTorrentStub.prototype.listResponse = function(xml)
 			if(!$type(ret.trackers_labels[torrent.tracker]))
 			{
 				ret.trackers_labels[torrent.tracker] = 1;
-				ret.trackers_labels_size[torrent.tracker] = torrent.size;
+				ret.trackers_labels_size[torrent.tracker] = {};
+				ret.trackers_labels_size[torrent.tracker][1] = torrent.size;
+				ret.trackers_labels_size[torrent.tracker][2] = torrent.downloaded;
+				ret.trackers_labels_size[torrent.tracker][3] = torrent.uploaded;
 			}
 			else
 			{
 				ret.trackers_labels[torrent.tracker]++;
-				ret.trackers_labels_size[torrent.tracker] = ret.trackers_labels_size[torrent.tracker] + torrent.size;
+				ret.trackers_labels_size[torrent.tracker][1] = ret.trackers_labels_size[torrent.tracker][1] + torrent.size;
+				ret.trackers_labels_size[torrent.tracker][2] = ret.trackers_labels_size[torrent.tracker][2] + torrent.downloaded;
+				ret.trackers_labels_size[torrent.tracker][3] = ret.trackers_labels_size[torrent.tracker][3] + torrent.uploaded;
 			}
 
 		torrent.seeds = torrent.seeds_actual + " (" + torrent.seeds_all + ")";
