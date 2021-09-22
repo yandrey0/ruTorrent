@@ -27,7 +27,6 @@ function isValidCode( $country )
 			if($parts[0]=="ip")
 			{
 				$value = trim($parts[1]);
-				$value = str_replace(array('[',']'), '', $value);
 
 				if(strlen($value))
 				{
@@ -35,7 +34,7 @@ function isValidCode( $country )
 
 						$country = '';
 
-						$record = $reader->get($value);
+						$record = $reader->get(str_replace(array('[',']'), '', $value));
 						$country = $record['country']['iso_code'] ? $record['country']['iso_code'] : '';
 						$name = $record['country']['names']['ru'] ? $record['country']['names']['ru'] : '';
 						if(empty($name) && $record['country']['names']['en']) $name = $record['country']['names']['en'];
@@ -64,7 +63,7 @@ function isValidCode( $country )
 							$city = null;
 				   }
                      
-                    $asn = $reader2->get($value);
+                    $asn = $reader2->get(str_replace(array('[',']'), '', $value));
 
                     if($record['location']['time_zone']){
 //						if($dt = new DateTime("now", new DateTimeZone($record['location']['time_zone']))) $timezone = $dt->format('P').' '.$record['location']['time_zone']; else $timezone = $record['location']['time_zone'];
