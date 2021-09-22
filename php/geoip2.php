@@ -26,15 +26,16 @@ function isValidCode( $country )
 			$parts = explode("=",$var);
 			if($parts[0]=="ip")
 			{
-				$value = trim($parts[1]);
+				$ip = trim($parts[1]);
+				$ip1 = trim($ip, '[]');
 
-				if(strlen($value))
+				if(filter_var($ip1, FILTER_VALIDATE_IP))
 				{
 					$city = array();
 
 						$country = '';
 
-						$record = $reader->get(str_replace(array('[',']'), '', $value));
+						$record = $reader->get($ip1);
 						$country = $record['country']['iso_code'] ? $record['country']['iso_code'] : '';
 						$name = $record['country']['names']['ru'] ? $record['country']['names']['ru'] : '';
 						if(empty($name) && $record['country']['names']['en']) $name = $record['country']['names']['en'];
@@ -63,7 +64,7 @@ function isValidCode( $country )
 							$city = null;
 				   }
                      
-                    $asn = $reader2->get(str_replace(array('[',']'), '', $value));
+                    $asn = $reader2->get($ip1);
 
                     if($record['location']['time_zone']){
 //						if($dt = new DateTime("now", new DateTimeZone($record['location']['time_zone']))) $timezone = $dt->format('P').' '.$record['location']['time_zone']; else $timezone = $record['location']['time_zone'];
@@ -77,7 +78,7 @@ function isValidCode( $country )
 						$timezone = '-';
 					}
 
-					$ret[] = array( "ip"=>$value, "info"=>array( "country_code"=>$country, "country_name"=>$name, "city"=>$city, "asn"=>$asn['autonomous_system_organization']?$asn['autonomous_system_organization']:"-", "timezone"=>$timezone ) );
+					$ret[] = array( "ip"=>$ip, "info"=>array( "country_code"=>$country, "country_name"=>$name, "city"=>$city, "asn"=>$asn['autonomous_system_organization']?$asn['autonomous_system_organization']:"-", "timezone"=>$timezone ) );
 				}
 			}
 		}
