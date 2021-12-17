@@ -431,7 +431,7 @@ class Snoopy
 				$this->response_code = $currentHeader;
 			}
 
-			if (preg_match("/Content-Encoding: gzip/", $currentHeader) )
+			if (preg_match("/Content-Encoding: gzip/i", $currentHeader) )
 				$is_gzipped = true;
 
 			$this->headers[] = $currentHeader;
