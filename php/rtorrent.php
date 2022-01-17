@@ -83,8 +83,8 @@ class rTorrent
 					$cmd->addParameter(getCmd("d.set_custom1=").$label);
 			}
 			
-			if($url = filter_var($torrent->{'publisher-url'}, FILTER_VALIDATE_URL, ['flags' => FILTER_FLAG_SCHEME_REQUIRED])){
-			} else if($url = filter_var($torrent->comment(), FILTER_VALIDATE_URL, ['flags' => FILTER_FLAG_SCHEME_REQUIRED])){
+			if($url = filter_var($torrent->{'publisher-url'}, FILTER_VALIDATE_URL)){
+			} else if($url = filter_var($torrent->comment(), FILTER_VALIDATE_URL)){
 			} else $url = $torrent->announce_list()[0][0] ? $torrent->announce_list()[0][0] : $torrent->announce();
 			
 			if($tracker = parse_url($url, PHP_URL_HOST))
