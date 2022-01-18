@@ -55,7 +55,7 @@ function isValidCode( $country )
 
 						}
 
-							$name = isset($name) ? $name : "неизвестно";
+							$name = $name ? $name : "неизвестно";
 
 					if(!empty($city)){
                             $city = array_unique($city);
