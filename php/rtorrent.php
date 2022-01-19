@@ -29,7 +29,7 @@ class rTorrent
 			}
 			$raw_value = base64_encode($torrent->__toString());
 			$filename = is_object($fname) ? $torrent->getFileName() : $fname;
-			if((strlen($raw_value)<self::RTORRENT_PACKET_LIMIT) || is_null($filename) || !isLocalMode())
+			if((strlen($raw_value)<self::RTORRENT_PACKET_LIMIT) || is_null($filename) || !User::isLocalMode())
 			{
 				$cmd = new rXMLRPCCommand( $isStart ? 'load_raw_start' : 'load_raw' );
 				$cmd->addParameter($raw_value,"base64");
@@ -42,7 +42,7 @@ class rTorrent
 				$cmd->addParameter($filename);
 			}
 			if(!is_null($filename) && (rTorrentSettings::get()->iVersion>=0x805))
-				$cmd->addParameter(getCmd("d.set_custom")."=x-filename,".rawurlencode(getFileName($filename)));
+				$cmd->addParameter(getCmd("d.set_custom")."=x-filename,".rawurlencode(FileUtil::getFileName($filename)));
 			$req = new rXMLRPCRequest();
 			$directory = self::parseDirectory($directory, $isAddPath);
 			if($directory && (strlen($directory)>0))
@@ -55,8 +55,8 @@ class rTorrent
 			$comment = $torrent->comment() ? $torrent->comment() : $torrent->{'publisher-url'};
 			if($comment)
 			{
-				if(isInvalidUTF8($comment))
-					$comment = win2utf($comment);
+				if(UTF::isInvalidUTF8($comment))
+					$comment = UTF::win2utf($comment);
 				if(strlen($comment)>0)
 				{
 					$comment = "VRS24mrker".rawurlencode($comment);
@@ -67,8 +67,8 @@ class rTorrent
 			$created_by = $torrent->created_by();
 			if($created_by)
 			{
-				if(isInvalidUTF8($created_by))
-					$created_by = win2utf($created_by);
+				if(UTF::isInvalidUTF8($created_by))
+					$created_by = UTF::win2utf($created_by);
 				if(strlen($created_by)>0)
 				{
 					$created_by = rawurlencode($created_by);
@@ -117,7 +117,7 @@ class rTorrent
 				$fpos = strlen($magnet);
 			$hash = strtoupper(substr($magnet,$hpos,$fpos-$hpos));
                         if(strlen($hash)==32)
-		        	$hash = base32decode($hash);
+		        	$hash = Decode::base32decode($hash);
 	        	if(strlen($hash)==40)
 	        	{
 				$req = new rXMLRPCRequest();
@@ -205,7 +205,7 @@ class rTorrent
 		}
 	        if($psize && rTorrentSettings::get()->correctDirectory($base))
 	        {
-		        $base = addslash($base);
+		        $base = FileUtil::addslash($base);
 	                $tsize = 0.0;
 			if(isset($info['files']))
 			{

@@ -309,6 +309,7 @@ rTorrentStub.prototype.getuisettings = function()
 {
 	this.mountPoint = theURLs.GetSettingsURL;
 	this.dataType = "json";
+	this.method = 'GET';
 }
 
 rTorrentStub.prototype.getplugins = function()
@@ -706,7 +707,7 @@ rTorrentStub.prototype.getValue = function(values,i)
 		var el = value.childNodes[0];
 		while(!el.tagName)
 			el = el.childNodes[0];
-		ret = $type(el.textContent) ? $.trim(el.textContent) : 
+		ret = $type(el.textContent) ? el.textContent.trim() :
 			el.childNodes.length ? 
 			el.childNodes[0].data : "";
 	}
@@ -1161,7 +1162,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 		var get_chunk_size = parseInt(this.getValue(values,14));
 		torrent.eta = (torrent.dl>0) ? Math.floor((get_size_chunks-get_completed_chunks)*get_chunk_size/torrent.dl) : -1;
 		try {
-		torrent.label = $.trim(decodeURIComponent(this.getValue(values,15)));
+		torrent.label = decodeURIComponent(this.getValue(values,15)).trim();
 		} catch(e) { torrent.label = ''; }
 		if(torrent.label.length>0)
 		{
@@ -1214,7 +1215,7 @@ rTorrentStub.prototype.listResponse = function(xml)
 		torrent.finished = this.getValue(values,36);
 		torrent.started = this.getValue(values,37);
 		torrent.addtime = this.getValue(values,38);
-		torrent.tracker = $.trim(decodeURIComponent(this.getValue(values,39)));
+		torrent.tracker = decodeURIComponent(this.getValue(values,39)).trim();
 		if(torrent.tracker == "") torrent.tracker = "unknown";
 
 			if(!$type(ret.trackers_labels[torrent.tracker]))
@@ -1259,8 +1260,8 @@ rTorrentStub.prototype.logErrorMessages = function()
 
 function Ajax(URI, isASync, onComplete, onTimeout, onError, reqTimeout) 
 {
-        var stub = new rTorrentStub(URI);
-	$.ajax(
+	var stub = new rTorrentStub(URI);
+	var request = $.ajax(
 	{
 		type: stub.method,
 		url: stub.mountPoint,
@@ -1273,67 +1274,78 @@ function Ajax(URI, isASync, onComplete, onTimeout, onError, reqTimeout)
 		ifModified: stub.ifModified,
 		dataType: stub.dataType,
 		traditional: true,
-		global: true,
-
-		complete: function(XMLHttpRequest, textStatus)
+		global: true
+	});
+	
+	request.fail(function(jqXHR, textStatus, errorThrown)
+	{
+		Ajax_UpdateTime(jqXHR);
+		
+		if((textStatus=="timeout") && ($type(onTimeout) == "function"))
+			onTimeout();
+		else if($type(onError) == "function")
 		{
-			if(theWebUI.deltaTime==0)
-			{
-				var diff = 0;
-				try {
-				diff = new Date().getTime()-Date.parse(XMLHttpRequest.getResponseHeader("Date"));
-				} catch(e) { diff = 0; };
-				theWebUI.deltaTime = iv(diff);
-			}
-			/*if(theWebUI.serverDeltaTime==0)
-			{
-				var timestamp = XMLHttpRequest.getResponseHeader("X-Server-Timestamp");
-				if(timestamp != null)
-					theWebUI.serverDeltaTime = new Date().getTime()-iv(timestamp)*1000;
-			}*/
-			stub = null;
-		},
-		error: function(XMLHttpRequest, textStatus, errorThrown)
-		{
-			if((textStatus=="timeout") && ($type(onTimeout) == "function"))
-				onTimeout();
-			else
-			if(($type(onError) == "function"))
-			{
-			        var status = "Status unavailable";
-			        var response = "Response unavailable";
-				try { status = XMLHttpRequest.status; response = XMLHttpRequest.responseText; } catch(e) {};				
-				if( stub.dataType=="script" )
-					response = errorThrown;
-				onError(status+" ["+textStatus+","+stub.action+"]",response);
-			}
-		},
-		success: function(data, textStatus)
-		{
+			var status = "Status unavailable";
+			var response = "Response unavailable";
+			try { status = jqXHR.status; response = jqXHR.responseText; } catch(e) {};				
+			if( stub.dataType=="script" )
+				response = errorThrown;
+			onError(status+" ["+textStatus+","+stub.action+"]",response);
+		}
+		stub = null; // Cleanup memory leak
+	});
+	
+	request.done(function(data, textStatus, jqXHR)
+	{
+		Ajax_UpdateTime(jqXHR);
+		
+		stub.logErrorMessages();
+		if(stub.listRequired)
+			Ajax("?list=1", isASync, onComplete, onTimeout, onError, reqTimeout);
+		else if(!stub.isError())
+	    {
 			var responseText = stub.getResponse(data);
-			stub.logErrorMessages();
-			if(stub.listRequired)
-				Ajax("?list=1", isASync, onComplete, onTimeout, onError, reqTimeout);
-			else
-	            	{
-	            		if(!stub.isError())
-	            		{
-	            			switch($type(onComplete))
-	            			{
-						case "function":
-							onComplete(responseText);
-							break;
-						case "array":
-						{
-							onComplete[0].apply(onComplete[1], 
-								new Array(responseText, onComplete[2]));
-							break;
-						}
-					}
+			switch($type(onComplete))
+			{
+				case "function":
+				{
+					onComplete(responseText);
+					break;
+				}				
+				case "array":
+				{
+					onComplete[0].apply(onComplete[1], new Array(responseText, onComplete[2]));
+					break;
 				}
 			}
+			responseText = null; // Cleanup memory leak
 		}
+		stub = null; // Cleanup memory leak
 	});
+	
+	// Nullify ajax request varriables to cleanup up memory leaks
+	request.onreadystatechange = null;
+	request = null;
+}
+
+function Ajax_UpdateTime(jqXHR)
+{
+	if(theWebUI.deltaTime==0)
+	{
+		var diff = 0;
+		try { diff = new Date().getTime()-Date.parse(jqXHR.getResponseHeader("Date")); } catch(e) { diff = 0; };
+		theWebUI.deltaTime = iv(diff);
+		diff = null; // Cleanup memory leak
+	}
+	
+	if(theWebUI.serverDeltaTime==0)
+	{
+		var timestamp = jqXHR.getResponseHeader("X-Server-Timestamp");
+		if(timestamp != null)
+			theWebUI.serverDeltaTime = new Date().getTime()-iv(timestamp)*1000;
+		timestamp = null; // Cleanup memory leak
+	}
+	jqXHR = null; // Cleanup memory leak
 }
 
 var thePeersCache = 
@@ -1367,7 +1379,6 @@ var thePeersCache =
 	}
 
 };
-
 
 $(document).ready(function() 
 {
