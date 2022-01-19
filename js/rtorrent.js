@@ -1338,13 +1338,13 @@ function Ajax_UpdateTime(jqXHR)
 		diff = null; // Cleanup memory leak
 	}
 	
-	if(theWebUI.serverDeltaTime==0)
+	/*if(theWebUI.serverDeltaTime==0)
 	{
 		var timestamp = jqXHR.getResponseHeader("X-Server-Timestamp");
 		if(timestamp != null)
 			theWebUI.serverDeltaTime = new Date().getTime()-iv(timestamp)*1000;
 		timestamp = null; // Cleanup memory leak
-	}
+	}*/
 	jqXHR = null; // Cleanup memory leak
 }
 
