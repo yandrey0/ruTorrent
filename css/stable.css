@@ -34,8 +34,9 @@
 
 .stable-head .rowcover { position: absolute; left: 0; top: 0; height: 20px; width: 1000px; background: transparent; display: none; }
 
-.meter-value { float: left; background-color: #87CEEB; border: 1px inset #BBBBBB; border-bottom: none;}
-.meter-text { position: relative; text-align: center; float: left; width: 100%; height: 0px; overflow: visible; font-size: 11px; z-index: 1; }
-
-.meter-value-start-color { background-color: #FFFF00 }
-.meter-value-end-color { background-color: #87CEEB }
+.meter-value { float: left; height: 16px; width: 100%; margin: 0 2px 0 2px; }
+.meter-text { position: relative; text-align: center; float: left; width: 100%; height: 0px; overflow: visible; font-size: 11px; line-height: 16px; z-index: 1; }
+progress { appearance: none; -moz-appearance: none; -webkit-appearance: none; border: none; background: #626567; color: #375273; border-radius: 0px; width: 100%; height: 16px; }
+progress::-webkit-progress-bar { background-color: #626567; border-radius: 0px; }
+progress::-moz-progress-bar { background-color: #626567; border-radius: 0px; }
+progress::-webkit-progress-value { background-color: #375273; border-radius: 0px; }

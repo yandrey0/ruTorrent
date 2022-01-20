@@ -81,8 +81,6 @@ var dxSTable = function()
 	this.created = false;
 	this.colReszObj = null;
 	this.rowCover = null;
-	this.prgStartColor = new RGBackground(".meter-value-start-color");
-	this.prgEndColor = new RGBackground(".meter-value-end-color");
 	this.mni = 0;
 	this.mxi = 0;
 	this.maxViewRows = 100;
@@ -1357,11 +1355,7 @@ dxSTable.prototype.createRow = function(cols, sId, icon, attr)
 		{
 			s+=" rawvalue='"+($type(cols[ind]) ? cols[ind] : "")+"'";
 		        span1 = "<span class='meter-text' style='overflow: visible'>"+escapeHTML(data[ind])+"</span>";
-			div = "<div class='meter-value' style='float: left; background-color: "+
-		 		(new RGBackground()).setGradient(this.prgStartColor,this.prgEndColor,parseFloat(data[ind])).getColor()+
-				"; width: "+iv(data[ind])+"%"+
-				"; visibility: "+(iv(data[ind]) ? "visible" : "hidden")+
-				"'>&nbsp;</div>";
+			div = "<progress class='meter-value' max='100' value='"+iv(data[ind])+"'></progress>";
 		}
 		else
 			div = "<div>"+((String(data[ind]) == "") ? "&nbsp;" : escapeHTML(data[ind]))+"</div>";
@@ -1699,12 +1693,7 @@ dxSTable.prototype.setValue = function(row, col, val)
 					if(this.colsdata[c].type==TYPE_PROGRESS)
 					{
 						$(td).attr("rawvalue",rawvalue);
-						td.lastChild.style.width = iv(val)+"%";
-						td.lastChild.style.backgroundColor = (new RGBackground()).setGradient(this.prgStartColor,this.prgEndColor,parseFloat(val)).getColor();
-						if(!iv(val))
-							$(td.lastChild).css({visibility: "hidden"});
-						else
-							$(td.lastChild).css({visibility: "visible"});
+						$(td).children("progress").val(iv(val));
 						td.firstChild.innerHTML = escapeHTML(val);
 					}
 					else

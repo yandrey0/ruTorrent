@@ -13,7 +13,7 @@
 .stable-icon {width: 16px; height: 16px; margin-right: -6px; margin: 0 5px; padding: 0 !important; float: left}
 .ie .stable-icon {}
 .stable-lpad {width: 5px; height: 16px; margin: 0; padding: 0; float: left; }
-.stable-body td div {font-size: 11px; overflow: hidden; height: 16px !important;}
+.stable-body td div {font-size: 11px; overflow: hidden; height: 16px !important; line-height: 16px;}
 .konqueror .stable-body td div { margin: 0 0px 0 0px !important }
 .stable-body td div { margin: 0 2px 0 2px !important}
 .ie .stable-body td, .ie .stable-body td div {zoom: 1 !important; height: 16px !important; line-height: 16px !important; vertical-align: top; float: none; white-space: nowrap !important}
@@ -34,8 +34,9 @@
 
 .stable-head .rowcover { position: absolute; left: 0; top: 0; height: 20px; width: 1000px; background: transparent; display: none; }
 
-.meter-value { float: left; background-color: #212F3D; border: none;}
-.meter-text { position: relative; text-align: center; float: left; width: 100%; height: 0px; overflow: visible; font-size: 11px; z-index: 1; }
-
-.meter-value-start-color { background-color: #212F3D }
-.meter-value-end-color { background-color: #212F3D }
+.meter-value { float: left; height: 16px; width: 100%; margin: 0 2px 0 2px; }
+.meter-text { position: relative; text-align: center; float: left; width: 100%; height: 0px; overflow: visible; font-size: 11px; line-height: 16px; z-index: 1; }
+progress { appearance: none; -moz-appearance: none; -webkit-appearance: none; border: none; background: #626567; color: #375273; border-radius: 0px; width: 100%; height: 16px; }
+progress::-webkit-progress-bar { background-color: #626567; border-radius: 0px; }
+progress::-moz-progress-bar { background-color: #626567; border-radius: 0px; }
+progress::-webkit-progress-value { background-color: #375273; border-radius: 0px; }
