@@ -1,0 +1,553 @@
+* { -webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0,0,0,1.0); }
+html, body {border: 0; margin: 0; padding: 0; cursor: default; overflow: hidden; background-color: #2b2b2c; color: #dfdfdf; height: 100%;}
+html, body, input,select,button,textarea{font-family: Tahoma, Arial, Helvetica, sans-serif;}
+form{margin:0;}
+div#preload {width: 0px; height: 0px; display: none; background-image: url(../images/toolbar.png); background-image: url(../images/tstatus.png); background-image: url(../images/t_bg.png); background-image: url(../images/r_bg.gif); background-image: url(../images/i_bg.gif); background-image: url(../images/asc.gif); background-image: url(../images/desc.gif); background-image: url(../images/close.png); background-image: url(../images/file.gif); background-image: url(../images/dir.gif); background-image: url(../images/pnl_open.gif); background-image: url(../images/pnl_close.gif)}
+div#cover {width: 100%; height: 100%; left: 0px; top: 0px; position: absolute; z-index: 500; background: #353638}
+div#msg {width: 100%; height: 100px; position: relative; top: 50%; margin-top: -50px; line-height: 100px; font-size: 11px; font-weight: bold;  text-align: center; background: #2b2b2c; border-top: 1px solid #444547; border-bottom: 1px solid #444547}
+div#modalbg {width: 100%; height: 100%; left: 0px; top: 0px; position: absolute; z-index: 500; display: none; opacity: 0.5; background-color: #2b2b2c;}
+.konqueror div#modalbg { background: none; }
+.ie div#modalbg { filter:alpha(opacity=50); }
+
+div.aright {text-align: right}
+div.dlg-window {position: absolute; left: 0px; top: 0px; background-color: #2b2b2c; font-size: 11px;  color: #dfdfdf; border: 2px solid #909090; display: none; overflow: hidden}
+div.fxcaret {overflow: auto}
+div.dlg-header {padding: 2px 24px; line-height: 20px; background: #353638 url(../images/blank.gif) no-repeat scroll 4px center; font-size: 11px;  font-weight: bold; border-bottom: 1px solid #909090}
+a.dlg-close:link, a.dlg-close:visited {width: 14px; height: 14px; margin: 5px; background: transparent url(../images/close.png) no-repeat scroll left center; float: right; border: 0}
+a.dlg-close:hover {width: 14px; height: 14px; background: transparent url(../images/close.png) no-repeat scroll -14px center; float: right; border: 0}
+a.dlg-close:active {width: 14px; height: 14px; background: transparent url(../images/close.png) no-repeat scroll -28px center; float: right; border: 0}
+
+div#sc {width: 150px; right: 57px; top: 40px; position: absolute; display: none; border: 1px solid #808080; background-color: #000000; z-index: 100}
+div#sc ul {margin: 0; padding: 0; list-style: none}
+div#sc ul li {margin: 0; padding: 0}
+div#sc li div {line-height: 14px; padding: 4px; font-weight: bold; font-size: 11px;}
+div#sc li.se_act div {background-color: #808080; color: #353638}
+ul.CMenu {width: 150px; left: 0px; top: 0px; display: none; border: 1px solid #444547; border-right: 2px solid #444547; border-bottom: 2px solid #808080; background: #353638; text-decoration: none; padding: 2px 0 0 2px; margin: 0; list-style-type: none; z-index: 1000}
+ul.CMenu li {float: left; margin-right: 1px; position: relative; width: 150px; background: #353638}
+ul.CMenu li a {display: block}
+ul.CMenu li a.dis {color: #C0C0C0}
+ul.CMenu li a.dis:hover {background-color: #353638; color: #C0C0C0}
+ul.CMenu li a {line-height: 16px; padding: 3px 4px 3px 16px; font-weight: normal}
+ul.CMenu li hr {width: 90%; border-top: 1px solid #000000; height: 0px; margin-top: 2px; margin-bottom: 2px; }
+.ie ul.CMenu li hr { line-height:1px; font-size:1px; margin: 0 }
+ul.CMenu li a.exp {background: transparent url(../images/menuexp.gif) no-repeat scroll 140px center; }
+ul.CMenu li a.sel {background: transparent url(../images/menusel.gif) no-repeat scroll 4px center}
+ul.CMenu li a:hover {background-color: #17202A; color: #dfdfdf}
+
+ul.CMenu li:hover ul {display: block; position: absolute; top: 0; left: 146px; width:150px;}
+ul.CMenu li:hover ul li ul {display: none;}
+ul.CMenu li:hover ul li a {display: block; background-color: #353638; color: #dfdfdf}
+ul.CMenu li:hover ul li a:hover {background-color: #17202A; color: #dfdfdf}
+ul.CMenu li:hover ul.left {left: -150px}
+ul.CMenu li ul li a.dis {color: #C0C0C0}
+ul.CMenu li ul li a.dis:hover {background-color: #353638; color: #C0C0C0}
+
+span.htkey {text-align:right; position: absolute; right: 16px; z-index:100}
+#sel {width: 0px; height: 0px; position: absolute; left: 0px; top: 0px; border: 1px dotted #dfdfdf; display: none; z-index: 1000}
+
+div#t {width: 100%; height: 36px; background: #353638 url(../images/t_bg.png) repeat-x center center; line-height: 36px; border-bottom: 1px solid #2b2b2c; white-space: nowrap}
+div#t a {float: left; margin: 3px 0 0 5px; padding: 3px}
+div#t a:hover {background: transparent url(../images/tb_bg.png) no-repeat scroll center center}
+div#t a:active {padding: 4px 2px 2px 4px}
+div#t div {width: 24px; height: 24px; float: left; cursor: pointer}
+div#t div.TB_Separator {width: 1px; height: 22px; margin: 7px 0 0 5px; padding: 0; border: 0; background-color: #000000}
+
+div#t div#add {background: transparent url(../images/toolbar.png) no-repeat -24px center}
+div#t div#create {background: transparent url(../images/toolbar.png) no-repeat -48px center}
+div#t div#remove {background: transparent url(../images/toolbar.png) no-repeat -73px center}
+div#t div#start {background: transparent url(../images/toolbar.png) no-repeat -96px center}
+div#t div#pause {background: transparent url(../images/toolbar.png) no-repeat -120px center}
+div#t div#stop {background: transparent url(../images/toolbar.png) no-repeat -144px center}
+div#t div#moveu {background: transparent url(../images/toolbar.png) no-repeat -168px center}
+div#t div#moved {background: transparent url(../images/toolbar.png) no-repeat -192px center}
+div#t div#search {background: transparent url(../images/toolbar.png) no-repeat -216px center}
+div#t div#rss {background: transparent url(../images/toolbar.png) no-repeat -242px center}
+div#t div#setting {background: transparent url(../images/toolbar.png) no-repeat -264px center}
+
+div#t div#help {background: transparent url(../images/quest.png) no-repeat 0px center}
+div#t div#plugins {background: transparent url(../images/plugin.png) no-repeat 0px center}
+
+#rc { float: right; }
+#go {background: transparent url(../images/go.png) no-repeat 0px center; }
+#query { margin-top: 4px; }
+div#t a#mnu_go {margin: 3px 0 0 0; padding: 3px}
+div#t #ind {margin-top: 2px; background: transparent url(../images/ajax-loader.gif) no-repeat 0px center; width: 32px; margin-right: 2px; line-height: 26px; cursor: default; }
+
+input.Textbox, input.Button, select {border: 1px solid #B0B0B0; font-size: 11px;  padding: 2px; background-color: #2b2b2c; color: #dfdfdf;}
+Input.TextboxShort {border: 1px solid #B0B0B0; font-size: 11px;  padding: 2px; width: 50px; background-color: #2b2b2c; color: #dfdfdf;}
+Input.TextboxMid {border: 1px solid #B0B0B0; font-size: 11px;  padding: 2px; width: 110px; background-color: #2b2b2c; color: #dfdfdf;}
+Input.TextboxLarge {border: 1px solid #B0B0B0; font-size: 11px;  padding: 2px; width: 220px; background-color: #2b2b2c; color: #dfdfdf;}
+Input.TextboxVShort {border: 1px solid #B0B0B0; font-size: 11px;  padding: 2px; width: 30px; background-color: #2b2b2c; color: #dfdfdf;}
+input.Button {padding: 1px 10px; width: 80px; height: 19px; border: 1px solid #444547; cursor: pointer; background-color: #2b2b2c; color: #dfdfdf; }
+
+select {margin-top: 5px}
+a {font-size: 11px;  color: #888888}
+table#maincont {margin: 5px 0 0 0}
+table#maincont td.uicell {vertical-align: top; padding: 0 }
+
+div#CatList {width: 0px; border: 1px solid #444547; background-color: #353638; border-top: 0; overflow-y: auto; overflow-x: hidden}
+div#CatList ul {padding: 0; margin: 0; list-style: none; white-space: nowrap}
+div#CatList ul li {padding: 2px 25px; margin: 0; line-height: 14px; font-size: 11px;  cursor: pointer; border: 1px solid #353638; background-repeat: no-repeat}
+div#CatList ul li.sel {background-color: #17202A; border-color: #17202A }
+.-_-_-all-_-_-, #-_-_-all-_-_-, #-_-_-dls-_-_-, #-_-_-sed-_-_-, #-_-_-com-_-_-, #-_-_-stp-_-_-, #-_-_-pus-_-_-, #-_-_-act-_-_-, #-_-_-iac-_-_-, #-_-_-chk-_-_-, #-_-_-que-_-_-, #-_-_-err-_-_- {background-image: url(../images/tstatus.png)}
+.-_-_-all-_-_-, #-_-_-all-_-_- {background-position: 4px -174px;}
+#-_-_-dls-_-_- {background-position: 4px 2px;}
+#-_-_-sed-_-_- {background-position: 4px -15px;}
+#-_-_-com-_-_- {background-position: 4px -254px;}
+#-_-_-stp-_-_- {background-position: 4px -31px;}
+#-_-_-pus-_-_- {background-position: 4px -46px;}
+#-_-_-act-_-_- {background-position: 4px -159px;}
+#-_-_-iac-_-_- {background-position: 4px -191px;}
+#-_-_-chk-_-_- {background-position: 4px -287px;}
+#-_-_-que-_-_- {background-position: 4px -352px;}
+#-_-_-err-_-_- {background-position: 4px -95px;}
+div#CatList ul li.RSS {background-image: url(../images/tstatus.png); background-position: 4px -206px}
+div#CatList ul li.disRSS {background-image: url(../images/tstatus.png); background-position: 4px -224px}
+
+.stable-icon {background-image: url(../images/tstatus.png); background-repeat: no-repeat}
+.Status_Down {background-position: 0px 0px}
+.Status_Down_Act {background-position: 0px -320px}
+.Status_Up {background-position: 0px -16px}
+.Status_Up_Act {background-position: 0px -336px}
+.Status_Incompleted {background-position: 0px -32px}
+.Status_Paused {background-position: 0px -48px}
+.Status_Error_Down {background-position: 0px -64px}
+.Status_Error_Up {background-position: 0px -80px}
+.Status_Error {background-position: 0px -96px}
+.Status_Completed {background-position: 0px -111px}
+.Status_Queued_Down {background-position: 0px -128px}
+.Status_Queued_Up {background-position: 0px -144px}
+.Status_Queued {background-position: 0px -352px}
+.Status_Up_Down {background-position: 0px -160px}
+.Status_Checking {background-position: 0px -288px}
+.Status_RSS {background-position: 0px -208px}
+
+div#HDivider, div#VDivider { font-size: 0; }
+div#HDivider { width: 5px; height: 0px; padding: 0; margin: 0; cursor: e-resize; }
+div#VDivider { width: 100%; height: 5px; padding: 0; margin: 0; cursor: n-resize; }
+div#dividerDrag { width: 5px; height: 5px; padding: 0; margin: 0; background: #444547; position: absolute; display: none }
+
+div#stg {width: 600px; height: 560px; position: absolute; left: 0px; top: 50px; display: none; overflow: visible}
+div#stg_c {overflow: hidden}
+div#stg-header { background-image: url(../images/settings.png); }
+
+div#stg .lm {width: 120px; height: 511px; margin: 5px; margin-right: 0; padding: 5px; float: left; position: relative; background-color: #353638; border: 1px solid #444547; overflow: auto}
+.ie div#stg .lm {width: 125px; position: static;}
+.ie9 div#stg .lm {position: static}
+.ie div#stg {width: 605px;}
+div.op100l {width: 400px; float: left}
+div.op50l {width: 200px; float: left; clear: left}
+div.op50l select {padding: 0}
+div.algnright {text-align: right; clear: right}
+.ie div.op50l {clear: none}
+.ie div.algnright {clear: none}
+.ie9 div.op50l {clear: left}
+.ie9 div.algnright {clear: right}
+
+.lm ul {width: 100%; margin: 0; padding: 0; list-style-position: inside; list-style: none}
+.lm li {margin: 0 5px; padding: 0 12px; line-height: 16px !important; background: transparent url(../images/bul.gif) no-repeat scroll left center}
+.lm ul.child {margin: 0 0 0 5px; display: none}
+.lm ul.child li {margin: 0 0 0 9px}
+.lm li.first {background: transparent url(../images/bul_f.gif) no-repeat scroll left bottom}
+.lm li.last {background: transparent url(../images/bul_l.gif) no-repeat scroll left top}
+.lm li div.toggle {width: 10px; height: 10px; background: transparent url(../images/exp.gif) no-repeat scroll center center; float: left; margin: 3px 0 0 -16px; cursor: pointer}
+.lm li a {color: #dfdfdf; padding: 1px 2px}
+.lm li a.focus {background-color: #17202A}
+.ie .lm li a {margin: 0 0 0 -5px; padding: 0}
+.stg_con {float: right; position: relative; width: 450px; height: 500px; margin: 4px; background-color: #2b2b2c}
+.ie9 .stg_con {position: static}
+fieldset {margin: 4px}
+* > fieldset {border: 1px solid #444547; -moz-border-radius: 6px; -webkit-border-radius:6px; border-radius:6px;}
+.stg_con table {width: 100%}
+.stg_con td {font-weight: normal; height: 19px}
+.stg_con td.alr {text-align: right}
+.stg_con td input {margin: 0 4px; font-size: 11px; padding: 1px 4px}
+.stg_con select {margin: 1px 4px; font-size: 11px; padding: 1px 4px}
+input.num {text-align: right; width: 50px}
+input.str {text-align: left; width: 130px}
+td label, div label {cursor: pointer}
+input.disabled {background-color: #2b2b2c; color: #C0C0C0; border: 1px solid #C0C0C0}
+td.disabled, label.disabled, span.disabled, div.disabled {color: #C0C0C0; cursor: default}
+fieldset div {padding: 2px}
+.ie7 fieldset div {padding: 0px}
+div input, div select {margin: 0 4px; font-size: 11px; padding: 1px 4px}
+legend {color: #dfdfdf; font-weight: bold}
+div.indent {padding-left: 16px}
+#st_gl {display: block}
+#st_dl, #st_con, #st_bt, #st_que, #st_sch, #st_ao, #st_dc {display: none}
+#st_btns {float: right; position: relative; width: 450px; height: 20px; padding: 3px; text-align: right; }
+#st_btns input {margin-left: 5px}
+a {text-decoration: none}
+#st_ao_h {width: 420px; overflow: auto; }
+#st_ao_h table {width: 400px}
+select.cols {border: 1px solid #808080; font-size: 11px;  padding: 2px; width: 120px}
+div#dragmask {width: 10px; height: 10px; left: 0px; top: 0px; position: absolute; z-index: 5000; display: none; border: 1px dotted #444547}
+div#tdetails {height: 50%; padding: 0 5px 0 0; background-color: #353638}
+div#tdetails a.h {margin: 0}
+div#tdcont {height: 200px; background: #353638; border: 1px solid #444547; padding: 0 2px 0 2px; overflow: hidden }
+
+div.tab { height:100%; background: #353638; overflow: auto }
+div#lcont {font-size: 11px;  line-height: 11px; background: #353638}
+div#lcont div.mono {font-size: 11px; font-family: monospace; line-height: 11px; background: #353638; white-space: pre}
+div#lcont div.std {padding: 2px}
+
+div#gcont table {font-size: 11px;  line-height: 10px}
+div#gcont table td.Header {font-weight: bold; background: #2b2b2c}
+
+div.table_tab {background-color: #353638; overflow: hidden; display: block; -moz-user-select: none; -moz-user-focus: normal; -moz-user-input: enabled; user-select: none; }
+div#List {border: 1px solid #444547;}
+
+div.cont {padding: 6px; font-size: 11px;}
+
+.tabbar {height: 18px; margin: 0; padding: 0; list-style-type: none; text-align: left}
+.tabbar li {margin: 0; padding: 0; display: inline; white-space: nowrap;}
+.tabbar li a {position: relative; top: 3px; text-decoration: none; border: 1px solid #444547; border-bottom: 0; margin: -5px 1px 0 1px; padding: 1px 5px; font-size: 11px;  -moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px; -webkit-border-top-left-radius:5px; -webkit-border-top-right-radius:5px; border-top-right-radius:5px; border-top-left-radius:5px; vertical-align: top; cursor: pointer}
+.tabbar li a:hover {border-top: 2px solid #17202A}
+.tabbar li.selected a {margin: 0 -2px 0 0; padding: 1px 7px 4px 7px; position: relative; top: 2px; vertical-align: top; border-top: 2px solid #17202A; background: #353638; color: #dfdfdf}
+div#dlgLabel {width: 250px; height: 140px}
+div#dlgLabel div.dlg-header {background-image: url(../images/label.gif)}
+div#dlgLabel div.content {width: 230px; margin: 5px; padding: 5px; line-height: 16px}
+div#dlgLabel div.content input {margin-top: 5px}
+#txtLabel {width: 200px}
+div#padd {width: 250px; height: 120px}
+div#padd div.dlg-header {background-image: url(../images/props.gif)}
+div#padd div.content {width: 230px; margin: 5px; padding: 5px; line-height: 16px}
+div#padd div.content input {margin-top: 5px}
+#peerIP {width: 200px}
+div#dlgAbout {width: 250px; height: 250px}
+div#dlgAbout div.dlg-header {background-image: url(../images/about.png)}
+div#dlgAbout div.content {width: 230px; margin: 5px; padding: 5px}
+div#dlgHelp {width: 250px; height: 250px}
+div#dlgHelp div.dlg-header {background-image: url(../images/about.png)}
+div#dlgHelp div.content {width: 230px; margin: 5px; padding: 5px}
+
+div#dlgProps {width: 395px; height: 215px}
+div#dlgProps div.dlg-header {background-image: url(../images/props.gif)}
+div#dlgProps div.content {width: 380px; margin-left: 5px; }
+div#dlgProps textarea#prop-trackers {width: 100%; height: 70px; background: #353638; border: 1px solid #444547}
+div#dlgProps fieldset {margin-bottom: 5px; }
+div#dlgProps fieldset div {line-height: 16px; }
+div#dlgProps fieldset div.props-spacer {width: 90%; float: left}
+input#prop-tracker_numwant {width: 60px; float: right}
+input#prop-ulslots {width: 60px; float: right}
+input#prop-peers_min {width: 60px; float: right}
+input#prop-peers_max {width: 60px; float: right}
+input#prop-seed_ratio {width: 40px}
+
+div#yesnoDlg {width: 280px; height: auto; min-height: 100px}
+div#yesnoDlg div.dlg-header {background-image: url(../images/error.png)}
+div#yesnoDlg div.content {width: 260px; margin: 5px; padding: 5px; line-height: 16px}
+div#yesnoDlg div.content input {margin-top: 5px}
+
+span#loadimg {padding: 20px; background: transparent url(../images/ajax-loader.gif) no-repeat center center; }
+.webkit div#msg {position: fixed;}
+.konqueror div#msg {position: fixed;}
+
+.Icon_File {background: transparent url(../images/file.png) no-repeat left center}
+.Icon_Dir {background: transparent url(../images/dir.png) no-repeat left center}
+.Icon_Share {background: transparent url(../images/share.png) no-repeat left center}
+
+div#HDivider:hover, div#VDivider:hover { background: #444547; }
+textarea { overflow: auto; }
+
+.catpanel { background: url(../images/pnl_open.gif) 2px no-repeat; background-color: #353638; border-bottom: 1px solid #444547; border-top: 1px solid #444547; padding: 2px 21px; margin: 0px; line-height: 16px; font-size: 11px;  cursor: pointer; -moz-user-select: none; -moz-user-focus: normal; -moz-user-input: enabled; user-select: none; }
+
+div#tadd-header {background-image: url(../images/world.png)}
+div#tadd {display: none; left: 100px; top: 100px; position: absolute; margin: 0 auto }
+div#tadd label {text-align: right; width: 75px; padding-right: 20px; float: left }
+div#tadd br {clear: left; line-height: 0}
+div#tadd input {margin-bottom: 1px}
+div#tadd select { width: 220px }
+
+.konqueror div#tadd label { width: 80px; }
+.konqueror div#tadd { height: 290px; }
+.konqueror #st_con { height: 340px; overflow: auto; }
+
+#StatusBar { border-top: 1px solid #444547; background-color: #353638; margin-top: 4px; height: 24px; font-size: 11px;  color: #dfdfdf; white-space: nowrap; overflow: hidden;}
+#StatusBar table { line-height: 24px; }
+#st_up { background:url(../images/status_up.png) 6px no-repeat; }
+#st_down { background:url(../images/status_down.png) 6px no-repeat; }
+#st_up td:first-child .sthdr { margin-left: 25px }
+#st_down td:first-child .sthdr { margin-left: 25px }
+.statuscell {height: 20px; line-height: 20px; border-right: 1px solid #444547;}
+.sthdr { font-weight: bold; padding-right: 3px; text-align: right; }
+.stval { padding-right: 3px; overflow: hidden; width: 65px; }
+.sttval { width: 65px; text-align: left; }
+.speedEdit { width: 320px }
+.statuscell td { padding: 0 }
+.st_system .sthdr { padding-left: 8px }
+#dhtstat { padding: 0 8px; overflow: hidden; }
+
+.ie fieldset {padding: 5px}
+.buttons-list {  margin-bottom: 5px }
+#servertime { text-align: center }
+#viewrows { text-align: center; }
+
+#bf {white-space:pre}
+
+@media only screen and (orientation:portrait) 
+{ 
+	#go { display: none }
+	#query { width: 80px }
+}
+
+#mainlayout { width: 100%; }
+#mainlayout td.tr1 { width: 6%; }
+#mainlayout td.tr2 { width: 11%; }
+
+.licon { width: 16px; height: 16px; margin-right: 5px; float: left; }
+
+.geoip {background-repeat: no-repeat; background-position: center center; width: 22px; }
+.geoip_flag_ad {background-image: url( "/images/flags/ad.svg" ); }
+.geoip_flag_ae {background-image: url( "/images/flags/ae.svg" ); }
+.geoip_flag_af {background-image: url( "/images/flags/af.svg" ); }
+.geoip_flag_ag {background-image: url( "/images/flags/ag.svg" ); }
+.geoip_flag_ai {background-image: url( "/images/flags/ai.svg" ); }
+.geoip_flag_al {background-image: url( "/images/flags/al.svg" ); }
+.geoip_flag_am {background-image: url( "/images/flags/am.svg" ); }
+.geoip_flag_ao {background-image: url( "/images/flags/ao.svg" ); }
+.geoip_flag_aq {background-image: url( "/images/flags/aq.svg" ); }
+.geoip_flag_ar {background-image: url( "/images/flags/ar.svg" ); }
+.geoip_flag_as {background-image: url( "/images/flags/as.svg" ); }
+.geoip_flag_at {background-image: url( "/images/flags/at.svg" ); }
+.geoip_flag_au {background-image: url( "/images/flags/au.svg" ); }
+.geoip_flag_aw {background-image: url( "/images/flags/aw.svg" ); }
+.geoip_flag_ax {background-image: url( "/images/flags/ax.svg" ); }
+.geoip_flag_az {background-image: url( "/images/flags/az.svg" ); }
+.geoip_flag_ba {background-image: url( "/images/flags/ba.svg" ); }
+.geoip_flag_bb {background-image: url( "/images/flags/bb.svg" ); }
+.geoip_flag_bd {background-image: url( "/images/flags/bd.svg" ); }
+.geoip_flag_be {background-image: url( "/images/flags/be.svg" ); }
+.geoip_flag_bf {background-image: url( "/images/flags/bf.svg" ); }
+.geoip_flag_bg {background-image: url( "/images/flags/bg.svg" ); }
+.geoip_flag_bh {background-image: url( "/images/flags/bh.svg" ); }
+.geoip_flag_bi {background-image: url( "/images/flags/bi.svg" ); }
+.geoip_flag_bj {background-image: url( "/images/flags/bj.svg" ); }
+.geoip_flag_bl {background-image: url( "/images/flags/bl.svg" ); }
+.geoip_flag_bm {background-image: url( "/images/flags/bm.svg" ); }
+.geoip_flag_bn {background-image: url( "/images/flags/bn.svg" ); }
+.geoip_flag_bo {background-image: url( "/images/flags/bo.svg" ); }
+.geoip_flag_bq {background-image: url( "/images/flags/bq.svg" ); }
+.geoip_flag_br {background-image: url( "/images/flags/br.svg" ); }
+.geoip_flag_bs {background-image: url( "/images/flags/bs.svg" ); }
+.geoip_flag_bt {background-image: url( "/images/flags/bt.svg" ); }
+.geoip_flag_bv {background-image: url( "/images/flags/bv.svg" ); }
+.geoip_flag_bw {background-image: url( "/images/flags/bw.svg" ); }
+.geoip_flag_by {background-image: url( "/images/flags/by.svg" ); }
+.geoip_flag_bz {background-image: url( "/images/flags/bz.svg" ); }
+.geoip_flag_ca {background-image: url( "/images/flags/ca.svg" ); }
+.geoip_flag_cc {background-image: url( "/images/flags/cc.svg" ); }
+.geoip_flag_cd {background-image: url( "/images/flags/cd.svg" ); }
+.geoip_flag_cf {background-image: url( "/images/flags/cf.svg" ); }
+.geoip_flag_cg {background-image: url( "/images/flags/cg.svg" ); }
+.geoip_flag_ch {background-image: url( "/images/flags/ch.svg" ); }
+.geoip_flag_ci {background-image: url( "/images/flags/ci.svg" ); }
+.geoip_flag_ck {background-image: url( "/images/flags/ck.svg" ); }
+.geoip_flag_cl {background-image: url( "/images/flags/cl.svg" ); }
+.geoip_flag_cm {background-image: url( "/images/flags/cm.svg" ); }
+.geoip_flag_cn {background-image: url( "/images/flags/cn.svg" ); }
+.geoip_flag_co {background-image: url( "/images/flags/co.svg" ); }
+.geoip_flag_cr {background-image: url( "/images/flags/cr.svg" ); }
+.geoip_flag_cu {background-image: url( "/images/flags/cu.svg" ); }
+.geoip_flag_cv {background-image: url( "/images/flags/cv.svg" ); }
+.geoip_flag_cw {background-image: url( "/images/flags/cw.svg" ); }
+.geoip_flag_cx {background-image: url( "/images/flags/cx.svg" ); }
+.geoip_flag_cy {background-image: url( "/images/flags/cy.svg" ); }
+.geoip_flag_cz {background-image: url( "/images/flags/cz.svg" ); }
+.geoip_flag_de {background-image: url( "/images/flags/de.svg" ); }
+.geoip_flag_dj {background-image: url( "/images/flags/dj.svg" ); }
+.geoip_flag_dk {background-image: url( "/images/flags/dk.svg" ); }
+.geoip_flag_dm {background-image: url( "/images/flags/dm.svg" ); }
+.geoip_flag_do {background-image: url( "/images/flags/do.svg" ); }
+.geoip_flag_dz {background-image: url( "/images/flags/dz.svg" ); }
+.geoip_flag_ec {background-image: url( "/images/flags/ec.svg" ); }
+.geoip_flag_ee {background-image: url( "/images/flags/ee.svg" ); }
+.geoip_flag_eg {background-image: url( "/images/flags/eg.svg" ); }
+.geoip_flag_eh {background-image: url( "/images/flags/eh.svg" ); }
+.geoip_flag_er {background-image: url( "/images/flags/er.svg" ); }
+.geoip_flag_es {background-image: url( "/images/flags/es.svg" ); }
+.geoip_flag_et {background-image: url( "/images/flags/et.svg" ); }
+.geoip_flag_eu {background-image: url( "/images/flags/eu.svg" ); }
+.geoip_flag_fi {background-image: url( "/images/flags/fi.svg" ); }
+.geoip_flag_fj {background-image: url( "/images/flags/fj.svg" ); }
+.geoip_flag_fk {background-image: url( "/images/flags/fk.svg" ); }
+.geoip_flag_fm {background-image: url( "/images/flags/fm.svg" ); }
+.geoip_flag_fo {background-image: url( "/images/flags/fo.svg" ); }
+.geoip_flag_fr {background-image: url( "/images/flags/fr.svg" ); }
+.geoip_flag_ga {background-image: url( "/images/flags/ga.svg" ); }
+.geoip_flag_gb {background-image: url( "/images/flags/gb.svg" ); }
+.geoip_flag_gd {background-image: url( "/images/flags/gd.svg" ); }
+.geoip_flag_ge {background-image: url( "/images/flags/ge.svg" ); }
+.geoip_flag_gf {background-image: url( "/images/flags/gf.svg" ); }
+.geoip_flag_gg {background-image: url( "/images/flags/gg.svg" ); }
+.geoip_flag_gh {background-image: url( "/images/flags/gh.svg" ); }
+.geoip_flag_gi {background-image: url( "/images/flags/gi.svg" ); }
+.geoip_flag_gl {background-image: url( "/images/flags/gl.svg" ); }
+.geoip_flag_gm {background-image: url( "/images/flags/gm.svg" ); }
+.geoip_flag_gn {background-image: url( "/images/flags/gn.svg" ); }
+.geoip_flag_gp {background-image: url( "/images/flags/gp.svg" ); }
+.geoip_flag_gq {background-image: url( "/images/flags/gq.svg" ); }
+.geoip_flag_gr {background-image: url( "/images/flags/gr.svg" ); }
+.geoip_flag_gs {background-image: url( "/images/flags/gs.svg" ); }
+.geoip_flag_gt {background-image: url( "/images/flags/gt.svg" ); }
+.geoip_flag_gu {background-image: url( "/images/flags/gu.svg" ); }
+.geoip_flag_gw {background-image: url( "/images/flags/gw.svg" ); }
+.geoip_flag_gy {background-image: url( "/images/flags/gy.svg" ); }
+.geoip_flag_hk {background-image: url( "/images/flags/hk.svg" ); }
+.geoip_flag_hm {background-image: url( "/images/flags/hm.svg" ); }
+.geoip_flag_hn {background-image: url( "/images/flags/hn.svg" ); }
+.geoip_flag_hr {background-image: url( "/images/flags/hr.svg" ); }
+.geoip_flag_ht {background-image: url( "/images/flags/ht.svg" ); }
+.geoip_flag_hu {background-image: url( "/images/flags/hu.svg" ); }
+.geoip_flag_id {background-image: url( "/images/flags/id.svg" ); }
+.geoip_flag_ie {background-image: url( "/images/flags/ie.svg" ); }
+.geoip_flag_il {background-image: url( "/images/flags/il.svg" ); }
+.geoip_flag_im {background-image: url( "/images/flags/im.svg" ); }
+.geoip_flag_in {background-image: url( "/images/flags/in.svg" ); }
+.geoip_flag_io {background-image: url( "/images/flags/io.svg" ); }
+.geoip_flag_iq {background-image: url( "/images/flags/iq.svg" ); }
+.geoip_flag_ir {background-image: url( "/images/flags/ir.svg" ); }
+.geoip_flag_is {background-image: url( "/images/flags/is.svg" ); }
+.geoip_flag_it {background-image: url( "/images/flags/it.svg" ); }
+.geoip_flag_je {background-image: url( "/images/flags/je.svg" ); }
+.geoip_flag_jm {background-image: url( "/images/flags/jm.svg" ); }
+.geoip_flag_jo {background-image: url( "/images/flags/jo.svg" ); }
+.geoip_flag_jp {background-image: url( "/images/flags/jp.svg" ); }
+.geoip_flag_ke {background-image: url( "/images/flags/ke.svg" ); }
+.geoip_flag_kg {background-image: url( "/images/flags/kg.svg" ); }
+.geoip_flag_kh {background-image: url( "/images/flags/kh.svg" ); }
+.geoip_flag_ki {background-image: url( "/images/flags/ki.svg" ); }
+.geoip_flag_km {background-image: url( "/images/flags/km.svg" ); }
+.geoip_flag_kn {background-image: url( "/images/flags/kn.svg" ); }
+.geoip_flag_kp {background-image: url( "/images/flags/kp.svg" ); }
+.geoip_flag_kr {background-image: url( "/images/flags/kr.svg" ); }
+.geoip_flag_kw {background-image: url( "/images/flags/kw.svg" ); }
+.geoip_flag_ky {background-image: url( "/images/flags/ky.svg" ); }
+.geoip_flag_kz {background-image: url( "/images/flags/kz.svg" ); }
+.geoip_flag_la {background-image: url( "/images/flags/la.svg" ); }
+.geoip_flag_lb {background-image: url( "/images/flags/lb.svg" ); }
+.geoip_flag_lc {background-image: url( "/images/flags/lc.svg" ); }
+.geoip_flag_li {background-image: url( "/images/flags/li.svg" ); }
+.geoip_flag_lk {background-image: url( "/images/flags/lk.svg" ); }
+.geoip_flag_lr {background-image: url( "/images/flags/lr.svg" ); }
+.geoip_flag_ls {background-image: url( "/images/flags/ls.svg" ); }
+.geoip_flag_lt {background-image: url( "/images/flags/lt.svg" ); }
+.geoip_flag_lu {background-image: url( "/images/flags/lu.svg" ); }
+.geoip_flag_lv {background-image: url( "/images/flags/lv.svg" ); }
+.geoip_flag_ly {background-image: url( "/images/flags/ly.svg" ); }
+.geoip_flag_ma {background-image: url( "/images/flags/ma.svg" ); }
+.geoip_flag_mc {background-image: url( "/images/flags/mc.svg" ); }
+.geoip_flag_md {background-image: url( "/images/flags/md.svg" ); }
+.geoip_flag_me {background-image: url( "/images/flags/me.svg" ); }
+.geoip_flag_mf {background-image: url( "/images/flags/mf.svg" ); }
+.geoip_flag_mg {background-image: url( "/images/flags/mg.svg" ); }
+.geoip_flag_mh {background-image: url( "/images/flags/mh.svg" ); }
+.geoip_flag_mk {background-image: url( "/images/flags/mk.svg" ); }
+.geoip_flag_ml {background-image: url( "/images/flags/ml.svg" ); }
+.geoip_flag_mm {background-image: url( "/images/flags/mm.svg" ); }
+.geoip_flag_mn {background-image: url( "/images/flags/mn.svg" ); }
+.geoip_flag_mo {background-image: url( "/images/flags/mo.svg" ); }
+.geoip_flag_mp {background-image: url( "/images/flags/mp.svg" ); }
+.geoip_flag_mq {background-image: url( "/images/flags/mq.svg" ); }
+.geoip_flag_mr {background-image: url( "/images/flags/mr.svg" ); }
+.geoip_flag_ms {background-image: url( "/images/flags/ms.svg" ); }
+.geoip_flag_mt {background-image: url( "/images/flags/mt.svg" ); }
+.geoip_flag_mu {background-image: url( "/images/flags/mu.svg" ); }
+.geoip_flag_mv {background-image: url( "/images/flags/mv.svg" ); }
+.geoip_flag_mw {background-image: url( "/images/flags/mw.svg" ); }
+.geoip_flag_mx {background-image: url( "/images/flags/mx.svg" ); }
+.geoip_flag_my {background-image: url( "/images/flags/my.svg" ); }
+.geoip_flag_mz {background-image: url( "/images/flags/mz.svg" ); }
+.geoip_flag_na {background-image: url( "/images/flags/na.svg" ); }
+.geoip_flag_nc {background-image: url( "/images/flags/nc.svg" ); }
+.geoip_flag_ne {background-image: url( "/images/flags/ne.svg" ); }
+.geoip_flag_nf {background-image: url( "/images/flags/nf.svg" ); }
+.geoip_flag_ng {background-image: url( "/images/flags/ng.svg" ); }
+.geoip_flag_ni {background-image: url( "/images/flags/ni.svg" ); }
+.geoip_flag_nl {background-image: url( "/images/flags/nl.svg" ); }
+.geoip_flag_no {background-image: url( "/images/flags/no.svg" ); }
+.geoip_flag_np {background-image: url( "/images/flags/np.svg" ); }
+.geoip_flag_nr {background-image: url( "/images/flags/nr.svg" ); }
+.geoip_flag_nu {background-image: url( "/images/flags/nu.svg" ); }
+.geoip_flag_nz {background-image: url( "/images/flags/nz.svg" ); }
+.geoip_flag_om {background-image: url( "/images/flags/om.svg" ); }
+.geoip_flag_pa {background-image: url( "/images/flags/pa.svg" ); }
+.geoip_flag_pe {background-image: url( "/images/flags/pe.svg" ); }
+.geoip_flag_pf {background-image: url( "/images/flags/pf.svg" ); }
+.geoip_flag_pg {background-image: url( "/images/flags/pg.svg" ); }
+.geoip_flag_ph {background-image: url( "/images/flags/ph.svg" ); }
+.geoip_flag_pk {background-image: url( "/images/flags/pk.svg" ); }
+.geoip_flag_pl {background-image: url( "/images/flags/pl.svg" ); }
+.geoip_flag_pm {background-image: url( "/images/flags/pm.svg" ); }
+.geoip_flag_pn {background-image: url( "/images/flags/pn.svg" ); }
+.geoip_flag_pr {background-image: url( "/images/flags/pr.svg" ); }
+.geoip_flag_ps {background-image: url( "/images/flags/ps.svg" ); }
+.geoip_flag_pt {background-image: url( "/images/flags/pt.svg" ); }
+.geoip_flag_pw {background-image: url( "/images/flags/pw.svg" ); }
+.geoip_flag_py {background-image: url( "/images/flags/py.svg" ); }
+.geoip_flag_qa {background-image: url( "/images/flags/qa.svg" ); }
+.geoip_flag_re {background-image: url( "/images/flags/re.svg" ); }
+.geoip_flag_ro {background-image: url( "/images/flags/ro.svg" ); }
+.geoip_flag_rs {background-image: url( "/images/flags/rs.svg" ); }
+.geoip_flag_ru {background-image: url( "/images/flags/ru.svg" ); }
+.geoip_flag_rw {background-image: url( "/images/flags/rw.svg" ); }
+.geoip_flag_sa {background-image: url( "/images/flags/sa.svg" ); }
+.geoip_flag_sb {background-image: url( "/images/flags/sb.svg" ); }
+.geoip_flag_sc {background-image: url( "/images/flags/sc.svg" ); }
+.geoip_flag_sd {background-image: url( "/images/flags/sd.svg" ); }
+.geoip_flag_se {background-image: url( "/images/flags/se.svg" ); }
+.geoip_flag_sg {background-image: url( "/images/flags/sg.svg" ); }
+.geoip_flag_sh {background-image: url( "/images/flags/sh.svg" ); }
+.geoip_flag_si {background-image: url( "/images/flags/si.svg" ); }
+.geoip_flag_sj {background-image: url( "/images/flags/sj.svg" ); }
+.geoip_flag_sk {background-image: url( "/images/flags/sk.svg" ); }
+.geoip_flag_sl {background-image: url( "/images/flags/sl.svg" ); }
+.geoip_flag_sm {background-image: url( "/images/flags/sm.svg" ); }
+.geoip_flag_sn {background-image: url( "/images/flags/sn.svg" ); }
+.geoip_flag_so {background-image: url( "/images/flags/so.svg" ); }
+.geoip_flag_sr {background-image: url( "/images/flags/sr.svg" ); }
+.geoip_flag_ss {background-image: url( "/images/flags/ss.svg" ); }
+.geoip_flag_st {background-image: url( "/images/flags/st.svg" ); }
+.geoip_flag_sv {background-image: url( "/images/flags/sv.svg" ); }
+.geoip_flag_sx {background-image: url( "/images/flags/sx.svg" ); }
+.geoip_flag_sy {background-image: url( "/images/flags/sy.svg" ); }
+.geoip_flag_sz {background-image: url( "/images/flags/sz.svg" ); }
+.geoip_flag_tc {background-image: url( "/images/flags/tc.svg" ); }
+.geoip_flag_td {background-image: url( "/images/flags/td.svg" ); }
+.geoip_flag_tf {background-image: url( "/images/flags/tf.svg" ); }
+.geoip_flag_tg {background-image: url( "/images/flags/tg.svg" ); }
+.geoip_flag_th {background-image: url( "/images/flags/th.svg" ); }
+.geoip_flag_tj {background-image: url( "/images/flags/tj.svg" ); }
+.geoip_flag_tk {background-image: url( "/images/flags/tk.svg" ); }
+.geoip_flag_tl {background-image: url( "/images/flags/tl.svg" ); }
+.geoip_flag_tm {background-image: url( "/images/flags/tm.svg" ); }
+.geoip_flag_tn {background-image: url( "/images/flags/tn.svg" ); }
+.geoip_flag_to {background-image: url( "/images/flags/to.svg" ); }
+.geoip_flag_tr {background-image: url( "/images/flags/tr.svg" ); }
+.geoip_flag_tt {background-image: url( "/images/flags/tt.svg" ); }
+.geoip_flag_tv {background-image: url( "/images/flags/tv.svg" ); }
+.geoip_flag_tw {background-image: url( "/images/flags/tw.svg" ); }
+.geoip_flag_tz {background-image: url( "/images/flags/tz.svg" ); }
+.geoip_flag_ua {background-image: url( "/images/flags/ua.svg" ); }
+.geoip_flag_ug {background-image: url( "/images/flags/ug.svg" ); }
+.geoip_flag_um {background-image: url( "/images/flags/um.svg" ); }
+.geoip_flag_un {background-image: url( "/images/flags/un.svg" ); }
+.geoip_flag_us {background-image: url( "/images/flags/us.svg" ); }
+.geoip_flag_uy {background-image: url( "/images/flags/uy.svg" ); }
+.geoip_flag_uz {background-image: url( "/images/flags/uz.svg" ); }
+.geoip_flag_va {background-image: url( "/images/flags/va.svg" ); }
+.geoip_flag_vc {background-image: url( "/images/flags/vc.svg" ); }
+.geoip_flag_ve {background-image: url( "/images/flags/ve.svg" ); }
+.geoip_flag_vg {background-image: url( "/images/flags/vg.svg" ); }
+.geoip_flag_vi {background-image: url( "/images/flags/vi.svg" ); }
+.geoip_flag_vn {background-image: url( "/images/flags/vn.svg" ); }
+.geoip_flag_vu {background-image: url( "/images/flags/vu.svg" ); }
+.geoip_flag_wf {background-image: url( "/images/flags/wf.svg" ); }
+.geoip_flag_ws {background-image: url( "/images/flags/ws.svg" ); }
+.geoip_flag_xk {background-image: url( "/images/flags/xk.svg" ); }
+.geoip_flag_ye {background-image: url( "/images/flags/ye.svg" ); }
+.geoip_flag_yt {background-image: url( "/images/flags/yt.svg" ); }
+.geoip_flag_za {background-image: url( "/images/flags/za.svg" ); }
+.geoip_flag_zm {background-image: url( "/images/flags/zm.svg" ); }
+.geoip_flag_zw {background-image: url( "/images/flags/zw.svg" ); }
+
