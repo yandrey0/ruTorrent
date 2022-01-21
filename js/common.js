@@ -582,39 +582,35 @@ var theFormatter =
 			else
    			switch(iv(i))
 			{
-				case 3:
+				case 4:
 					arr[i] = (arr[i] / 10) + "%";
 					break;
 				case 2:
-				case 4:
 				case 5:
-				case 15:
+				case 6:
+				case 12:
 					arr[i] = theConverter.bytes(arr[i], 2);
 					break;
-				case 6:
+				case 7:
 					arr[i] = (arr[i] ==- 1) ? "\u221e" : theConverter.round(arr[i] / 1000, 3);
 					break;
-				case 7:
 				case 8:
+				case 9:
 					arr[i] = theConverter.speed(arr[i]);
 					break;
-				case 9:
+				case 13:
 					arr[i] = (arr[i] <=- 1) ? "\u221e" : theConverter.time(arr[i]);
 					break;
-				case 13:
+				case 14:
 					arr[i] = theFormatter.tPriority(arr[i]);
 					break;
-				case 14:
-					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
-					break;
+				case 15:
+				case 16:
 				case 17:
 					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
 					break;
 				case 18:
 					arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
-					break;
-				case 19:
-					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
 					break;
 			}
 		}
