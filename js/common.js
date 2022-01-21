@@ -766,14 +766,10 @@ var theFormatter =
 	      				arr[i] = theConverter.time(arr[i]);
       					break;
       				case 'last' :
-	      				arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
-      					break;
       				case 'slast' :
 	      				arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
       					break;
       				case 'alast' :
-	      				arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
-      					break;
       				case 'anext' :
 	      				arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
       					break;

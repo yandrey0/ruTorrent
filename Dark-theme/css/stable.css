@@ -2,7 +2,7 @@
 .stable td {font: menu; white-space: nowrap; padding: 1px}
 .stable-head {position: absolute; background-color: #2b2b2c; overflow: hidden; -moz-user-select: none; z-index: 10}
 .stable-head table {table-layout: fixed; width: 0}
-.stable-head table tr {background-color: #2b2b2c;}
+.stable-head table tr {background: transparent url(../images/t_bg.png) repeat-x scroll center;}
 .stable-head table tr td {height: 14px; font-size: 11px; border: 1px solid; border-color: transparent; background: transparent url(../images/blank.gif) no-repeat scroll right center; line-height: 14px; overflow: hidden; white-space: nowrap; vertical-align: top}
 .stable-head td div {padding: 0 12px 0 4px}
 .stable-head div.resz {border: 1px solid #000000; width: 5px; height: 14px; padding: 0 !important; float: right; background: transparent url(../images/s.gif) no-repeat scroll left center; cursor: e-resize}
