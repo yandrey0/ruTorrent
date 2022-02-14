@@ -635,11 +635,6 @@ var theWebUI =
 
 	initSettings: function(newSettings)
 	{
-		// If when receive an empty JSON object for the webui settings,
-		// We must initialize "webui.lang", so it can be set
-		if (JSON.stringify(newSettings)=="{}")
-			newSettings = {"webui.lang": ""};
-		
 		// Add webui settings for the first time
 		this.addSettings(newSettings);
 		
@@ -2873,19 +2868,27 @@ rebuildTrackersLabels: function(c, s)
 
    	catchErrors: function(toLog)
    	{
-   	        if(toLog)
-	   		window.onerror = function(msg, url, line)
+		if(toLog)
+	   		window.onerror = function(msg, url, line, col, error)
 			{
-			        theWebUI.show();
+				theWebUI.show();
 				noty("JS error: [" + url + " : " + line + "] " + msg,"error");
+
+				if (error != null)
+					console.log(msg, "from", error.stack);
+
 				return true;
 			}
 		else
-			window.onerror = function(msg, url, line)
+			window.onerror = function(msg, url, line, col, error)
 			{
 				msg = "JS error: [" + url + " : " + line + "] " + msg;
 				theWebUI.msg(msg);
 				log(msg);
+				
+				if (error != null)
+					console.log(msg, "from", error.stack);
+				
 				return true;
 			}
    	},
