@@ -67,7 +67,7 @@ var theRequestManager =
 	{
 		commands: 
 		[
-			"get_up_total", "get_down_total", "get_upload_rate", "get_download_rate", "dht_statistics"
+			"get_up_total", "get_down_total", "get_upload_rate", "get_download_rate", "dht_statistics", "network.http.current_open", "network.open_sockets"
 		],
 		handlers: []
 	},
@@ -793,7 +793,7 @@ rTorrentStub.prototype.gettotalResponse = function(xml)
 	$(data).find("member").each(function () {
 	dht[$(this).find("name").text()] = $(this).find("value").text();
 	});
-	var ret = { UL: this.getValue(values,1), DL: this.getValue(values,3), rateUL: this.getValue(values,5), rateDL: this.getValue(values,7), DHT: dht };
+	var ret = { UL: this.getValue(values,1), DL: this.getValue(values,3), rateUL: this.getValue(values,5), rateDL: this.getValue(values,7), DHT: dht, openHT: this.getValue(values,27), openSK: this.getValue(values,29) };
 	var self = this;
 	$.each( theRequestManager.ttl.handlers, function(i,handler)
 	{

@@ -183,7 +183,9 @@ var theWebUI =
 		speedUL: 	0,
 		DL: 		0,
 		UL: 		0,
-		DHT:		{}
+		DHT:		{},
+		openHT:		0,
+		openSK:		0
 	},
 	sTimer: 	null,
 	updTimer: 	null,
@@ -2609,6 +2611,11 @@ rebuildTrackersLabels: function(c, s)
        	        dhtstat += (self.total.DHT.peers || self.total.DHT.peers_max) ? ' P: ' + self.total.DHT.peers + ' / ' + self.total.DHT.peers_max + ' |' : '';
        	        dhtstat += self.total.DHT.torrents ? ' T: ' + self.total.DHT.torrents + ' |' : '';;
 	        $("#dhtstat").text(dhtstat.slice(0, -1));
+
+		var netopen = '';
+		netopen += self.total.openHT ? ' HTTP: ' + self.total.openHT + ' |' : '';
+		netopen += self.total.openSK ? ' Socket: ' + self.total.openSK + ' |' : '';
+		$("#netopen").text(netopen.slice(0, -1));
 	},
 
 	setDLRate: function(spd)
