@@ -67,7 +67,7 @@ var theRequestManager =
 	{
 		commands: 
 		[
-			"get_up_total", "get_down_total", "get_upload_rate", "get_download_rate", "dht_statistics", "network.http.current_open", "network.open_sockets"
+			"get_up_total", "get_down_total", "get_upload_rate", "get_download_rate", "network.http.current_open", "network.open_sockets", "dht_statistics"
 		],
 		handlers: []
 	},
@@ -352,7 +352,7 @@ rTorrentStub.prototype.setsettings = function()
 		if(this.ss[i]=="ndht")
 		{
 			if(prm==0)
-				prm = "disable";
+				prm = "off";
 			else
 				prm = "auto";
 			prmType = "string";
@@ -793,7 +793,7 @@ rTorrentStub.prototype.gettotalResponse = function(xml)
 	$(data).find("member").each(function () {
 	dht[$(this).find("name").text()] = $(this).find("value").text();
 	});
-	var ret = { UL: this.getValue(values,1), DL: this.getValue(values,3), rateUL: this.getValue(values,5), rateDL: this.getValue(values,7), DHT: dht, openHT: this.getValue(values,27), openSK: this.getValue(values,29) };
+	var ret = { UL: this.getValue(values,1), DL: this.getValue(values,3), rateUL: this.getValue(values,5), rateDL: this.getValue(values,7), DHT: dht, openHT: this.getValue(values,9), openSK: this.getValue(values,11) };
 	var self = this;
 	$.each( theRequestManager.ttl.handlers, function(i,handler)
 	{
