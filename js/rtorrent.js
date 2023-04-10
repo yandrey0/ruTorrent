@@ -1169,18 +1169,12 @@ rTorrentStub.prototype.listResponse = function(xml)
 			if(!$type(ret.labels[torrent.label]))
 			{
 				ret.labels[torrent.label] = 1;
-				ret.labels_size[torrent.label] = {};
-				ret.labels_size[torrent.label][1] = torrent.size;
-				ret.labels_size[torrent.label][2] = torrent.downloaded;
-				ret.labels_size[torrent.label][3] = torrent.uploaded;
-
+				ret.labels_size[torrent.label] = torrent.size;
 			}
 			else
 			{
 				ret.labels[torrent.label]++;
-				ret.labels_size[torrent.label][1] = ret.labels_size[torrent.label][1] + torrent.size;
-				ret.labels_size[torrent.label][2] = ret.labels_size[torrent.label][2] + torrent.downloaded;
-				ret.labels_size[torrent.label][3] = ret.labels_size[torrent.label][3] + torrent.uploaded;
+				ret.labels_size[torrent.label] = ret.labels_size[torrent.label] + torrent.size;
 			}
 		}
 		torrent.chunks = get_size_chunks;
@@ -1221,17 +1215,12 @@ rTorrentStub.prototype.listResponse = function(xml)
 			if(!$type(ret.trackers_labels[torrent.tracker]))
 			{
 				ret.trackers_labels[torrent.tracker] = 1;
-				ret.trackers_labels_size[torrent.tracker] = {};
-				ret.trackers_labels_size[torrent.tracker][1] = torrent.size;
-				ret.trackers_labels_size[torrent.tracker][2] = torrent.downloaded;
-				ret.trackers_labels_size[torrent.tracker][3] = torrent.uploaded;
+				ret.trackers_labels_size[torrent.tracker] = torrent.size;
 			}
 			else
 			{
 				ret.trackers_labels[torrent.tracker]++;
-				ret.trackers_labels_size[torrent.tracker][1] = ret.trackers_labels_size[torrent.tracker][1] + torrent.size;
-				ret.trackers_labels_size[torrent.tracker][2] = ret.trackers_labels_size[torrent.tracker][2] + torrent.downloaded;
-				ret.trackers_labels_size[torrent.tracker][3] = ret.trackers_labels_size[torrent.tracker][3] + torrent.uploaded;
+				ret.trackers_labels_size[torrent.tracker] = ret.trackers_labels_size[torrent.tracker] + torrent.size;
 			}
 
 		torrent.seeds = torrent.seeds_actual + " (" + torrent.seeds_all + ")";
