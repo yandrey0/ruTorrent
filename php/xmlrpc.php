@@ -92,15 +92,17 @@ class rXMLRPCRequest
 
 	public static function send( $data, $trusted = true )
 	{
-		if(LOG_RPC_CALLS)
+		global $rpcLogCalls;
+		if($rpcLogCalls)
 			FileUtil::toLog($data);
-		global $scgi_host;
-		global $scgi_port;
 		$result = false;
 		$contentlength = strlen($data);
 		if($contentlength>0)
 		{
-			$socket = @fsockopen($scgi_host, $scgi_port, $errno, $errstr, RPC_TIME_OUT);
+			global $rpcTimeOut;
+			global $scgi_host;
+			global $scgi_port;
+			$socket = @fsockopen($scgi_host, $scgi_port, $errno, $errstr, $rpcTimeOut);
 			if($socket) 
 			{
 				$reqheader = "CONTENT_LENGTH\x0".$contentlength."\x0"."SCGI\x0"."1\x0UNTRUSTED_CONNECTION\x0".($trusted ? "0" : "1")."\x0";
@@ -112,7 +114,7 @@ class rXMLRPCRequest
 				fclose($socket);
 			}
 		}
-		if(LOG_RPC_CALLS)
+		if($rpcLogCalls)
 			FileUtil::toLog($result);
 		return($result);
 	}
@@ -127,32 +129,37 @@ class rXMLRPCRequest
 		return(count($this->commands));
 	}
 
-	protected function makeCall()
+	protected function makeNextCall()
 	{
-	        rTorrentSettings::get()->patchDeprecatedRequest($this->commands);
 		$this->fault = false;
 		$this->content = "";
-		$cnt = count($this->commands);
+		$cnt = count($this->commands) - $this->commandOffset;
 		if($cnt>0)
 		{
 			$this->content = '<?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>';
 			if($cnt==1)
 			{
-				$cmd = $this->commands[0];
+				$cmd = $this->commands[$this->commandOffset++];
 	        		$this->content .= "{$cmd->command}</methodName><params>\r\n";
 	        		foreach($cmd->params as &$prm)
 	        			$this->content .= "<param><value><{$prm->type}>{$prm->value}</{$prm->type}></value></param>\r\n";
 		        }
 			else
 			{
+				$maxContentSize = rTorrentSettings::get()->maxContentSize();
 				$this->content .= "system.multicall</methodName><params><param><value><array><data>";
-				foreach($this->commands as &$cmd)
+				for(; $this->commandOffset < count($this->commands); $this->commandOffset++)
 				{
-					$this->content .= "\r\n<value><struct><member><name>methodName</name><value><string>".
+					$cmd = $this->commands[$this->commandOffset];
+					$cmdStr = "\r\n<value><struct><member><name>methodName</name><value><string>".
 						"{$cmd->command}</string></value></member><member><name>params</name><value><array><data>";
 					foreach($cmd->params as &$prm)
-						$this->content .= "\r\n<value><{$prm->type}>{$prm->value}</{$prm->type}></value>";
-					$this->content .= "\r\n</data></array></value></member></struct></value>";
+						$cmdStr .= "\r\n<value><{$prm->type}>{$prm->value}</{$prm->type}></value>";
+					$cmdStr .= "\r\n</data></array></value></member></struct></value>";
+					if($this->commandOffset > count($this->commands) - $cnt and
+						strlen($this->content) + strlen($cmdStr) + 35 + 22 > $maxContentSize)
+						break;
+					$this->content .= $cmdStr;
 				}
 				$this->content .= "\r\n</data></array></value></param>";
 			}
@@ -172,7 +179,9 @@ class rXMLRPCRequest
 		$this->i8s = array();
 		$this->strings = array();
 		$this->val = array();
-		if($this->makeCall())
+		rTorrentSettings::get()->patchDeprecatedRequest($this->commands);
+		$this->commandOffset = 0;
+		while($this->makeNextCall())
 		{
 			$answer = self::send($this->content,$trusted);
 			if(!empty($answer))
@@ -212,15 +221,17 @@ class rXMLRPCRequest
 				{
 					if(strstr($answer,"faultCode")!==false)
 					{
-						$this->fault = true;	
-						if(LOG_RPC_FAULTS && $this->important)
+						$this->fault = true;
+						global $rpcLogFaults;
+						if($rpcLogFaults && $this->important)
 						{
 							FileUtil::toLog($this->content);
 							FileUtil::toLog($answer);
 						}
+						break;
 					}
-				}
-			}
+				} else break;
+			} else break;
 		}
 		$this->content = "";
 		$this->commands = array();

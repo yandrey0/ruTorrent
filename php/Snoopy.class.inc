@@ -80,6 +80,7 @@ class Snoopy
 	// send Accept-encoding: gzip?
 	var $use_gzip		=	true;	
 	var $IP			=	null;
+	var $useIpv4		=	false;
 
 	/**** Private variables ****/	
 
@@ -97,12 +98,16 @@ class Snoopy
 	{
 		global $httpIP;
 		global $httpProxy;
-		if(@constant('HTTP_USER_AGENT')!==null)
-			$this->agent = @constant('HTTP_USER_AGENT');
-		if(@constant('HTTP_TIME_OUT')!==null)
+		global $httpUserAgent;
+		global $httpTimeOut;
+		global $httpUseGzip;
+		
+		if(isset($httpUserAgent))
+			$this->agent = $httpUserAgent;
+		if(isset($httpTimeOut))
 		{
-			$this->_fp_timeout = @constant('HTTP_TIME_OUT');
-			$this->read_timeout = @constant('HTTP_TIME_OUT');
+			$this->_fp_timeout = $httpTimeOut;
+			$this->read_timeout = $httpTimeOut;
 		}
 		if(is_array($httpProxy) && $httpProxy['use'])
 		{
@@ -110,7 +115,8 @@ class Snoopy
 			$this->proxy_host = $httpProxy['host'];
 			$this->proxy_port = $httpProxy['port'];
 		}
-		$this->use_gzip = @constant('HTTP_USE_GZIP');
+		if (isset($httpUseGzip))
+			$this->use_gzip = $httpUseGzip;
 		if(isset($httpIP))
 			$this->IP = $httpIP;
 	}
@@ -209,24 +215,25 @@ class Snoopy
 
 	public function fetchComplex($URI,$method="GET",$content_type="",$body="")
 	{
-		global $rootPath;
 		$parts = parse_url($URI);
 		$this->host = $parts["host"];
 		if(rTorrentSettings::get()->isPluginRegistered('cookies') && !empty($this->host))
 		{
-			require_once($rootPath."/plugins/cookies/cookies.php");	
+			// Go back to ruTorrent root folder and include cookies.php plugin file
+			require_once(dirname(__FILE__)."/../plugins/cookies/cookies.php");
 			$cookies = rCookies::load();
 			$this->cookies = array_merge($this->cookies,$cookies->getCookiesForHost($this->host));
 		}
 		$this->cookies = array_merge($this->cookies,self::getURLCookies($URI));
 		if(rTorrentSettings::get()->isPluginRegistered('loginmgr'))
 		{
-			require_once($rootPath."/plugins/loginmgr/accounts.php");	
+			// Go back to ruTorrent root folder and include accounts.php plugin file
+			require_once(dirname(__FILE__)."/../plugins/loginmgr/accounts.php");
 			$am = accountManager::load();
 			if($am===false)
 			{
 				$am = new accountManager();
-				$am->obtain($rootPath."/plugins/loginmgr/accounts");
+				$am->obtain();
 			}
 			$acc = $am->getAccount($URI);
 			if($acc)
@@ -385,14 +392,12 @@ class Snoopy
 			socket_set_timeout($fp, $this->read_timeout);
 		$this->timed_out = false;
 		fwrite($fp,$headers.$body,strlen($headers.$body));
-//toLog($headers.$body);
 		$this->_redirectaddr = false;
 		$this->headers = array();
 		$is_gzipped = false;
 						
 		while($currentHeader = fgets($fp,$this->_maxlinelen))
 		{
-//toLog($currentHeader);
 			if ($this->read_timeout > 0 && $this->_check_timeout($fp))
 			{
 				$this->status=-100;
@@ -476,7 +481,6 @@ class Snoopy
 		}
 
 		$this->results = $results;
-//toLog($this->results);		
 		return true;
 	}
 
@@ -484,7 +488,6 @@ class Snoopy
 	{
 		if($this->passcookies && $this->_redirectaddr)
 			$this->setcookies();
-
 		$headers = array();		
 		if(!empty($this->agent))
 			$headers[] = "User-Agent: ".$this->agent;
@@ -527,6 +530,9 @@ class Snoopy
 
 		if(!is_null($this->IP))
 			$cmdline_params .= " --interface ".$this->IP;
+
+		if($this->useIpv4)
+			$cmdline_params .= " --ipv4";
 
 		if($this->_isproxy)
 			$cmdline_params .= " --proxy-insecure --proxy ".(empty($this->proxy_proto) ? '' : $this->proxy_proto.'://').$this->proxy_host.":".$this->proxy_port;
@@ -609,7 +615,6 @@ class Snoopy
 					}
 				}
 			}
-
 			$this->results = $results;
 		}
 		@unlink($headerfile);

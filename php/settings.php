@@ -157,7 +157,7 @@ class rTorrentSettings
 				if(is_file($file))
 				{
 					require_once( $file );
-					$func = $hook['name'].'Hooks::On'.$ename;
+					$func = str_replace('-', '_', $hook['name']).'Hooks::On'.$ename;
 					if(is_callable( $func ) && 
 						(call_user_func_array($func,$prm)==true))
 					{
@@ -397,6 +397,10 @@ class rTorrentSettings
 		if((array_key_exists($name,$this->aliases) && $this->aliases[$name]["prm"]) || 
 			(($this->iVersion>=0x904) && (strpos($cmd->command,"group2.")===0)))
 			$cmd->addParameter("");
+	}
+	public function maxContentSize()
+	{
+		return 2 << (20 + 3*($this->apiVersion>=11));
 	}
 	public function patchDeprecatedRequest($commands)
 	{

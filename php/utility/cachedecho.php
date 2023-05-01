@@ -5,15 +5,17 @@ require_once( 'utility.php' );
 
 class CachedEcho
 {	
-	public static function send( $content, $type = null, $cacheable = false, $exit = true )
+	public static function send( $content, $type = null, $cacheable = false, $exit = true, $cacheDuration = -1 )
 	{
 		header("X-Server-Timestamp: ".time());
 		if($cacheable && isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD']=='GET'))
 		{
+			global $miscCacheExpire;
+			$cacheAge = ($cacheDuration == -1) ? $miscCacheExpire : $cacheDuration;
 			$etag = '"'.strtoupper(dechex(crc32($content))).'"';
 			header('Expires: ');
 			header('Pragma: ');
-			header('Cache-Control: ');
+			header('Cache-Control: max-age='.$cacheAge);
 			if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
 			{
 				header('HTTP/1.0 304 Not Modified');
@@ -28,7 +30,8 @@ class CachedEcho
 			ini_set("zlib.output_compression",false);
 		if(!ini_get("zlib.output_compression"))
 		{
-				if(PHP_USE_GZIP && isset($_SERVER['HTTP_ACCEPT_ENCODING']))
+				global $phpUseGzip;
+				if($phpUseGzip && isset($_SERVER['HTTP_ACCEPT_ENCODING']))
 				{
 					if( strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false ) 
 						$encoding = 'x-gzip'; 
@@ -36,11 +39,12 @@ class CachedEcho
 						$encoding = 'gzip'; 
 				if($encoding && ($len>=2048))
 				{
+					global $phpGzipLevel;
 					$gzip = Utility::getExternal('gzip');
 					header('Content-Encoding: '.$encoding); 
 					$randName = FileUtil::getTempFilename('answer');
 					file_put_contents($randName,$content);
-					passthru( $gzip." -".PHP_GZIP_LEVEL." -c < ".$randName );
+					passthru( $gzip." -".$phpGzipLevel." -c < ".$randName );
 					unlink($randName);
 					return;
 				}

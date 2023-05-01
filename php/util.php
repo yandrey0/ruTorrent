@@ -2,7 +2,9 @@
 
 // Include our base configuration file
 $rootPath = realpath(dirname(__FILE__)."/..");
-require_once( $rootPath.'/conf/config.php' );
+// Avoid reusing $rootPath here becuase it calls realpath
+// dirname is a more stable option becuase it's not file system aware
+require_once( dirname(__FILE__).'/../conf/config.php' );
 
 // Automatically include only the used utility classes
 spl_autoload_register(function ($class) 
@@ -12,7 +14,13 @@ spl_autoload_register(function ($class)
 	$arr = explode('\\',$class);
 	$class = end($arr);
 	
-	include_once 'utility/'. strtolower($class). '.php';
+	// Suppress include warnings if the user disables al_diagnostic
+	// For compatibility with 3rd party plugins which use autoloaders
+	global $al_diagnostic;
+	if($al_diagnostic)
+		include_once 'utility/'. strtolower($class). '.php';
+	else
+		@include_once 'utility/'. strtolower($class). '.php';
 });
 
 // Fixes quotations if php verison is less than 5.4

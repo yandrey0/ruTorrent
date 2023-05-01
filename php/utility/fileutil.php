@@ -91,14 +91,13 @@ class FileUtil
 	public static function getPluginConf($plugin)
 	{
 		$ret = '';
-		global $rootPath;
-		$conf = $rootPath.'/plugins/'.$plugin.'/conf.php';
+		$conf = dirname(__FILE__).'/../../plugins/'.$plugin.'/conf.php';
 		if(is_file($conf) && is_readable($conf))
 			$ret.='require("'.$conf.'");';
 		$user = User::getUser();
 		if($user!='')
 		{
-			$conf = $rootPath.'/conf/users/'.$user.'/plugins/'.$plugin.'/conf.php';
+			$conf = dirname(__FILE__).'/../../conf/users/'.$user.'/plugins/'.$plugin.'/conf.php';
 			if(is_file($conf) && is_readable($conf))
 				$ret.='require("'.$conf.'");';
 		}
@@ -110,15 +109,14 @@ class FileUtil
 		$user = User::getUser();
 		if($user!='')
 		{
-			global $rootPath;
-			$conf = $rootPath.'/conf/users/'.$user.'/'.$name;
+			$conf = dirname(__FILE__).'/../../conf/users/'.$user.'/'.$name;
 			if(is_file($conf) && is_readable($conf))
 				return($conf);
 		}
 		return(false);
 	}
 	
-	private static function getUniqueFilename($fname)
+	public static function getUniqueFilename($fname)
 	{
 		while(file_exists($fname))
 		{
@@ -235,5 +233,15 @@ class FileUtil
 				fclose( $w );
 			}
 		}
+	}
+	
+	public static function getMinFilePerms( $file, $chmod = 755 )
+	{
+		$code = fileperms($file);
+		
+		if($code!==false)
+			return((decoct($code) & 0777) >= $chmod);
+		
+		return false;
 	}
 }
