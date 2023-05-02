@@ -665,7 +665,6 @@ var theWebUI =
 				}
          		}
 		});
-		newSettings["webui.lang"] = GetActiveLanguage();
 		$.extend(this.settings,newSettings);
    		this.loadSettings();
    	},
@@ -752,12 +751,6 @@ var theWebUI =
 							{
 								$("#tdetails").toggle();
 								needResize = true;
-								break;
-							}
-							case "webui.lang":
-							{
-								SetActiveLanguage(nv);
-								reply = theWebUI.reload;
 								break;
 							}
 							case "webui.register_magnet":

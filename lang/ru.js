@@ -8,10 +8,12 @@
 
 var theUILang =
 {
+ lang				: "ru",
  General			: "Общее",
  Downloads			: "Закачки",
  Connection			: "Соединение",
  BitTorrent			: "BitTorrent",
+ Format				: "Формат",
  Advanced			: "Дополнительно",
  User_Interface			: "Польз. интерфейс",
  Confirm_del_torr		: "Подтв. удаления торента",
@@ -20,6 +22,9 @@ var theUILang =
  Alt_list_bckgnd		: "Альтернативный цвет списка",
  Show_cat_start			: "Показать категории при запуске",
  Show_det_start			: "Показать детали при запуске",
+ KeepSearches			: "Сохранять результаты поиска",
+ KeepSelectedTab		: "Сохранять выбранные панели",
+ KeepSelectedLabels		: "Сохранять выбранные метки",
  Dnt_start_down_auto		: "Не начинать закачку автоматически",
  Listening_Port			: "Порт",
  Port_f_incom_conns		: "Порт для входящих соединений",
@@ -148,6 +153,7 @@ var theUILang =
  Glob_max_memory		: "Макс. кол-во используемой памяти",
  Glob_max_files			: "Макс. кол-во открытых файлов",
  Glob_max_http			: "Макс. кол-во открытых http соединений",
+ Open_label         		: "Открыто",
  Other_sett			: "Прочее",
  Directory_For_Dl		: "Директория для закачек",
  Check_hash			: "Проверять данные после закачки",
@@ -202,6 +208,12 @@ var theUILang =
  plgShutdown			: "Выгрузить",
  limit				: "Лимит",
  speedList			: "Шкала всплывающего списка скоростей (разделять запятой)",
+ DecimalPlacesSizes		: "Число цифр после запятой",
+ CatListSizeDecimalPlaces	: "В списке категорий",
+ TableSizeDecimalPlaces		: "В таблицах",
+ DetailsSizeDecimalPlaces	: "На закладке 'Общее'",
+ OtherSizeDecimalPlaces		: "В прочих местах",
+ Default			: "По умолчанию",
  ClearButton			: "Очистить",
  dontShowTimeouts		: "Игнорировать таймауты",
  fullTableRender		: "Рендерить большие таблицы полностью",
@@ -241,7 +253,15 @@ var theUILang =
  scrapeUpdate			: "Был обновлен",
  trkInterval			: "Интервал",
  logAutoSwitch			: "Автопереключение на закладку 'Лог'",
+ showStateLabelSize		: "Показывать размер файлов для состояния",
  showLabelSize			: "Показывать размер файлов для меток",
+ showSearchLabelSize		: "Показывать размер файлов для поиска",
+ showCustomLabelTree		: "Показывать дерево для меток",
+ labelSizeRightAlign		: "Выравнивать направо размер файлов в списке категорий",
+ showEmptyPathLabel		: "Показывать метки, для который нет торрентов",
+ showLabelTextOverflow		: "Не обрезать метки",
+ showOpenStatus			: "Показывать используемые ресурсы в статусе",
+ requiresAtLeastRtorrent	: "Требуется rTorrent >= {version}", // ... v0.9.7
  phpParameterUnavailable	: "Директива php register_argc_argv выставлена в Off. Измените ее значение на On, иначе некоторые плагины будут работать некорректно.",
  addTorrentFailedURL		: "Ошибка добавления закачки. Невозможно получить файл по заданному URL.",
  addTorrentFailedFile		: "Ошибка добавления закачки. Полученный контент не является корректным torrent файлом.",
@@ -278,5 +298,5 @@ var theUILang =
  registerMagnet			: "Регистрировать magnet протокол на старте",
  linkTorTorrentRestored		: "Связь с rTorrent восстановлена.",
  removeAllTegs			: "Удалить все теги",
- Torrents			: "Показано"
+ Torrents			: "Торренты"
 };

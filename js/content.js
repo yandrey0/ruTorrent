@@ -258,9 +258,6 @@ function makeContent()
 		'<div id="yesnoDlg-buttons" class="aright buttons-list"><input type="button" class="OK Button" value="'+theUILang.ok+'" id="yesnoOK">'+
 		'<input type="button" class="Button Cancel" value="'+theUILang.Cancel+'" id="yesnoCancel"></div>',
 		true);
-	var languages = '';
-	for (var i in AvailableLanguages)
-		languages+="<option value='"+i+"'>"+AvailableLanguages[i]+"</option>";
 	var retries = '';
 	for (var i in theUILang.retryOnErrorList)
 		retries+="<option value='"+i+"'>"+theUILang.retryOnErrorList[i]+"</option>";
@@ -353,12 +350,6 @@ function makeContent()
 						"<label for=\"webui.retry_on_error\">"+theUILang.retryOnErrorTitle+":</label>&nbsp;"+
 						"<select id=\"webui.retry_on_error\">"+
 							retries+
-						"</select>"+
-					"</div>"+
-					"<div class=\"op50l\">"+
-						"<label for=\"webui.lang\">"+theUILang.mnu_lang+":</label>&nbsp;"+
-						"<select id=\"webui.lang\">"+
-							languages+
 						"</select>"+
 					"</div>"+
 				"</fieldset>"+

@@ -194,7 +194,7 @@ rPlugin.prototype.loadLangPrim = function(lang,template,sendNotify)
 
 rPlugin.prototype.loadLang = function(sendNotify)
 {
-	this.loadLangPrim(GetActiveLanguage(),this.path+"lang/{lang}.js",sendNotify);
+	this.loadLangPrim(theUILang.lang,this.path+"lang/{lang}.js",sendNotify);
 	return(this);
 }
 
