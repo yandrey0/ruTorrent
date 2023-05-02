@@ -181,6 +181,8 @@ var theWebUI =
 		rateUL: 	0,
 		speedDL: 	0,
 		speedUL: 	0,
+		totalDL: 	0,
+		totalUL: 	0,
 		DL: 		0,
 		UL: 		0,
 		DHT:		{},
@@ -1678,6 +1680,8 @@ var theWebUI =
    		var table = this.getTable("trt");
    		var tul = 0;
 		var tdl = 0;
+   		var tult = 0;
+		var tdlt = 0;
 		var tArray = [];
 		var firstLoad = this.firstLoad;
 		var mlcnt = {
@@ -1703,6 +1707,8 @@ var theWebUI =
 		{
 			tdl += iv(torrent.dl);
 			tul += iv(torrent.ul);
+			tdlt += torrent.downloaded;
+			tult += torrent.uploaded;
 			var sInfo = theWebUI.getStatusIcon(torrent);
 			torrent.status = sInfo[1];
 			var lbl = theWebUI.getLabels(hash, torrent, mlcnt);
@@ -1747,7 +1753,7 @@ var theWebUI =
 			torrent._updated = true;
 		});
 		$.extend(this.torrents,data.torrents);
-		this.setSpeedValues(tul,tdl);
+		this.setSpeedValues(tul,tdl,tult,tdlt);
 		var wasRemoved = false;
 		this.clearTegs();
 		$.each(this.torrents,function(hash,torrent)
@@ -1784,10 +1790,12 @@ var theWebUI =
 		data = null;
 	},
 
-	setSpeedValues: function(tul,tdl)
+	setSpeedValues: function(tul,tdl,tult,tdlt)
 	{
 		this.total.speedDL = tdl;
 		this.total.speedUL = tul;
+		this.total.totalDL = tdlt;
+		this.total.totalUL = tult;
 	},
 
 	loadTorrents: function()
@@ -2566,6 +2574,9 @@ rebuildTrackersLabels: function(c, s)
 	        $("#stdown_speed").text(dl);
 	        $("#stdown_limit").text((self.total.rateDL>0 && self.total.rateDL<327625*1024) ? theConverter.speed(self.total.rateDL) : theUILang.no);
 	        $("#stdown_total").text(theConverter.bytes(self.total.DL));
+
+	        $("#up_total").text(theConverter.bytes(self.total.totalUL));
+	        $("#down_total").text(theConverter.bytes(self.total.totalDL));
 
 	        var dhtstat = '';
 	        dhtstat += (self.total.DHT.active == "1") ? '' : ' off |';
