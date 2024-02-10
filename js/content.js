@@ -249,7 +249,7 @@ function makeContent()
 	{
 		setTimeout(function(){
 			$("#txtLabel").off('focus').on('focus',function() { 
-				$(this).select(); 
+				$(this).trigger("select");
 			}).trigger('focus');		
 		}, 0);
 	});

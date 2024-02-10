@@ -242,7 +242,7 @@ $.fn.extend(
 				range.collapse(true);
 				range.moveEnd('character', pos);
 				range.moveStart('character', pos);
-				range.select();
+				range.trigger("select");
 			}
 		return(this);
 	}
@@ -610,7 +610,7 @@ var theFormatter =
 					arr[i] = theConverter.date(iv(arr[i])+theWebUI.deltaTime/1000);
 					break;
 				case 18:
-					arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
+					arr[i] = iv(arr[i]) ? theConverter.time( Date.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
 					break;
 			}
 		}
@@ -767,7 +767,7 @@ var theFormatter =
       					break;
       				case 'last' :
       				case 'slast' :
-	      				arr[i] = iv(arr[i]) ? theConverter.time( $.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
+	      				arr[i] = iv(arr[i]) ? theConverter.time( Date.now()/1000 - iv(arr[i]) - theWebUI.deltaTime/1000,true) : '';
       					break;
       				case 'alast' :
       				case 'anext' :
@@ -1574,7 +1574,7 @@ function strip_tags(input, allowed)
 function copyToClipboard(element) {
   var $temp = $("<input>");
   $("body").append($temp);
-  $temp.val($(element).text()).select();
+  $temp.val($(element).text()).trigger("select");
   document.execCommand("copy");
   $temp.remove();
 }
