@@ -38,7 +38,7 @@
 	<body>
 		<div id="preload"></div>
 		<div id="cover">
-			<div id="msg"><span id="loadimg">&nbsp;</span><script type="text/javascript"> document.write(theUILang.Loading); </script></div>
+			<div id="msg"><span id="loadimg">&nbsp;</span><span data-lang="Loading"></span></div>
 		</div>
 		<div id="modalbg"></div>
 		<div id="dragmask"></div>
@@ -91,54 +91,54 @@
 			<tr>
 				<td class="uicell" rowspan="3">
 					<div id="CatList">
-						<div class="catpanel" id="pstate" onclick="theWebUI.togglePanel(this); return(false);"><script type="text/javascript"> document.write(theUILang.pnlState); </script></div>
+						<div class="catpanel" id="pstate" onclick="theWebUI.togglePanel(this); return(false);"><span data-lang="pnlState"></span></div>
 						<ul id="pstate_cont" class="catpanel_cont">
 							<li class="-_-_-all-_-_- sel cat">
-								<script type="text/javascript"> document.write(theUILang.All); </script> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
+								<span data-lang="All"></span> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
 							<li id="-_-_-dls-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Downloading); </script> (<span id="-_-_-dls-_-_-c">0</span>) <span class="psz" id="-_-_-dls-_-_-s"></span></li>
+								<span data-lang="Downloading"></span> (<span id="-_-_-dls-_-_-c">0</span>) <span class="psz" id="-_-_-dls-_-_-s"></span></li>
 							<li id="-_-_-sed-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Seeding); </script> (<span id="-_-_-sed-_-_-c">0</span>) <span class="psz" id="-_-_-sed-_-_-s"></span></li>
+								<span data-lang="Seeding"></span> (<span id="-_-_-sed-_-_-c">0</span>) <span class="psz" id="-_-_-sed-_-_-s"></span></li>
 							<li id="-_-_-com-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Finished); </script> (<span id="-_-_-com-_-_-c">0</span>) <span class="psz" id="-_-_-com-_-_-s"></span></li>
+								<span data-lang="Finished"></span> (<span id="-_-_-com-_-_-c">0</span>) <span class="psz" id="-_-_-com-_-_-s"></span></li>
 							<li id="-_-_-stp-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Stopped); </script> (<span id="-_-_-stp-_-_-c">0</span>) <span class="psz" id="-_-_-stp-_-_-s"></span></li>
+								<span data-lang="Stopped"></span> (<span id="-_-_-stp-_-_-c">0</span>) <span class="psz" id="-_-_-stp-_-_-s"></span></li>
 							<li id="-_-_-pus-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Pausing); </script> (<span id="-_-_-pus-_-_-c">0</span>) <span class="psz" id="-_-_-pus-_-_-s"></span></li>
+								<span data-lang="Pausing"></span> (<span id="-_-_-pus-_-_-c">0</span>) <span class="psz" id="-_-_-pus-_-_-s"></span></li>
 							<li id="-_-_-act-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Active); </script> (<span id="-_-_-act-_-_-c">0</span>) <span class="psz" id="-_-_-act-_-_-s"></span></li>
+								<span data-lang="Active"></span> (<span id="-_-_-act-_-_-c">0</span>) <span class="psz" id="-_-_-act-_-_-s"></span></li>
 							<li id="-_-_-iac-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Inactive); </script> (<span id="-_-_-iac-_-_-c">0</span>) <span class="psz" id="-_-_-iac-_-_-s"></span></li>
+								<span data-lang="Inactive"></span> (<span id="-_-_-iac-_-_-c">0</span>) <span class="psz" id="-_-_-iac-_-_-s"></span></li>
 							<li id="-_-_-chk-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Checking); </script> (<span id="-_-_-chk-_-_-c">0</span>) <span class="psz" id="-_-_-chk-_-_-s"></span></li>
+								<span data-lang="Checking"></span> (<span id="-_-_-chk-_-_-c">0</span>) <span class="psz" id="-_-_-chk-_-_-s"></span></li>
 							<li id="-_-_-que-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Queued); </script> (<span id="-_-_-que-_-_-c">0</span>) <span class="psz" id="-_-_-que-_-_-s"></span></li>								
+								<span data-lang="Queued"></span> (<span id="-_-_-que-_-_-c">0</span>) <span class="psz" id="-_-_-que-_-_-s"></span></li>								
 							<li id="-_-_-err-_-_-" class="cat">
-								<script type="text/javascript"> document.write(theUILang.Error); </script> (<span id="-_-_-err-_-_-c">0</span>) <span class="psz" id="-_-_-err-_-_-s"></span></li>
+								<span data-lang="Error"></span> (<span id="-_-_-err-_-_-c">0</span>) <span class="psz" id="-_-_-err-_-_-s"></span></li>
 						</ul>
-						<div class="catpanel" id="plabel" onclick="theWebUI.togglePanel(this); return(false);"><script type="text/javascript"> document.write(theUILang.Labels); </script></div>
+						<div class="catpanel" id="plabel" onclick="theWebUI.togglePanel(this); return(false);"><span data-lang="Labels"></span></div>
 						<div class="catpanel_cont" id="plabel_cont">
 							<ul id="clabel_cont">
 								<li class="-_-_-all-_-_- sel cat">
-									<script type="text/javascript"> document.write(theUILang.All); </script> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
+									<span data-lang="All"></span> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
 								<li id="-_-_-nlb-_-_-" class="cat">
-									<script type="text/javascript"> document.write(theUILang.No_label); </script> (<span id="-_-_-nlb-_-_-c">0</span>) <span class="psz" id="-_-_-nlb-_-_-s"></span></li>
+									<span data-lang="No_label"></span> (<span id="-_-_-nlb-_-_-c">0</span>) <span class="psz" id="-_-_-nlb-_-_-s"></span></li>
 								</ul>
 							<ul id="lbll">
 							</ul>
 						</div>
-						<div class="catpanel" id="flabel" onclick="theWebUI.togglePanel(this); return(false);"><script type="text/javascript"> document.write(theUILang.mnu_search); </script></div>
+						<div class="catpanel" id="flabel" onclick="theWebUI.togglePanel(this); return(false);"><span data-lang="mnu_search"></span></div>
 						<div class="catpanel_cont" id="flabel_cont">
 							<ul id="lblf">
 								<li class="-_-_-all-_-_- sel cat">
-									<script type="text/javascript"> document.write(theUILang.All); </script> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
+									<span data-lang="All"></span> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
 							</ul>
 						</div>
-						<div class="catpanel" id="ptrackers" onclick="theWebUI.togglePanel(this); return(false);"><script type="text/javascript"> document.write(theUILang.Trackers); </script></div>
+						<div class="catpanel" id="ptrackers" onclick="theWebUI.togglePanel(this); return(false);"><span data-lang="Trackers"></span></div>
 						<div class="catpanel_cont" id="ptrackers_cont">
 							<ul id="torrl_cont">
 								<li class="-_-_-all-_-_- sel cat">
-									<script type="text/javascript"> document.write(theUILang.All); </script> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
+									<span data-lang="All"></span> (<span class="-_-_-all-_-_-c">0</span>) <span class="psz -_-_-all-_-_-s"></span></li>
 								</ul>
 							<ul id="torrl">
 							</ul>
@@ -167,66 +167,66 @@
 								<table cellpadding="5" cellspacing="2" summary="layout table" id="mainlayout">
 									<tr>
 										<td colspan="6" class="Header">
-											<script type="text/javascript"> document.write(theUILang.Transfer); </script></td>
+											<span data-lang="Transfer"></span></td>
 									</tr>
 									<tr>
-										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Time_el); </script>:</td><td class="tr2" nowrap><span id="et" class="det"></span></td>
-										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Remaining); </script>:</td><td class="tr2" nowrap><span id="rm" class="det"></span></td>
-										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Share_ratio); </script>:</td><td class="tr2" nowrap><span id="ra" class="det"></span></td>
+										<td class="tr1" nowrap><span data-lang="Time_el"></span>:</td><td class="tr2" nowrap><span id="et" class="det"></span></td>
+										<td class="tr1" nowrap><span data-lang="Remaining"></span>:</td><td class="tr2" nowrap><span id="rm" class="det"></span></td>
+										<td class="tr1" nowrap><span data-lang="Share_ratio"></span>:</td><td class="tr2" nowrap><span id="ra" class="det"></span></td>
 									</tr>
 									<tr>
-										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Downloaded); </script>:</td><td class="tr2" nowrap><span id="dl" class="det"></span></td>
-										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Down_speed); </script>:</td><td class="tr2" nowrap><span id="ds" class="det"></span></td>
-										<td class="tr1" nowrap><script type="text/javascript"> document.write(theUILang.Wasted); </script>:</td><td class="tr2" nowrap><span id="wa" class="det"></span></td>
+										<td class="tr1" nowrap><span data-lang="Downloaded"></span>:</td><td class="tr2" nowrap><span id="dl" class="det"></span></td>
+										<td class="tr1" nowrap><span data-lang="Down_speed"></span>:</td><td class="tr2" nowrap><span id="ds" class="det"></span></td>
+										<td class="tr1" nowrap><span data-lang="Wasted"></span>:</td><td class="tr2" nowrap><span id="wa" class="det"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Uploaded); </script>:</td><td nowrap><span id="ul" class="det"></span></td>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Ul_speed); </script>:</td><td nowrap><span id="us" class="det"></span></td>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Status); </script>:</td><td nowrap><span id="st" class="det"></span></td>
+										<td nowrap><span data-lang="Uploaded"></span>:</td><td nowrap><span id="ul" class="det"></span></td>
+										<td nowrap><span data-lang="Ul_speed"></span>:</td><td nowrap><span id="us" class="det"></span></td>
+										<td nowrap><span data-lang="Status"></span>:</td><td nowrap><span id="st" class="det"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Seeds); </script>:</td><td nowrap><span id="se" class="det"></span></td>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Peers); </script>:</td><td nowrap><span id="pe" class="det"></span></td>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Files); </script>:</td><td nowrap><span id="fl" class="det"></span></td>
+										<td nowrap><span data-lang="Seeds"></span>:</td><td nowrap><span id="se" class="det"></span></td>
+										<td nowrap><span data-lang="Peers"></span>:</td><td nowrap><span id="pe" class="det"></span></td>
+										<td nowrap><span data-lang="Files"></span>:</td><td nowrap><span id="fl" class="det"></span></td>
 									</tr>
 									<tr>
 										<td colspan="6" class="Header">
-											<script type="text/javascript"> document.write(theUILang.Tracker); </script></td>
+											<span data-lang="Tracker"></span></td>
 									</tr>
 									<!--tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Track_URL); </script>:</td>
+										<td nowrap><span data-lang="Track_URL"></span>:</td>
 										<td colspan="5" nowrap><span id="tu" class="det"></span></td>
 									</tr-->
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Track_status); </script>:</td>
+										<td nowrap><span data-lang="Track_status"></span>:</td>
 										<td colspan="5" nowrap><span id="ts" class="det"></span></td>
 									</tr>
 									<tr>
 										<td colspan="6" class="Header">
-											<script type="text/javascript"> document.write(theUILang.General); </script></td>
+											<span data-lang="General"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Save_as); </script>:</td>
+										<td nowrap><span data-lang="Save_as"></span>:</td>
 										<td colspan="5" nowrap><span id="bf" class="det" onclick="copyToClipboard(this)"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Free_Disk_Space); </script>:</td>
+										<td nowrap><span data-lang="Free_Disk_Space"></span>:</td>
 										<td colspan="5" nowrap><span id="dsk" class="det"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Size); </script>:</td>
+										<td nowrap><span data-lang="Size"></span>:</td>
 										<td colspan="5" nowrap><span id="sz" class="det"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Created_on); </script>:</td>
+										<td nowrap><span data-lang="Created_on"></span>:</td>
 										<td colspan="5" nowrap><span id="co" class="det"></span><span id="by" class="det"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Hash); </script>:</td>
+										<td nowrap><span data-lang="Hash"></span>:</td>
 										<td colspan="5" nowrap><span id="hs" class="det" onclick="copyToClipboard(this)"></span></td>
 									</tr>
 									<tr>
-										<td nowrap><script type="text/javascript"> document.write(theUILang.Comment); </script>:</td>
+										<td nowrap><span data-lang="Comment"></span>:</td>
 										<td colspan="5"><span id="cmt" class="det"></span></td>
 									</tr>
 								</table>
@@ -249,7 +249,7 @@
 							        <table id="st_up" class="statuscell" cellpadding="0" cellspacing="0">
 							        	<tr>
 										<td><div class="sthdr sttval" id="stup_total"></div></td><td><div class="sttval" id="up_total"></div></td><td><div class="stval" id="stup_speed"></div></td>
-										<td><div class="sthdr"><script type="text/javascript"> document.write(theUILang.limit); </script>:</div></td><td><div class="stval" id="stup_limit"></div></td>
+										<td><div class="sthdr"><span data-lang="limit"></span>:</div></td><td><div class="stval" id="stup_limit"></div></td>
 									</tr>
 								</table>
 							</td>
@@ -257,7 +257,7 @@
 							        <table id="st_down" class="statuscell" cellpadding="0" cellspacing="0">
 							        	<tr>
 										<td><div class="sthdr sttval" id="stdown_total"></div></td><td><div class="sttval" id="down_total"></div></td><td><div class="stval" id="stdown_speed"></div></td>
-										<td><div class="sthdr"><script type="text/javascript"> document.write(theUILang.limit); </script>:</div></td><td><div class="stval" id="stdown_limit"></div></td>
+										<td><div class="sthdr"><span data-lang="limit"></span>:</div></td><td><div class="stval" id="stdown_limit"></div></td>
 									</tr>
 								</table>
 							</td>
@@ -271,7 +271,7 @@
 							<td class="statusCell">
 								<table class="statuscell st_system" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><div class="sthdr"><script type="text/javascript"> document.write(theUILang.Torrents); </script>:</div></td><td><div class="stval" id="viewrows"></div></td>
+										<td><div class="sthdr"><span data-lang="Torrents"></span>:</div></td><td><div class="stval" id="viewrows"></div></td>
 									</tr>
 								</table>
 							</td>

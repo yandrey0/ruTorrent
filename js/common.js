@@ -103,6 +103,11 @@ $(document).ready(function()
 	document.body.removeChild(o);
 	window.scrollbarWidth = w1-w2;
 	window.scrollbarHeight = h1-h2;
+
+	$("span[data-lang]").each(function(){
+  	 $(this).text(theUILang[$(this).data("lang")]);
+	});
+
 });
 
 if(browser.isKonqueror)
