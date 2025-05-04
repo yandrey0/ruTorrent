@@ -185,7 +185,7 @@ function rTorrentStub( URI )
 	this.content = null;
 	this.mountPoint = theURLs.XMLRPCMountPoint;
 	this.faultString = [];
-	this.contentType = "text/xml; charset=UTF-8";
+	this.contentType = "text/xml";
 	this.dataType = "xml";
 	this.method = "POST";
 	this.ifModified = false;
@@ -901,7 +901,8 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 		peer.name = this.getValue(values,1);
 		peer.ip = peer.name;
 		var cv = this.getValue(values,2);
-		var mycv = theBTClientVersion.get(this.getValue(values,11));
+		peer.id = this.getValue(values,11);
+		var mycv = theBTClientVersion.get(peer.id);
 		if((mycv.indexOf("Unknown")>=0) && (cv.indexOf("Unknown")<0))
 			mycv = cv;
 		peer.version = mycv;
