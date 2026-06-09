@@ -235,7 +235,7 @@ class FileUtil
 		}
 	}
 	
-	public static function getMinFilePerms( $file, $chmod = 755 )
+	public static function getMinFilePerms( $file, $chmod = 0755 )
 	{
 		$code = fileperms($file);
 		
