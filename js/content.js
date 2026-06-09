@@ -1043,5 +1043,5 @@ function correctContent()
 			"load"			:	{ name: "load.normal", prm: 1 }
 		});
 	}
-	$("#rtorrentv").text(theWebUI.systemInfo.rTorrent.version+"/"+theWebUI.systemInfo.rTorrent.libVersion);
+	$("#rtorrentv").text(theWebUI.systemInfo.rTorrent.version);
 }

@@ -902,10 +902,8 @@ rTorrentStub.prototype.getpeersResponse = function(xml)
 		peer.ip = peer.name;
 		var cv = this.getValue(values,2);
 		peer.id = this.getValue(values,11);
-		var mycv = theBTClientVersion.get(peer.id);
-		if((mycv.indexOf("Unknown")>=0) && (cv.indexOf("Unknown")<0))
-			mycv = cv;
-		peer.version = mycv;
+		if(cv.indexOf("Unknown")>=0) cv = theBTClientVersion.get(peer.id);
+		peer.version = cv;
 		peer.flags = '';
 		if(this.getValue(values,3)==1)	//	p.is_incoming
 			peer.flags+='I';

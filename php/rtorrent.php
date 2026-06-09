@@ -74,7 +74,7 @@ class rTorrent
 				$req->addCommand( new rXMLRPCCommand( 'execute', array('mkdir','-p',$directory) ) );
 				$cmd->addParameter( ($isAddPath ? getCmd("d.set_directory=")."\"" : getCmd("d.set_directory_base=")."\"").$directory."\"" );
 			}
-			$comment = $torrent->comment() ? $torrent->comment() : $torrent->{'publisher-url'};
+			$comment = $torrent->comment() ? $torrent->comment() : $torrent->publisher_url();
 			if($comment)
 			{
 				if(UTF::isInvalidUTF8($comment))
@@ -105,7 +105,7 @@ class rTorrent
 					$cmd->addParameter(getCmd("d.set_custom1=").$label);
 			}
 			
-			if($url = filter_var($torrent->{'publisher-url'}, FILTER_VALIDATE_URL)){
+			if($url = filter_var($torrent->publisher_url(), FILTER_VALIDATE_URL)){
 			} else if($url = filter_var($torrent->comment(), FILTER_VALIDATE_URL)){
 			} else $url = $torrent->announce_list()[0][0] ? $torrent->announce_list()[0][0] : $torrent->announce();
 			

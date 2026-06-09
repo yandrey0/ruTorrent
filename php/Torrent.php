@@ -331,6 +331,13 @@ class Torrent
             		$this->touch( $this->{'created by'} = (string) $created_by ));
 	}
 
+    	public function publisher_url( $publisher_url = null ) 
+    	{
+        	return(is_null( $publisher_url ) ?
+            		isset( $this->{'publisher-url'} ) ? $this->{'publisher-url'} : '' :
+            		$this->touch( $this->{'publisher-url'} = (string) $publisher_url ));
+	}
+
 	/** Getter and setter of torrent name
 	 * @param null|string name (optional, if omitted it's a getter)
 	 * @return string|null name or null if not set
