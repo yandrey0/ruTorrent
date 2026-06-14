@@ -87,7 +87,7 @@ var theRequestManager =
 			"check_hash", "bind", "dht_port", "directory", "download_rate", 
 			"hash_interval", "hash_max_tries", "hash_read_ahead", "http_cacert", "http_capath",
 			"http_proxy", "ip", "max_downloads_div", "max_downloads_global", "max_file_size",
-			"max_memory_usage", "max_open_files", "max_open_http", "max_peers", "max_peers_seed",
+			"max_memory_usage", "max_open_files", "max_peers", "max_peers_seed",
 			"max_uploads", "max_uploads_global", "min_peers_seed", "min_peers", "peer_exchange",
 			"port_open", "upload_rate", "port_random", "port_range", "preload_min_size",
 			"preload_required_rate", "preload_type", "proxy_address", "receive_buffer_size", "safe_sync",

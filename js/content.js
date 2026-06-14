@@ -840,7 +840,7 @@ function correctContent()
 			"d.set_tied_to_file"	:	{ name: "d.tied_to_file.set", prm: 0 },
 			"d.set_tracker_numwant"	:	{ name: "d.tracker_numwant.set", prm: 0 },
 			"d.set_uploads_max"	:	{ name: "d.uploads_max.set", prm: 0 },
-			"execute"		:	{ name: "execute2", prm: 1 },
+			"execute"		:	{ name: "execute", prm: 1 },
 			"execute_capture"	:	{ name: "execute.capture", prm: 1 },
 			"execute_capture_nothrow"	:	{ name: "execute.capture_nothrow", prm: 1 },
 			"execute_nothrow"	:	{ name: "execute.nothrow", prm: 1 },
@@ -999,8 +999,8 @@ function correctContent()
 			"set_use_udp_trackers"	:	{ name: "trackers.use_udp.set", prm: 1 },
 			"set_xmlrpc_dialect"	:	{ name: "network.xmlrpc.dialect.set", prm: 1 },
 			"set_xmlrpc_size_limit"	:	{ name: "network.xmlrpc.size_limit.set", prm: 1 },
-			"schedule"		:	{ name: "schedule2", prm: 1 },
-			"schedule_remove"	:	{ name: "schedule_remove2", prm: 1 },
+			"schedule"		:	{ name: "schedule", prm: 1 },
+			"schedule_remove"	:	{ name: "schedule.remove", prm: 1 },
 			"system.file_allocate"	:	{ name: "system.file.allocate", prm: 0 },
 			"system.file_allocate.set"	:	{ name: "system.file.allocate.set", prm: 1 },
 			"system.method.erase"	:	{ name: "method.erase", prm: 1 },
@@ -1041,6 +1041,27 @@ function correctContent()
 			"dht_add_node"		:	{ name: "dht.add_node", prm: 1 },
 			"dht_statistics"	:	{ name: "dht.statistics", prm: 0 },
 			"load"			:	{ name: "load.normal", prm: 1 }
+		});
+	}
+	if(theWebUI.systemInfo.rTorrent.iVersion>=0x1002)
+	{
+		$.extend(theRequestManager.aliases,
+		{
+			"dht"                           : { name: "dht.mode.set", prm: 1 },
+			"throttle.max_uploads.div"      : { name: "throttle.max_uploads.div._val", prm: 1 },
+			"throttle.max_uploads.global"   : { name: "throttle.max_uploads.global._val", prm: 1 },
+			"throttle.max_downloads.div"    : { name: "throttle.max_downloads.div._val", prm: 1 },
+			"throttle.max_downloads.global" : { name: "throttle.max_downloads.global._val", prm: 1 },
+			"ratio.enable"                  : { name: "group.seeding.ratio.enable", prm: 1 },
+			"ratio.disable"                 : { name: "group.seeding.ratio.disable", prm: 1 },
+			"ratio.min"                     : { name: "group2.seeding.ratio.min", prm: 0 },
+			"ratio.max"                     : { name: "group2.seeding.ratio.max", prm: 0 },
+			"ratio.upload"                  : { name: "group2.seeding.ratio.upload", prm: 0 },
+			"ratio.min.set"                 : { name: "group2.seeding.ratio.min.set", prm: 1 },
+			"ratio.max.set"                 : { name: "group2.seeding.ratio.max.set", prm: 1 },
+			"ratio.upload.set"              : { name: "group2.seeding.ratio.upload.set", prm: 1 },
+			"connection_leech"              : { name: "protocol.connection.leech.set", prm: 1 },
+			"connection_seed"               : { name: "protocol.connection.seed.set", prm: 1 },
 		});
 	}
 	$("#rtorrentv").text(theWebUI.systemInfo.rTorrent.version);
